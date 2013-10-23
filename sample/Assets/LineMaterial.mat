@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: cent
+  m_Name: LineMaterial
   m_Shader: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_SavedProperties:
@@ -24,4 +24,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .69647491, g: .83088237, b: .702963531, a: 1}
+        second: {r: .429319292, g: .387705445, b: .742647052, a: 1}
