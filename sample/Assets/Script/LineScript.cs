@@ -30,13 +30,13 @@ public class LineScript : MonoBehaviour {
 											new Vector3(0.0f, 0.0f, 0.0f),
 											new Vector3(0.0f, 0.0f, 0.0f)};
 		//3ベクトル分算出
-		if(prev.x >= 0.0f){
+		if(prev.x != float.MaxValue){
 			vecValid[0] = true;
 			vecValue[0] = point1 - prev;
 		}
 		vecValid[1] = true;
 		vecValue[1] = point2 - point1;
-		if(next.x >= 0.0f){
+		if(next.x != float.MaxValue){
 			vecValid[2] = true;
 			vecValue[2] = next - point2;
 		}

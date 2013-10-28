@@ -44,7 +44,7 @@ public class LineManagerScript : MonoBehaviour {
 		ArrayList data = new ArrayList();
 		Vector3[] lineData;
 		int numPoint; 
-		Vector3 dummy = new Vector3(-1.0f, -1.0f, -1.0f);
+		Vector3 dummy = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 		//ラインオブジェクト
 		//LineScript[] obj;
 		//床オブジェクトのサイズ取得（スケール＊5がpositionに入る？）
