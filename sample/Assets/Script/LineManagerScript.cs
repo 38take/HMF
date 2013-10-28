@@ -15,7 +15,10 @@ public class LineManagerScript : MonoBehaviour {
 
 	public GameObject target;	
 	public GameObject line;
-	//public LineScript line;
+	Vector3[] lineData;
+	Vector3[] lineDir;
+	int numPoint; 
+	int numTarget;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
@@ -30,8 +33,22 @@ public class LineManagerScript : MonoBehaviour {
 		obj.SetData(prev, point1, point2, next);
 	}
 	//ターゲットの生成
-	void CreateTarget(Vector3 linePoint1, Vector3 linePoint2, float offset)
+	private void CreateTarget(int lineID, Vector2 offset)
 	{
+		//中央線内の位置計算
+		Vector3 basePos = lineData[lineID] + (lineData[lineID+1]-lineData[lineID])*offset.x;
+		//基準位置での線の方向算出
+		Vector3 dir = lineDir[lineID]*(1.0f - offset.x) + lineDir[lineID+1]*offset.x;
+		dir = Vector3.Normalize(dir);
+		//算出した方向から左向きのベクトルへ変換
+		float tmp = dir.z;
+		dir.z = dir.x;
+		dir.x = -tmp;
+		//位置確定
+		Vector3 pos = basePos + dir * (-offset.y) * 1.0f;//1,ofは線の太さ
+		//ターゲット生成
+		Instantiate(target, pos, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		
 	}
 	
 	// Use this for initialization
@@ -42,16 +59,20 @@ public class LineManagerScript : MonoBehaviour {
 		String[] split;
 		
 		ArrayList data = new ArrayList();
-		Vector3[] lineData;
-		int numPoint; 
 		Vector3 dummy = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-		//ラインオブジェクト
-		//LineScript[] obj;
+		
+		int lineID = new int();
+		int tNum = new int();
+		int tCnt = new int();
 		//床オブジェクトのサイズ取得（スケール＊5がpositionに入る？）
 		GameObject floor = GameObject.Find("Floor");
 		float stageHorizontal = floor.transform.localScale.x * 5.0f;
 		float stageVertical = floor.transform.localScale.z * 5.0f;
-		
+		//パラメータ初期化
+		numPoint 	= 0;
+		numTarget 	= 0;
+		lineID = tNum = tCnt = -1;
+		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
@@ -71,6 +92,7 @@ public class LineManagerScript : MonoBehaviour {
 					//頂点数算出
 					numPoint = (int)(data.Count / 3);
 					lineData = new Vector3[numPoint];
+					lineDir  = new Vector3[numPoint];
 					for(int i=0; i<numPoint; i++)
 					{
 						lineData[i].x = (float)data[(i*3)+0] * stageHorizontal;
@@ -95,10 +117,14 @@ public class LineManagerScript : MonoBehaviour {
 							inValue[3] = lineData[i+2];					
 						//生成関数
 						CreateLine(inValue[0], inValue[1], inValue[2], inValue[3]);
+						//線の方向を算出
+						lineDir[i] = Vector3.Normalize(inValue[2] - inValue[1]);
 					}
+					lineDir[numPoint-1] = lineDir[numPoint-2];
 					//for(int i=0; i<1000; i++)
 					//	CreateLine(dummy, dummy, dummy, dummy);
 					state = (char)STATE.TARGET;
+					data.Clear();
 					break;
 				}
 				//数値を格納
@@ -108,6 +134,43 @@ public class LineManagerScript : MonoBehaviour {
 				break;
 				
 			case (char)STATE.TARGET:
+				if(split[0] == "EOF")
+				{
+					data.Clear();
+					break;
+				}
+				//ラインID取得
+				if(lineID < 0){
+					lineID = int.Parse(split[0]);
+					break;
+				}
+				//ライン内のターゲットの個数取得
+				if(tNum < 0){
+					tNum = int.Parse(split[0]);
+					tCnt = tNum;
+					break;
+				}
+				//ターゲットデータ取得
+				data.Add(float.Parse(split[0]));
+				data.Add(float.Parse(split[1]));
+				tCnt--;
+				//ターゲット生成
+				if(tCnt <= 0)
+				{
+					Vector2 offset = new Vector2();
+					
+					for(int i=0; i<tNum; i++){
+						offset.x = (float)data[i*2];
+						offset.y = (float)data[i*2+1];
+						CreateTarget(lineID, offset);
+					}
+					
+					numTarget += tNum;
+					
+					data.Clear();
+					lineID = -1;
+					tNum = -1;
+				}
 				break;
 				
 			case (char)STATE.NUM_STATE:

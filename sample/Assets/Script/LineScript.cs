@@ -56,10 +56,10 @@ public class LineScript : MonoBehaviour {
 		
 		//頂点位置の設定
 		vertices = new Vector3[4];
-		vertices[0] = point1 + (vecValue[0]* 2.0f);
-		vertices[1] = point2 + (vecValue[1]* 2.0f);
-		vertices[2] = point1 - (vecValue[0]* 2.0f);
-		vertices[3] = point2 - (vecValue[1]* 2.0f);
+		vertices[0] = point1 + (vecValue[0]* 1.0f);
+		vertices[1] = point2 + (vecValue[1]* 1.0f);
+		vertices[2] = point1 - (vecValue[0]* 1.0f);
+		vertices[3] = point2 - (vecValue[1]* 1.0f);
 		//インデックス
 		triangles = new int[6];
 		triangles[0] = 0;

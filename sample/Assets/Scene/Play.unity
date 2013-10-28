@@ -1160,7 +1160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 008125db414a8d14882bd70473e5a1de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 100000, guid: 174d68581da19a8489b54138e8ae9393, type: 2}
   line: {fileID: 100000, guid: 89288b2987693e8499ca9d945b905d64, type: 2}
 --- !u!1 &2137090851
 GameObject:
