@@ -59,7 +59,7 @@ public class PlayerScript : MonoBehaviour {
 	
 	private void OnCollisionEnter(Collision collision)
 	{
-		if(collision.gameObject.name != "Floor")
+		if(collision.gameObject.name == "Target(Clone)")
 		{
 			SScore.AddScore(100);
 			Destroy(collision.gameObject);
