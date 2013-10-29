@@ -19,7 +19,6 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3[] lineDir;
 	int numPoint; 
 	int numTarget;
-	int nowLineID;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
@@ -73,7 +72,6 @@ public class LineManagerScript : MonoBehaviour {
 		numPoint 	= 0;
 		numTarget 	= 0;
 		lineID = tNum = tCnt = -1;
-		nowLineID = 0;
 		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
