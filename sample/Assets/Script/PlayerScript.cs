@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 	
 	ScoreScript				SScore;
+	LineManagerScript		SLineManager;
 	private	Vector3			oldPos;
 	private float			oldMouseX;
 	private float			Speed;
@@ -18,6 +19,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		// 他スクリプトの関数を参照可能にする
 		SScore = (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");		
+		SLineManager = (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");		
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// FPS * 制限移動秒数

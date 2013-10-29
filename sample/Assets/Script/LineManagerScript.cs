@@ -19,6 +19,7 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3[] lineDir;
 	int numPoint; 
 	int numTarget;
+	int nowLineID;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
@@ -72,6 +73,7 @@ public class LineManagerScript : MonoBehaviour {
 		numPoint 	= 0;
 		numTarget 	= 0;
 		lineID = tNum = tCnt = -1;
+		nowLineID = 0;
 		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
@@ -189,5 +191,36 @@ public class LineManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+	
+	public Vector3 CalcPlayerPos(int timer, float offset)
+	{
+		Vector3 ret = new Vector3();
+		float length = (float)timer * 0.1f;
+		float lineLength = new float();
+		//今いるラインを算出(速度0.1として)
+		int lineIdx = new int();
+		for(lineIdx=0; lineIdx<numPoint-1; lineIdx++)
+		{
+			lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
+			if((length - lineLength) < 0.0f)
+				break;
+			length -= lineLength;
+		}
+		length = length / lineLength;
+		
+		
+		//基準点算出
+		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;
+		//方向算出
+		Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
+		dir = Vector3.Normalize(dir);
+		float tmp = dir.x;
+		dir.x = dir.z;
+		dir.z = -tmp;
+		//位置確定
+		ret = basePos + dir * offset * 1.0f;
+		
+		return ret;
 	}
 }
