@@ -4,7 +4,8 @@ using System;
 using System.IO;
 
 public class GameSystemScript : MonoBehaviour {
-
+	
+	private bool valid;
 	private int actID;
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,8 @@ public class GameSystemScript : MonoBehaviour {
             actID = int.Parse(sr.ReadLine());
             }
        	sr.Close();
+		
+		valid = true;
 	}
 	
 	public void SystemOutPut(int nextAct)
@@ -32,5 +35,10 @@ public class GameSystemScript : MonoBehaviour {
 	public int GetActID()
 	{
 		return actID;
+	}
+	
+	public bool isValid()
+	{
+		return valid;
 	}
 }

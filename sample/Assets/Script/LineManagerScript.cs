@@ -23,13 +23,7 @@ public class LineManagerScript : MonoBehaviour {
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
 	{
-		//line = new GameObject();
-		//line.AddComponent(typeof(MeshFilter));
-		//LineScript.SetData(prev, point1, point2, next);
-		//((GameObject)Instantiate(Resources.Load("Button_UP"))).GetComponent<Button2D>(); 
 		LineScript obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();	
-		//line = new LineScript();
-		//Instantiate(line);
 		obj.SetData(prev, point1, point2, next);
 	}
 	//ターゲットの生成
@@ -81,7 +75,6 @@ public class LineManagerScript : MonoBehaviour {
 			str = sr.ReadLine();
 			strBase = str.Split(';');
 			split = strBase[0].Split(',');
-			Debug.Log(split[0]);
 			
 			switch(state)
 			{
@@ -220,5 +213,16 @@ public class LineManagerScript : MonoBehaviour {
 		ret = basePos + dir * offset * 1.0f;
 		
 		return ret;
+	}
+	
+	//ラインの始点を取得
+	public Vector3 GetLineStartPoint()
+	{
+		return lineData[0];
+	}
+	//ラインの方向を取得
+	public Vector3 GetLineDirection(int id)
+	{
+		return lineDir[id];
 	}
 }
