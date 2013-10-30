@@ -15,8 +15,8 @@ public class PlayerScript : MonoBehaviour {
 	
 	public	GameObject		obj_Particle;
 	
-	float m_Offset;
-	int m_Timer;
+	public	float			m_Offset;
+	public	int				m_Timer;
  	
 	// Use this for initialization
 	void Start () {
