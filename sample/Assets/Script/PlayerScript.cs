@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour {
 	private float			RightTime,LeftTime;
 	private	float			TransX_Limit = 10;
 	private float			TransX_LimitTime = 5;
+	private float			height;
+	private float			HEIGHT;
 //	private bool			InitFall = false;
 	
 	public	GameObject		obj_Particle;
@@ -31,6 +33,8 @@ public class PlayerScript : MonoBehaviour {
 		transform.position = new Vector3(0.0f,10.0f,0.0f);
 		oldMouseX = Input.mousePosition.x;
 		Speed = 7.5f;
+		HEIGHT = 8.0f;
+		height = 0.0f;
 		
 		m_Timer = 0;
 		m_Offset = 0.0f;
@@ -46,7 +50,12 @@ public class PlayerScript : MonoBehaviour {
 		m_Offset += transX;
 		if(m_Offset > 1.0f) m_Offset = 1.0f;
 		if(m_Offset < -1.0f) m_Offset = -1.0f;
-		transform.position =SLineManager.CalcPlayerPos(m_Timer, m_Offset);
+		Vector3 basePos = SLineManager.CalcPlayerPos(m_Timer, m_Offset);
+		if(Input.GetMouseButton(0))
+			height += (HEIGHT-height)*0.1f;
+		else
+			height += (0.0f-height)*0.1f;
+		transform.position = new Vector3(basePos.x, basePos.y+height, basePos.z);
 		oldMouseX = Input.mousePosition.x;
 		//------------------------------------//
 		//回転処理
