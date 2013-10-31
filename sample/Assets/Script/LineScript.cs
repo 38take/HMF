@@ -19,7 +19,7 @@ public class LineScript : MonoBehaviour {
 		transform.position = new Vector3(0.0f, 0.1f, 0.0f);
 	}
 	
-	public void SetData(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next) {
+	public void SetData(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, float width) {
 		
 		mesh = new Mesh();
 		meshFilter = (MeshFilter)GetComponent("MeshFilter");
@@ -56,10 +56,10 @@ public class LineScript : MonoBehaviour {
 		
 		//頂点位置の設定
 		vertices = new Vector3[4];
-		vertices[0] = point1 + (vecValue[0]* 1.0f);
-		vertices[1] = point2 + (vecValue[1]* 1.0f);
-		vertices[2] = point1 - (vecValue[0]* 1.0f);
-		vertices[3] = point2 - (vecValue[1]* 1.0f);
+		vertices[0] = point1 + (vecValue[0]* width);
+		vertices[1] = point2 + (vecValue[1]* width);
+		vertices[2] = point1 - (vecValue[0]* width);
+		vertices[3] = point2 - (vecValue[1]* width);
 		//インデックス
 		triangles = new int[6];
 		triangles[0] = 0;

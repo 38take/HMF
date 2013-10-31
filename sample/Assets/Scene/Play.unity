@@ -138,7 +138,7 @@ Transform:
   m_GameObject: {fileID: 15093469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 30, y: 1, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!1 &77839385
@@ -152,9 +152,9 @@ GameObject:
   - 137: {fileID: 77839389}
   - 111: {fileID: 77839388}
   - 114: {fileID: 77839387}
-  - 135: {fileID: 77839390}
   - 54: {fileID: 77839391}
   - 114: {fileID: 77839392}
+  - 136: {fileID: 77839390}
   m_Layer: 0
   m_Name: "\u30CA\u30A4\u30D55"
   m_TagString: Untagged
@@ -260,8 +260,8 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: .0299619436, z: -.0926499963}
     m_Extent: {x: .00850000046, y: .0129619427, z: .164050013}
   m_DirtyAABB: 0
---- !u!135 &77839390
-SphereCollider:
+--- !u!136 &77839390
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -269,9 +269,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .0190237369
-  m_Center: {x: 0, y: .0306013655, z: -.200000003}
+  m_Radius: .0199999996
+  m_Height: .328000009
+  m_Direction: 2
+  m_Center: {x: 9.08341192e-16, y: .0299619772, z: -.0926500931}
 --- !u!54 &77839391
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -285,7 +286,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &77839392
 MonoBehaviour:

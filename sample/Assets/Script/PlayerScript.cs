@@ -39,92 +39,33 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
-		m_Timer+=2;
-/*
-		float	transX = 0;
-		float	mouseX = Input.mousePosition.x - oldMouseX;
+		m_Timer+=4;
 		
-		if( Mathf.Abs(mouseX) <= TransX_Limit )
-		{
-			transX = mouseX * 2.0f;
-		}
-		else
-		{
-			if( Mathf.Sin(mouseX) < 0 )
-				transX =  TransX_Limit * 2.0f;
-			else
-				transX = -TransX_Limit * 2.0f;
-		}
-*/
+		//------------------------------------//
+		//移動
 		m_Offset += transX;
 		if(m_Offset > 1.0f) m_Offset = 1.0f;
 		if(m_Offset < -1.0f) m_Offset = -1.0f;
-		// 右方向に移動する時
-		//if( transX < 0 )
-		//{
-		//	if(offset)
-		//	//if( RightTime != 0 )
-		//	//{
-		//	//	rigidbody.velocity =
-		//	//		new Vector3(transX, rigidbody.velocity.y, rigidbody.velocity.z);
-		//	//
-		//	//	RightTime	--;
-		//	//	LeftTime	++;
-		//	//}
-		//}
-		// 左方向に移動する時
-		//else if( transX > 0 )
-		//{
-		//	
-		//	if( LeftTime != 0 )
-		//	{
-		//		rigidbody.velocity =
-		//			new Vector3(transX, rigidbody.velocity.y, rigidbody.velocity.z);
-		//		
-		//		RightTime	++;
-		//		LeftTime	--;
-		//	}
-		//}
-		
-		//if( LeftTime == 0 || RightTime == 0 )
-		//	rigidbody.velocity =
-		//		new Vector3(0, rigidbody.velocity.y, Speed);
-		//else
-		//	rigidbody.velocity =
-		//		new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, Speed);
-
-		
-/*		
-		if( InitFall )
-			rigidbody.velocity = new Vector3(transX, rigidbody.velocity.y, Speed);
-
-		// 下方向にレイを飛ばす
-		if( Physics.Raycast(transform.position,Vector3.down,5) )
-		{
-			oldPos = transform.position;
-			
-			if( !InitFall )
-				InitFall = true;
-		}
-		else
-		{
-			if( InitFall )
-			{
-				transform.position = oldPos;
-			}
-		}
-*/		
-		
-		//if(transform.position.z >= 15.0f)
-		//{
-		//	RightTime = LeftTime = Application.targetFrameRate * TransX_LimitTime;
-		//	transform.position = new Vector3(	0,
-		//										transform.position.y,
-		//										-30.0f);
-		//}
 		transform.position =SLineManager.CalcPlayerPos(m_Timer, m_Offset);
 		oldMouseX = Input.mousePosition.x;
+		//------------------------------------//
+		//回転処理
+		//向くべき方向を算出
+		int inLineID = SLineManager.GetPlyaerLineID();
+		Vector3 dir = SLineManager.GetLineDirection(inLineID+1)-SLineManager.GetLineDirection(inLineID);
+		dir = Vector3.Normalize(dir);
+		
+        // モデルのデフォルト向きによって基準ベクトルは任意調整
+		Vector3 vecDefault = new Vector3(1.0f,0.0f,0.0f);
 	
+	        // 0~360の値が欲しいので２倍
+		float rad = Mathf.Atan2(dir.x-vecDefault.x,dir.z-vecDefault.z)*2.0f;
+		float deg = rad * Mathf.Rad2Deg -180.0f;
+		
+	    //一度角度をリセットしてから回転する
+		transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+	    // X軸基準に回す
+		transform.Rotate(310.0f, deg,0);
 	}
 	
 	private void OnCollisionEnter(Collision collision)

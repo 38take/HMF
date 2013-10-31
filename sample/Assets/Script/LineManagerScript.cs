@@ -19,12 +19,14 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3[] lineDir;
 	int numPoint; 
 	int numTarget;
+	int wherePlayer;
+	float lineWidth; 
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
 	{
 		LineScript obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();	
-		obj.SetData(prev, point1, point2, next);
+		obj.SetData(prev, point1, point2, next, lineWidth);
 	}
 	//ターゲットの生成
 	private void CreateTarget(int lineID, Vector2 offset)
@@ -39,7 +41,7 @@ public class LineManagerScript : MonoBehaviour {
 		dir.z = dir.x;
 		dir.x = -tmp;
 		//位置確定
-		Vector3 pos = basePos + dir * (-offset.y) * 1.0f;//1,ofは線の太さ
+		Vector3 pos = basePos + dir * (-offset.y) * lineWidth;//1,ofは線の太さ
 		//ターゲット生成
 		Instantiate(target, pos, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		
@@ -65,7 +67,9 @@ public class LineManagerScript : MonoBehaviour {
 		//パラメータ初期化
 		numPoint 	= 0;
 		numTarget 	= 0;
+		wherePlayer = 0;
 		lineID = tNum = tCnt = -1;
+		lineWidth = 3.0f;
 		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
@@ -216,19 +220,27 @@ public class LineManagerScript : MonoBehaviour {
 		dir.x = dir.z;
 		dir.z = -tmp;
 		//位置確定
-		ret = basePos + dir * offset * 1.0f;
+		ret = basePos + dir * offset * lineWidth;
+		
+		wherePlayer = lineIdx;
 		
 		return ret;
 	}
 	
 	//ラインの始点を取得
-	public Vector3 GetLineStartPoint()
+	public Vector3 GetLineStartPoint(int id)
 	{
-		return lineData[0];
+		return lineData[id];
 	}
 	//ラインの方向を取得
 	public Vector3 GetLineDirection(int id)
 	{
 		return lineDir[id];
+	}
+	
+	//プレイヤーがどのライン上にいるのか取得
+	public int GetPlyaerLineID()
+	{
+		return wherePlayer;
 	}
 }
