@@ -95,6 +95,7 @@ public class LineManagerScript : MonoBehaviour {
 					//必要分ラインを生成
 					//obj = new LineScript[numPoint-1];
 					Vector3[] inValue = new Vector3[4];
+					Vector3 tmp;
 					for(int i=0; i<(numPoint-1);i++)
 					{
 						//引数をセットしていく
@@ -111,7 +112,11 @@ public class LineManagerScript : MonoBehaviour {
 						//生成関数
 						CreateLine(inValue[0], inValue[1], inValue[2], inValue[3]);
 						//線の方向を算出
-						lineDir[i] = Vector3.Normalize(inValue[2] - inValue[1]);
+						if(i>0)
+							tmp = lineDir[i-1];
+						else
+							tmp = new Vector3(0.0f, 0.0f, 0.0f);
+						lineDir[i] = Vector3.Normalize((inValue[2] - inValue[1])+tmp);
 					}
 					lineDir[numPoint-1] = lineDir[numPoint-2];
 					//for(int i=0; i<1000; i++)
@@ -191,15 +196,16 @@ public class LineManagerScript : MonoBehaviour {
 		float lineLength = new float();
 		//今いるラインを算出(速度0.1として)
 		int lineIdx = new int();
-		for(lineIdx=0; lineIdx<numPoint-1; lineIdx++)
+		for(lineIdx=0; lineIdx<numPoint-2; lineIdx++)
 		{
 			lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
 			if((length - lineLength) < 0.0f)
 				break;
 			length -= lineLength;
 		}
+		if(length > lineLength)
+			length = lineLength;
 		length = length / lineLength;
-		
 		
 		//基準点算出
 		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;

@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
-		m_Timer++;
+		m_Timer+=2;
 /*
 		float	transX = 0;
 		float	mouseX = Input.mousePosition.x - oldMouseX;

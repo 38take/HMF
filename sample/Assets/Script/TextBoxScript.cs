@@ -15,6 +15,7 @@ public class TextBoxScript : MonoBehaviour {
 	string renderString;
 	string renderBase;
 	bool initialized;
+	bool valid;
 	
 	
 	// Use this for initialization
@@ -25,6 +26,7 @@ public class TextBoxScript : MonoBehaviour {
 		strIdx 			= 0;
 		charIdx			= 0;
 		initialized = false;
+		valid = true;
 		
 		initialized = Initialize();
 	}
@@ -93,6 +95,8 @@ public class TextBoxScript : MonoBehaviour {
 						strIdx++;
 						if(strIdx < numStatement)
 							renderBase = strArray[strIdx].ToString();
+						else
+							valid = false;
 						charIdx = 0;
 					}
 				}
@@ -113,5 +117,10 @@ public class TextBoxScript : MonoBehaviour {
 			initialized = Initialize();
 		}
 		//Debug.Log(numStatement+","+renderBase);
+	}
+	
+	public bool isValid()
+	{
+		return valid;	
 	}
 }

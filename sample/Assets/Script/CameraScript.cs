@@ -20,9 +20,9 @@ public class CameraScript : MonoBehaviour {
 		TargetPos = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer, 0);
 		
 		// 現在の刃の位置から数秒前の位置にカメラをセットする
-		transform.position = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer-90, 0);
+		transform.position = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer-60, 0);
 		transform.position = new Vector3(	transform.position.x,
-											transform.position.y+5,
+											transform.position.y+3.0f,
 											transform.position.z );
 		transform.LookAt(TargetPos);
 	}
