@@ -1230,6 +1230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 100000, guid: 174d68581da19a8489b54138e8ae9393, type: 2}
   line: {fileID: 100000, guid: 89288b2987693e8499ca9d945b905d64, type: 2}
+  lineDead: {fileID: 100000, guid: 76522a1f200a0fc48aa468efbf55f2e3, type: 2}
 --- !u!1 &2137090851
 GameObject:
   m_ObjectHideFlags: 0

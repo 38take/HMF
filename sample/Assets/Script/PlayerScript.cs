@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour {
 	private float			TransX_LimitTime = 5;
 	private float			height;
 	private float			HEIGHT;
+	private int			holdHorizontal;	           
 //	private bool			InitFall = false;
 	
 	public	GameObject		obj_Particle;
@@ -38,6 +39,8 @@ public class PlayerScript : MonoBehaviour {
 		
 		m_Timer = 0;
 		m_Offset = 0.0f;
+		
+		holdHorizontal = 0;
 	}
 	
 	// Update is called once per frame
@@ -47,7 +50,11 @@ public class PlayerScript : MonoBehaviour {
 		
 		//------------------------------------//
 		//移動
-		m_Offset += transX;
+		if(holdHorizontal <= 0)
+			m_Offset += transX;
+		else
+			holdHorizontal--;
+		Debug.Log(holdHorizontal);
 		if(m_Offset > 1.0f) m_Offset = 1.0f;
 		if(m_Offset < -1.0f) m_Offset = -1.0f;
 		Vector3 basePos = SLineManager.CalcPlayerPos(m_Timer, m_Offset);
@@ -89,6 +96,10 @@ public class PlayerScript : MonoBehaviour {
 										collision.gameObject.transform.position,
 										collision.gameObject.transform.rotation);
 			Destroy(ins_obj, 1.0f);
+		}
+		else if(collision.gameObject.name == "DeadLine(Clone)")
+		{
+			holdHorizontal = 120;
 		}
 	}
 }

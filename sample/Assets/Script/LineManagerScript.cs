@@ -15,7 +15,9 @@ public class LineManagerScript : MonoBehaviour {
 
 	public GameObject target;	
 	public GameObject line;
+	public GameObject lineDead;
 	Vector3[] lineData;
+	int[]	  lineKind;
 	Vector3[] lineDir;
 	int numPoint; 
 	int numTarget;
@@ -23,9 +25,21 @@ public class LineManagerScript : MonoBehaviour {
 	float lineWidth; 
 	
 	//線の生成
-	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next)
+	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
 	{
-		LineScript obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();	
+		LineScript obj = new LineScript();
+		switch(kind)
+		{
+		case 0:
+			obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();	
+			break;
+		case 1:
+			obj = ((GameObject)Instantiate(lineDead)).GetComponent<LineScript>();	
+			break;
+		default:
+			break;
+			
+		}
 		obj.SetData(prev, point1, point2, next, lineWidth);
 	}
 	//ターゲットの生成
@@ -87,14 +101,16 @@ public class LineManagerScript : MonoBehaviour {
 				if(split[0] == "Marker")
 				{
 					//頂点数算出
-					numPoint = (int)(data.Count / 3);
+					numPoint = (int)(data.Count / 4);
 					lineData = new Vector3[numPoint];
+					lineKind = new int[numPoint];
 					lineDir  = new Vector3[numPoint];
 					for(int i=0; i<numPoint; i++)
 					{
-						lineData[i].x = (float)data[(i*3)+0] * stageHorizontal;
-						lineData[i].y = (float)data[(i*3)+1];
-						lineData[i].z = (float)data[(i*3)+2] * stageVertical;
+						lineData[i].x = (float)data[(i*4)+0] * stageHorizontal;
+						lineData[i].y = (float)data[(i*4)+1];
+						lineData[i].z = (float)data[(i*4)+2] * stageVertical;
+						lineKind[i]   = (int)data[(i*4)+3];
 					}
 					//必要分ラインを生成
 					//obj = new LineScript[numPoint-1];
@@ -114,7 +130,7 @@ public class LineManagerScript : MonoBehaviour {
 						else
 							inValue[3] = lineData[i+2];					
 						//生成関数
-						CreateLine(inValue[0], inValue[1], inValue[2], inValue[3]);
+						CreateLine(inValue[0], inValue[1], inValue[2], inValue[3], lineKind[i]);
 						//線の方向を算出
 						if(i>0)
 							tmp = lineDir[i-1];
@@ -133,6 +149,8 @@ public class LineManagerScript : MonoBehaviour {
 				data.Add(float.Parse(split[0]));
 				data.Add(0.1f);
 				data.Add(float.Parse(split[1]));
+				data.Add(int.Parse(split[2]));
+				
 				break;
 				
 			case (char)STATE.TARGET:
