@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DrawEnable: 1
-  texture: {fileID: 2800000, guid: 3a79b7e3f3bc0314fa5d7d6ab359c4cb, type: 3}
+  texture: {fileID: 2800000, guid: 64c2609be04a7994ca4f27462eddb306, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   Position: {x: -100, y: 0}
   Width: 400
