@@ -5,6 +5,7 @@ using System.Collections;
 [RequireComponent( typeof( MeshRenderer ) )]
 [RequireComponent( typeof( MeshFilter ) )]
 [RequireComponent( typeof( MeshCollider ) )]
+[RequireComponent( typeof( ParticleSystem ) )]
 
 public class LineScript : MonoBehaviour {
 	
