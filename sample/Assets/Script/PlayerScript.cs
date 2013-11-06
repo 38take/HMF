@@ -48,8 +48,10 @@ public class PlayerScript : MonoBehaviour {
 			if(holdHorizontal <= 0)
 				m_Offset += transX;
 			else
+			{
 				holdHorizontal--;
-			Debug.Log(holdHorizontal);
+				Debug.Log(holdHorizontal);
+			}
 			if(m_Offset > 1.0f) m_Offset = 1.0f;
 			if(m_Offset < -1.0f) m_Offset = -1.0f;
 			Vector3 basePos = SLineManager.CalcPlayerPos(m_Timer, m_Offset);
@@ -93,7 +95,7 @@ public class PlayerScript : MonoBehaviour {
 										collision.gameObject.transform.rotation);
 			Destroy(ins_obj, 1.0f);
 		}
-		else if(collision.gameObject.name == "DeadLine(Clone)")
+		if(collision.gameObject.name == "DeadLine(Clone)")
 		{
 			holdHorizontal = 120;
 		}

@@ -4,11 +4,14 @@ using System.Collections;
 [ExecuteInEditMode]
 [RequireComponent( typeof( MeshRenderer ) )]
 [RequireComponent( typeof( MeshFilter ) )]
+[RequireComponent( typeof( MeshCollider ) )]
 
 public class LineScript : MonoBehaviour {
 	
 	Mesh mesh;
 	MeshFilter meshFilter;
+	MeshCollider meshCollider;
+	ParticleSystem particleSystem;
 	
 	Vector3[] vertices;
 	int[] triangles;
@@ -21,8 +24,10 @@ public class LineScript : MonoBehaviour {
 	
 	public void SetData(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, float width) {
 		
-		mesh = new Mesh();
-		meshFilter = (MeshFilter)GetComponent("MeshFilter");
+		mesh 			= new Mesh();
+		meshFilter 		= (MeshFilter)GetComponent("MeshFilter");
+		meshCollider 	= (MeshCollider)GetComponent("MechCollider"); 
+		particleSystem  = (ParticleSystem)GetComponent("ParticleSystem");
 		mesh.Clear();
 		//頂点位置の算出
 		bool[] vecValid = new bool[]{false, false, false};
@@ -86,43 +91,12 @@ public class LineScript : MonoBehaviour {
 		meshFilter.sharedMesh = mesh;
 		meshFilter.sharedMesh.name = "SimpleMesh";
 		
+		//パーティクルエミッタ
+		particleSystem.transform.position = (point1 + point2)/2.0f;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		//mesh.Clear();
-		
-		//vertices = new Vector3[4];
-		//vertices[0] = new Vector3(0.0f, 0.0f, 0.0f);
-		//vertices[1] = new Vector3( 0, 0.0f, 1 );
-		//vertices[2] = new Vector3( 1, 0.0f, 0 );
-		//vertices[3] = new Vector3( 1, 0.0f, 1 );
-		//
-		//triangles = new int[6];
-		//triangles[0] = 0;
-		//triangles[1] = 1;
-		//triangles[2] = 2;
-		//triangles[3] = 2;
-		//triangles[4] = 1;
-		//triangles[5] = 3;
-		//
-		//uvs = new Vector2[4];
-		//uvs[0] = Vector2.zero;
-		//uvs[1] = Vector2.up;
-		//uvs[2] = Vector2.right;
-		//uvs[3] = new Vector2(1.0f, 1.0f);
-		//
-		//mesh.vertices = vertices;
-		//mesh.triangles = triangles;
-		//mesh.uv = uvs;
-		//
-		//mesh.RecalculateNormals();
-		//mesh.RecalculateBounds();
-		////mesh.Optimize();
-		//
-		//meshFilter.sharedMesh = mesh;
-		//meshFilter.sharedMesh.name = "SimpleMesh";
 	}
 	
 }

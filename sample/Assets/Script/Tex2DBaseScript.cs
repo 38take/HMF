@@ -57,6 +57,7 @@ public class Tex2DBaseScript : MonoBehaviour {
 		GUI.color = Color.white;
 	}
 	
+	//座標（左上）取得 
 	public virtual Vector2 GetPos (){
 		return Position;
 	}
@@ -103,6 +104,15 @@ public class Tex2DBaseScript : MonoBehaviour {
 	public virtual void SetSizeCenter ( Vector2 Size ){
 		Vector2 Offset = new Vector2( Size.x - Width, Size.y - Height );
 		Position -= Offset / 2.0f;
+		Width = Size.x;
+		Height = Size.y;
+	}
+	
+	//Change Texture Size. You can appoint center pos(0.0f~1.0f)
+	public virtual void SetSizeFlexiblePoint ( Vector2 Size, Vector2 Point ){
+		Vector2 Offset = new Vector2( Size.x - Width, Size.y - Height );
+		Position.x -= (Offset.x * Point.x); 
+		Position.y -= (Offset.y * Point.y);
 		Width = Size.x;
 		Height = Size.y;
 	}
