@@ -46,7 +46,7 @@ public class SceneControllerADV : MonoBehaviour {
 		{
 			Application.LoadLevel("Play");
 			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			gameSystem.SystemOutPut(-gameSystem.GetActID());
+			gameSystem.SystemOutPut(1);
 		}
 		//シャッターの移動
 		if(press)
