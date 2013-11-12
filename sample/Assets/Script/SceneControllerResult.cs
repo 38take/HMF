@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SceneControllerTitle : MonoBehaviour {
-
+public class SceneControllerResult : MonoBehaviour {
+	
 	bool press;
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
@@ -39,8 +39,8 @@ public class SceneControllerTitle : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			Application.LoadLevel("Adventure");
 			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+			Application.LoadLevel("Title");
 			gameSystem.SystemOutPut(-gameSystem.GetActID());
 		}
 		//シャッターの移動

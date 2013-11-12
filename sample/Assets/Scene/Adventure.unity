@@ -182,7 +182,7 @@ GUIText:
   m_GameObject: {fileID: 188578444}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: ADV
+  m_Text: "ADV Enter\u30AD\u30FC\u3067\u8AAD\u307F\u9032\u3081\u308B"
   m_Anchor: 0
   m_Alignment: 0
   m_PixelOffset: {x: 0, y: 0}
@@ -190,7 +190,7 @@ GUIText:
   m_TabSize: 4
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Material: {fileID: 0}
-  m_FontSize: 0
+  m_FontSize: 20
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
@@ -454,17 +454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EditorClassIdentifier: 
-  DrawEnable: 1
-  texture: {fileID: 2800000, guid: 64c2609be04a7994ca4f27462eddb306, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: 0, y: 0}
-  Width: 0
-  Height: 0
-  Depth: 5
-  UVPosition: {x: 0, y: 0}
-  UVWidth: 0
-  UVHeight: 0
-  cnt: 0
 --- !u!1 &900980733
 GameObject:
   m_ObjectHideFlags: 0

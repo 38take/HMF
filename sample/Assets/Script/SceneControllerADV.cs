@@ -44,9 +44,17 @@ public class SceneControllerADV : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			Application.LoadLevel("Play");
 			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			gameSystem.SystemOutPut(1);
+			if(gameSystem.isLastAct())
+			{
+				Application.LoadLevel("Result");
+				gameSystem.SystemOutPut(1);
+			}
+			else
+			{
+				Application.LoadLevel("Play");
+				gameSystem.SystemOutPut(1);
+			}
 		}
 		//シャッターの移動
 		if(press)
