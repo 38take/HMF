@@ -23,6 +23,7 @@ public class LineManagerScript : MonoBehaviour {
 	int numTarget;
 	int wherePlayer;
 	float lineWidth; 
+	bool 	lastPoint;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
@@ -84,6 +85,7 @@ public class LineManagerScript : MonoBehaviour {
 		wherePlayer = 0;
 		lineID = tNum = tCnt = -1;
 		lineWidth = 3.0f;
+		lastPoint = false;
 		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
@@ -226,7 +228,10 @@ public class LineManagerScript : MonoBehaviour {
 			length -= lineLength;
 		}
 		if(length > lineLength)
+		{
 			length = lineLength;
+			lastPoint = true;
+		}
 		length = length / lineLength;
 		
 		//基準点算出
@@ -255,10 +260,14 @@ public class LineManagerScript : MonoBehaviour {
 	{
 		return lineDir[id];
 	}
-	
 	//プレイヤーがどのライン上にいるのか取得
 	public int GetPlyaerLineID()
 	{
 		return wherePlayer;
+	}
+	//プレイヤーが最終地点にいるか取得
+	public bool isLastpoint()
+	{
+		return lastPoint;
 	}
 }

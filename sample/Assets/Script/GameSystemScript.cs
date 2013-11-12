@@ -10,7 +10,7 @@ public class GameSystemScript : MonoBehaviour {
 	private int lastAct;
 	// Use this for initialization
 	void Start () {
-        FileInfo fi = new FileInfo(Application.dataPath+"/GameData/system.txt");
+		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/system.txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
         while( sr.Peek() != -1 ){
             actID 	= int.Parse(sr.ReadLine());
