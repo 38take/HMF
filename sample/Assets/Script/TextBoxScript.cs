@@ -7,7 +7,9 @@ using System.Text;
 public class TextBoxScript : MonoBehaviour {
 	
 	int actID;
+	int nextAct;
 	int numStatement;
+	
 	int strIdx;
 	int charIdx;
 	int[] balloonArray;
@@ -51,6 +53,7 @@ public class TextBoxScript : MonoBehaviour {
 			if(int.Parse(split[0]) == dataID)
 			{
 				actID = int.Parse(split[1]);
+				nextAct = int.Parse(split[2]);
 				break;
 			}
         }
@@ -122,5 +125,9 @@ public class TextBoxScript : MonoBehaviour {
 	public bool isValid()
 	{
 		return valid;	
+	}
+	public int GetNextAct()
+	{
+		return nextAct;
 	}
 }

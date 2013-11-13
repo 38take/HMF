@@ -22,4 +22,9 @@ public class ScoreScript : MonoBehaviour {
 	{
 		Debug.Log("てす");
 	}
+	//スコアの取得
+	public float GetScore()
+	{
+		return Score;
+	}
 }

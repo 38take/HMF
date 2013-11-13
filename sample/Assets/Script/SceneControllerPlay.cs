@@ -6,6 +6,8 @@ public class SceneControllerPlay : MonoBehaviour {
 	bool press;
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
+	ScoreScript		SScore;
+	LineManagerScript SLineManager;
 	float screenWidth;
 	float screenHeight;
 	float shutterPos;
@@ -30,6 +32,11 @@ public class SceneControllerPlay : MonoBehaviour {
 		shutterRight.SetPos(screenWidth/2.0f, 0.0f);
 		
 		shutterPos = screenWidth/2.0f;
+		
+		//スコアスクリプトへのアクセス準備
+		SScore = ((GameObject)GameObject.Find("ScoreTextBox")).GetComponent<ScoreScript>();
+		//ステージへのアクセス準備
+		SLineManager = ((GameObject)GameObject.Find("LineManager")).GetComponent<LineManagerScript>();
 	}
 	
 	// Update is called once per frame
@@ -39,16 +46,30 @@ public class SceneControllerPlay : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
+			//スコアから分岐先を算出
+			//ターゲット数取得
+			int targetNum = SLineManager.GetNumTarget();
+			int maxScore = targetNum * 100;//今はこれで
+			int score = (int)SScore.GetScore();
+			//とりあえず3分割してどこに分類されるかで
+			int nextAct;
+			if(score < (maxScore/3))
+				nextAct = 1;
+			else if(score < ((maxScore/3)*2))
+				nextAct = 2;
+			else 
+				nextAct = 3;
+			
 			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 			if(gameSystem.isLastAct())
 			{
 				Application.LoadLevel("Result");
-				gameSystem.SystemOutPut(1);
+				gameSystem.SystemOutPut(nextAct);
 			}
 			else
 			{
 				Application.LoadLevel("Adventure");
-				gameSystem.SystemOutPut(1);
+				gameSystem.SystemOutPut(nextAct);
 			}
 		}
 		//シャッターの移動

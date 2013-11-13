@@ -250,6 +250,15 @@ public class LineManagerScript : MonoBehaviour {
 		return ret;
 	}
 	
+	//ラインの本数を取得
+	public int GetNumLine(){
+		return numPoint-1;
+	}
+	//ターゲットの個数を取得
+	public int GetNumTarget(){
+		return numTarget;
+	}
+	
 	//ラインの始点を取得
 	public Vector3 GetLineStartPoint(int id)
 	{

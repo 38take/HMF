@@ -48,12 +48,12 @@ public class SceneControllerADV : MonoBehaviour {
 			if(gameSystem.isLastAct())
 			{
 				Application.LoadLevel("Result");
-				gameSystem.SystemOutPut(1);
+				gameSystem.SystemOutPut(StextBox.GetNextAct());
 			}
 			else
 			{
 				Application.LoadLevel("Play");
-				gameSystem.SystemOutPut(1);
+				gameSystem.SystemOutPut(StextBox.GetNextAct());
 			}
 		}
 		//シャッターの移動
