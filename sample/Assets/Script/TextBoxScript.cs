@@ -12,6 +12,10 @@ public class TextBoxScript : MonoBehaviour {
 	
 	int strIdx;
 	int charIdx;
+	
+	int readCnt;
+	int READCNT;
+	
 	int[] balloonArray;
 	string[] strArray;
 	string renderString;
@@ -27,6 +31,8 @@ public class TextBoxScript : MonoBehaviour {
 		numStatement 	= 0;
 		strIdx 			= 0;
 		charIdx			= 0;
+		readCnt 		= 0;
+		READCNT 		= 2;
 		initialized = false;
 		valid = true;
 		
@@ -92,7 +98,7 @@ public class TextBoxScript : MonoBehaviour {
 			{
 				if(string.Compare(renderString, renderBase) == 0)
 				{
-					if(Input.GetKeyUp(KeyCode.Return))
+					if(Input.GetMouseButtonDown(0))
 					{
 						renderString = "";
 						strIdx++;
@@ -105,21 +111,24 @@ public class TextBoxScript : MonoBehaviour {
 				}
 				else
 				{
-					renderString += renderBase.Substring(charIdx, 1);
-					charIdx=charIdx+1;
+					if(readCnt>0)
+						readCnt--;
+					else
+					{
+						renderString += renderBase.Substring(charIdx, 1);
+						charIdx=charIdx+1;
+						readCnt = READCNT;
+					}
 				}
 				
 				//テキスト表示
-				//GUIText gui = ((GameObject)GameObject.Find("TextBox")).GetComponent<GUIText>();
 				guiText.text = renderString;
-				//guiText.text = renderBase;
 			}
 		}
 		else
 		{
 			initialized = Initialize();
 		}
-		//Debug.Log(numStatement+","+renderBase);
 	}
 	
 	public bool isValid()

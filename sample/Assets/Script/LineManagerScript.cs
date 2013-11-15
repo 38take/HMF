@@ -12,6 +12,11 @@ public class LineManagerScript : MonoBehaviour {
 		TARGET,
 		NUM_STATE,
 	};
+	private struct TARGET_ARRAY
+	{
+		public Vector3[] 	targetPosArray;
+		public bool[]		pastArray;
+	};
 
 	public GameObject target;	
 	public GameObject line;
@@ -19,6 +24,7 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3[] lineData;
 	int[]	  lineKind;
 	Vector3[] lineDir;
+	TARGET_ARRAY[] targetArray;
 	int numPoint; 
 	int numTarget;
 	int wherePlayer;
@@ -75,7 +81,6 @@ public class LineManagerScript : MonoBehaviour {
 		int lineID = new int();
 		int tNum = new int();
 		int tCnt = new int();
-		//床オブジェクトのサイズ取得（スケール＊5がpositionに入る？）
 		GameObject floor = GameObject.Find("Floor");
 		float stageHorizontal = floor.transform.localScale.x * 5.0f;
 		float stageVertical = floor.transform.localScale.z * 5.0f;
@@ -143,6 +148,7 @@ public class LineManagerScript : MonoBehaviour {
 					lineDir[numPoint-1] = lineDir[numPoint-2];
 					//for(int i=0; i<1000; i++)
 					//	CreateLine(dummy, dummy, dummy, dummy);
+					targetArray = new TARGET_ARRAY[numPoint-1];
 					state = (char)STATE.TARGET;
 					data.Clear();
 					break;
@@ -170,6 +176,8 @@ public class LineManagerScript : MonoBehaviour {
 				if(tNum < 0){
 					tNum = int.Parse(split[0]);
 					tCnt = tNum;
+					targetArray[lineID].targetPosArray = new Vector3[tCnt];
+					targetArray[lineID].pastArray = new bool[tCnt];
 					break;
 				}
 				//ターゲットデータ取得
@@ -185,6 +193,10 @@ public class LineManagerScript : MonoBehaviour {
 						offset.x = (float)data[i*2];
 						offset.y = (float)data[i*2+1];
 						CreateTarget(lineID, offset);
+						
+						targetArray[lineID].targetPosArray[i].x = offset.x;
+						targetArray[lineID].targetPosArray[i].y = offset.y;
+						targetArray[lineID].pastArray[i]		= false;
 					}
 					
 					numTarget += tNum;

@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 	
 	ScoreScript				SScore;
+	ComboScript				SCombo;
 	LineManagerScript		SLineManager;
 	CameraScript			SCamera;
 	private float			oldMouseX;
@@ -31,6 +32,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		// 他スクリプトの関数を参照可能にする
 		SScore			= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
+		SCombo			= (ComboScript)GameObject.Find("ComboRenderer").GetComponent("ComboScript");
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
 		// FPSを60に設定
@@ -132,6 +134,7 @@ public class PlayerScript : MonoBehaviour {
 										collision.gameObject.transform.position,
 										collision.gameObject.transform.rotation);
 			Destroy(ins_obj, 1.0f);
+			SCombo.Notice(true);
 		}
 		if(collision.gameObject.name == "DeadLine(Clone)")
 		{

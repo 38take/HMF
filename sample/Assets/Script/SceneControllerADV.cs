@@ -72,7 +72,8 @@ public class SceneControllerADV : MonoBehaviour {
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		
-		if(!StextBox.isValid())
+		if(	!StextBox.isValid() ||
+			Input.GetMouseButtonDown(1))
 			press = true;
 	}
 }

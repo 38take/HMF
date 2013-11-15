@@ -36,7 +36,7 @@ public class Tex2DBaseScript : MonoBehaviour {
 		GUI.depth = Depth;
 		GUI.color = color;
 
-		Debug.Log("OnGUI");
+		//Debug.Log("OnGUI");
 		
 		GUI.DrawTextureWithTexCoords(
 			new Rect(
