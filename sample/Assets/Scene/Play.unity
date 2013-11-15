@@ -350,9 +350,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obj_Particle: {fileID: 100000, guid: e3a55d178fa963d4ca58112dc62cfae7, type: 2}
-  m_CameraFlag: 0
   m_Offset: 0
   m_Timer: 0
+  m_GameState: 0
 --- !u!1 &250406717
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb634e3a56e909547abfaab2320d44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obj_TestObject: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
 --- !u!82 &542674058
 AudioSource:
   m_ObjectHideFlags: 0
