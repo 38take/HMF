@@ -12,10 +12,11 @@ public class LineManagerScript : MonoBehaviour {
 		TARGET,
 		NUM_STATE,
 	};
+	//各ラインのターゲット配列
 	private struct TARGET_ARRAY
 	{
-		public Vector3[] 	targetPosArray;
-		public bool[]		pastArray;
+		public Vector3[] 	targetPosArray; //ターゲット位置（X:中心ラインのオフセット Y:左右のオフセット）
+		public bool[]		pastArray;		//通過したかのフラグ
 	};
 
 	public GameObject target;	
