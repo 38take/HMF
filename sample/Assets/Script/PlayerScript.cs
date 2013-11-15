@@ -5,41 +5,70 @@ public class PlayerScript : MonoBehaviour {
 	
 	ScoreScript				SScore;
 	LineManagerScript		SLineManager;
+	CameraScript			SCamera;
 	private float			oldMouseX;
 	private float			height;
 	private float			HEIGHT;
 	private int				holdHorizontal;
+	private	bool			InitFlag = false;
 
 	public	GameObject		obj_Particle;
-	
-	public	bool			m_CameraFlag = false;
 	public	float			m_Offset;
 	public	int				m_Timer;
+	
+	public enum GAME_STATE
+	{
+		GAME_START,				// ゲーム開始前のカメラ操作状態
+		GAME_PLAY,				// ゲームプレイ中の状態
+		GAME_END,				// ゲームクリア時のカメラ操作状態
+		GAME_COMPLETION,		// 次の状態遷移可能
+	}
+	
+	public	GAME_STATE		m_GameState = GAME_STATE.GAME_START;
+	
  	
 	// Use this for initialization
 	void Start () {
 		// 他スクリプトの関数を参照可能にする
-		SScore = (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");		
-		SLineManager = (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");		
+		SScore			= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
+		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
+		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
-		transform.position = new Vector3(0.0f,10.0f,0.0f);
 		oldMouseX = Input.mousePosition.x;
-
-		HEIGHT = 8.0f;
-		height = 0.0f;
 		
-		m_Timer = 0;
-		m_Offset = 0.0f;
+		HEIGHT		= 8.0f;
+		height		= 0.0f;
+		
+		m_Timer		= 0;
+		m_Offset	= 0.0f;
 		
 		holdHorizontal = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if( m_CameraFlag )
+		
+		if( m_GameState == GAME_STATE.GAME_PLAY || !InitFlag )
 		{
+			if( !InitFlag )
+			{
+				Vector3 startPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				startPos = new Vector3( startPos.x, startPos.y+3.0f, startPos.z );
+				SCamera.SetStartCameraPos( startPos );
+				InitFlag = true;
+			}
+
+			// デバッグ用
+			if(Input.GetKeyDown(KeyCode.Space))
+			{
+				Vector3 lastPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
+				SCamera.SetLastCameraPos( lastPos );
+				m_GameState = GAME_STATE.GAME_END;
+			}
+
 			float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
 			m_Timer+=4;
 			
@@ -79,6 +108,15 @@ public class PlayerScript : MonoBehaviour {
 			transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 		    // X軸基準に回す
 			transform.Rotate(310.0f, deg,0);
+			
+			if( SLineManager.isLastpoint() )
+			{
+				Vector3 lastPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
+				SCamera.SetLastCameraPos( lastPos );
+				m_GameState = GAME_STATE.GAME_END;
+			}
+			
 		}
 	}
 	
