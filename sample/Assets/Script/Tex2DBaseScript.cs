@@ -29,15 +29,20 @@ public class Tex2DBaseScript : MonoBehaviour {
 	}
 	
 	// 描画.
-	void OnGUI () {
+	public void OnGUI () {
 		
-		if( !DrawEnable || texture == null ) return;
+		if( !DrawEnable || texture == null ){
+			if(!DrawEnable){
+				Debug.Log ("Drawflag is false!!");
+			}
+			if(texture == null)
+			Debug.Log("texture is NULL!!");
+			return;
+		}
 		
 		GUI.depth = Depth;
 		GUI.color = color;
 
-		//Debug.Log("OnGUI");
-		
 		GUI.DrawTextureWithTexCoords(
 			new Rect(
 			Position.x,
