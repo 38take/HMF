@@ -71,7 +71,8 @@ public class CameraScript : MonoBehaviour {
 //				Destroy( GameObject.Find("target(Clone)") );
 //				Destroy( GameObject.Find("Floor") );
 				
-//				Instantiate(obj_TestObject);
+				// 完成型オブジェクトを生成
+				Instantiate(obj_TestObject);
 				
 				SPlayerScript.m_GameState = PlayerScript.GAME_STATE.GAME_COMPLETION;
 				timer = 0;
