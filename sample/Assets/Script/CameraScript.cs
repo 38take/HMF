@@ -8,10 +8,9 @@ public class CameraScript : MonoBehaviour {
 	private	Vector3			TargetPos, StartPos, LastPos, RelayPos;
 	private	float			timer;
 	private	bool			StartCameraFlag;
+	private	Quaternion		StartRota, EndRota;
+	private	float			Rota_timer;
 	public	GameObject		obj_TestObject;
-	
-	int				roteTime = 0;
-	Quaternion		BaseRota, Rota;
 	
 	// Use this for initialization
 	void Start () {
@@ -20,19 +19,33 @@ public class CameraScript : MonoBehaviour {
 		
 		StartCameraFlag = false;
 		timer = 0;
+		Rota_timer = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
-
+		
+		Vector3	workPos;
+		
 		switch( SPlayerScript.m_GameState )
 		{
 		// ゲームプレイまでのカメラ操作
 		case PlayerScript.GAME_STATE.GAME_START:
-			if( PointInterpolationSlerp(new Vector3(0,500,-150), StartPos, 120) >= 0.8 && !StartCameraFlag )
+			if( PointInterpolationSlerp(new Vector3(0,250,-200), StartPos, 120) >= 0.8 && !StartCameraFlag )
 			{
 				StartCameraFlag = true;
-				RelayPos = transform.position;
+				StartRota	= transform.rotation;
+				RelayPos	= transform.position;
+				workPos		= transform.position;
+								
+				transform.position = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer-60, 0);
+				transform.position = new Vector3(	transform.position.x,
+													transform.position.y+3.0f,
+													transform.position.z );
+				transform.LookAt(GameObject.Find("ナイフ5").transform.position);
+				EndRota		= transform.rotation;
+				transform.position = workPos;
+				transform.LookAt(GameObject.Find("Floor").transform.position);
 				timer = 0;
 			}
 			else if( StartCameraFlag )
@@ -42,9 +55,9 @@ public class CameraScript : MonoBehaviour {
 					SPlayerScript.m_GameState = PlayerScript.GAME_STATE.GAME_PLAY;
 					timer = 0;
 				}
-				roteTime++;
 				
-				transform.LookAt(GameObject.Find("ナイフ5").transform.position);
+				Rota_timer++;
+				transform.rotation = Quaternion.Slerp( StartRota, EndRota, Rota_timer/80 );
 			}
 			break;
 			
@@ -64,7 +77,7 @@ public class CameraScript : MonoBehaviour {
 
 		// ゲーム終了時のカメラ操作
 		case PlayerScript.GAME_STATE.GAME_END:
-			if( PointInterpolationSlerp(LastPos, new Vector3(0,500,-100), 120 ) >= 0.75 )
+			if( PointInterpolationSlerp(LastPos, new Vector3(0,250,-200), 120 ) >= 1 )
 			{
 //				Destroy( GameObject.Find("DeadLine(Clone)") );
 //				Destroy( GameObject.Find("Line(Clone)") );
@@ -87,7 +100,7 @@ public class CameraScript : MonoBehaviour {
 	{
 		timer++;
 		
-		transform.LookAt(GameObject.Find("ナイフ5").transform.position);
+		transform.LookAt(GameObject.Find("Floor").transform.position);
 		transform.position = Vector3.Lerp( start_pos, end_pos, timer/MOVE_TIME );
 		
 		return timer/MOVE_TIME;
@@ -98,7 +111,7 @@ public class CameraScript : MonoBehaviour {
 	{
 		timer++;
 		
-		transform.LookAt(GameObject.Find("ナイフ5").transform.position);
+		transform.LookAt(GameObject.Find("Floor").transform.position);
 		transform.position = Vector3.Slerp( start_pos, end_pos, timer/MOVE_TIME );
 		
 		return timer/MOVE_TIME;

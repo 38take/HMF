@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BillboardScript : MonoBehaviour {
-	
+
 	 // ゲームオブジェクトをビルボード化させる対象のカメラ
 	public Camera m_Camera;
 	// true の場合ゲームオブジェクトはクリッピング平面のカメラの前に配置されます。
@@ -26,8 +26,7 @@ public class BillboardScript : MonoBehaviour {
 		vec.Normalize();
 		// ゲームオブジェクトのポジションをカメラのクリッピング平面のすぐ内側にセットしてカメラビューをブロックするようにする
 		if (this.PositionInFrontOfCamera)
-			this.transform.position =
-				m_Camera.transform.position + (vec * (m_Camera.nearClipPlane + this.Offset));
+			this.transform.position = m_Camera.transform.position + (vec * (m_Camera.nearClipPlane + this.Offset));
 		// ゲームオブジェクトの向きがカメラの方へ向くようにする
 		this.transform.LookAt(this.transform.position + m_Camera.transform.rotation * Vector3.back, m_Camera.transform.rotation * Vector3.up);
 	}
