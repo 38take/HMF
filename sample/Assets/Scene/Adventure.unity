@@ -508,11 +508,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DrawEnable: 1
-  texture: {fileID: 0}
+  texture: {fileID: 2800000, guid: df4c6513a3514e048bab1fdd62f81611, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: 0, y: 0}
-  Width: 0
-  Height: 0
+  Position: {x: 100, y: 100}
+  Width: 100
+  Height: 100
   Depth: 5
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
@@ -529,7 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4f58e749eebf945895b919619c9760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
 --- !u!1 &900980733
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +538,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 900980734}
   - 114: {fileID: 900980735}
+  - 114: {fileID: 900980736}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -566,6 +566,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 810bb922bc15d07478b8394f7c6e5efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &900980736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 900980733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e5b9b4a29cbb24cb9fce5289529234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1263198561
@@ -606,7 +617,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e21d016b0a8fcbf4b983d0745ed2a93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextBoxObj: {fileID: 0}
 --- !u!1 &1275678003
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ScreenContlloer : MonoBehaviour {
+public class ScreenController : MonoBehaviour {
 	
 	int	OldWidth;
 	int OldHeight;

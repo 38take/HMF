@@ -32,30 +32,31 @@ public class Tex2DBaseScript : MonoBehaviour {
 	public void OnGUI () {
 		
 		if( !DrawEnable || texture == null ){
-			if(!DrawEnable){
+			if(DrawEnable == false){
 				Debug.Log ("Drawflag is false!!");
 			}
-			if(texture == null)
-			Debug.Log("texture is NULL!!");
+			if(texture == null){
+				Debug.Log("texture is NULL!!");
+			}
 			return;
 		}
 		
 		GUI.depth = Depth;
 		GUI.color = color;
-
+		
 		GUI.DrawTextureWithTexCoords(
-			new Rect(
-			Position.x,
-			Position.y,
-			Width,
-			Height),
+			new Rect( 
+			Position.x 								* DefaultScreen.Par.x, 
+			Position.y								* DefaultScreen.Par.y, 
+			Width 									* DefaultScreen.Par.x, 
+			Height 									* DefaultScreen.Par.y ),
 			
 			texture,
 			
 			new Rect(UVPosition.x,
 			UVPosition.y,
-			UVPosition.x + UVWidth,
-			UVPosition.y + UVHeight )
+			UVWidth,
+			UVHeight )
 		);
 		
 		// 元に戻しておく.
