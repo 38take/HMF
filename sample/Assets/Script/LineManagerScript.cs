@@ -17,20 +17,28 @@ public class LineManagerScript : MonoBehaviour {
 	{
 		public Vector3[] 	targetPosArray; //ターゲット位置（X:中心ラインのオフセット Y:左右のオフセット）
 		public bool[]		pastArray;		//通過したかのフラグ
+		public int seek;
 	};
-
+	
+	//外部ゲームオブジェクト
 	public GameObject target;	
 	public GameObject line;
 	public GameObject lineDead;
+	public GameObject hitRenderer;
+	//ステージの構成データ
 	Vector3[] lineData;
 	int[]	  lineKind;
 	Vector3[] lineDir;
 	TARGET_ARRAY[] targetArray;
+	//各種パラメータ
 	int numPoint; 
 	int numTarget;
 	int wherePlayer;
 	float lineWidth; 
 	bool 	lastPoint;
+	Vector3 playerOldOffset;
+	float   targetWidthInLine;
+	Vector3 TargetHitChecker;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
@@ -85,6 +93,8 @@ public class LineManagerScript : MonoBehaviour {
 		GameObject floor = GameObject.Find("Floor");
 		float stageHorizontal = floor.transform.localScale.x * 5.0f;
 		float stageVertical = floor.transform.localScale.z * 5.0f;
+		
+		hitRenderer = (GameObject)GameObject.Find("HitTextBox");
 		//パラメータ初期化
 		numPoint 	= 0;
 		numTarget 	= 0;
@@ -92,6 +102,9 @@ public class LineManagerScript : MonoBehaviour {
 		lineID = tNum = tCnt = -1;
 		lineWidth = 3.0f;
 		lastPoint = false;
+		playerOldOffset = new Vector3(0.0f, 0.0f, 0.0f);
+		TargetHitChecker = new Vector3(0.1f, 0.3f, 1.0f);
+		targetWidthInLine = 5.0f / (lineWidth*2);
 		//==================================================
 		//ステージファイルの読み込み
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
@@ -197,8 +210,10 @@ public class LineManagerScript : MonoBehaviour {
 						
 						targetArray[lineID].targetPosArray[i].x = offset.x;
 						targetArray[lineID].targetPosArray[i].y = offset.y;
+						targetArray[lineID].targetPosArray[i].z = 0.0f;
 						targetArray[lineID].pastArray[i]		= false;
 					}
+					targetArray[lineID].seek = 0;
 					
 					numTarget += tNum;
 					
@@ -245,7 +260,7 @@ public class LineManagerScript : MonoBehaviour {
 			length = lineLength;
 			lastPoint = true;
 		}
-		length = length / lineLength;
+		length = length / lineLength;//中心線のオフセット算出
 		
 		//基準点算出
 		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;
@@ -259,8 +274,72 @@ public class LineManagerScript : MonoBehaviour {
 		ret = basePos + dir * offset * lineWidth;
 		
 		wherePlayer = lineIdx;
+		//ターゲットとのあたり判定をとる
+		Vector3 tmpVec = new Vector3(length, offset, 0.0f);
+		HitCheckTarget(wherePlayer, tmpVec, playerOldOffset);
+		playerOldOffset = tmpVec;
 		
 		return ret;
+	}
+	
+	private void HitCheckTarget(int lineID, Vector3 offset, Vector3 oldOffset)
+	{
+		Vector3 targetPos;
+		
+		//hitRenderer.guiText.text = "";
+		
+		if(targetArray[lineID].targetPosArray != null &&
+			targetArray[lineID].targetPosArray.Length > 0)
+		{
+			for(int i=targetArray[lineID].seek; i<targetArray[lineID].targetPosArray.Length; i++)
+			{
+				targetPos = targetArray[lineID].targetPosArray[i];
+				if( offset.x >= targetPos.x )
+				{
+					if(oldOffset.x < targetPos.x)
+					{
+						//ターゲットの位置におけるプレイヤーの横方向オフセット算出
+						float transrate = offset.x - oldOffset.x;
+						float target   = targetPos.x - oldOffset.x;
+						transrate = target / transrate;
+						float H = oldOffset.y + (offset.y-oldOffset.y)*transrate;
+						
+						//判定
+						H = H - targetPos.y;
+						//クリティカル
+						if( H < TargetHitChecker.x * targetWidthInLine &&
+							H > -TargetHitChecker.x * targetWidthInLine)
+						{
+							hitRenderer.guiText.text = "クリティカル！！";
+						}
+						//ノーマル
+						else if( H < TargetHitChecker.y * targetWidthInLine &&
+								 H > -TargetHitChecker.y * targetWidthInLine)
+						{
+							hitRenderer.guiText.text = "ノーマル";
+						}
+						//セーフ
+						else if( H < TargetHitChecker.z * targetWidthInLine &&
+								 H > -TargetHitChecker.z * targetWidthInLine)
+						{
+							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
+						}
+						//ミス
+						else
+						{
+							hitRenderer.guiText.text = "ミス・・・";
+						}
+						
+						//通過したと判定させる
+						targetArray[lineID].pastArray[i] = true;
+						targetArray[lineID].seek++;
+						Debug.Log("pass");
+					}
+				}
+				else
+					break;
+			}
+		}
 	}
 	
 	//ラインの本数を取得

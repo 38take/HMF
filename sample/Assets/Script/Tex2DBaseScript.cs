@@ -32,12 +32,10 @@ public class Tex2DBaseScript : MonoBehaviour {
 	public void OnGUI () {
 		
 		if( !DrawEnable || texture == null ){
-			if(DrawEnable == false){
-				Debug.Log ("Drawflag is false!!");
-			}
-			if(texture == null){
-				Debug.Log("texture is NULL!!");
-			}
+		//	if(!DrawEnable)
+		//		Debug.Log ("Drawflag is false!!");
+		//	if(texture == null)
+		//		Debug.Log("texture is NULL!!");
 			return;
 		}
 		

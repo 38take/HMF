@@ -17,8 +17,8 @@ public class SceneControllerResult : MonoBehaviour {
 		dummyLoadCnt = 0;
 		
 		//画面サイズ取得
-		screenWidth = Screen.width;
-		screenHeight = Screen.height;
+		screenWidth  = 1024.0f;//Screen.width;
+		screenHeight = 768.0f;//Screen.height;
 		
 		//シャッターの初期設定
 		shutterLeft = ((GameObject)GameObject.Find("ShutterLeft")).GetComponent<Tex2DBaseScript>();
