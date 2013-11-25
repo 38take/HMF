@@ -25,6 +25,7 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject line;
 	public GameObject lineDead;
 	public GameObject hitRenderer;
+	PlayerScript SPlayer;	
 	//ステージの構成データ
 	Vector3[] lineData;
 	int[]	  lineKind;
@@ -34,8 +35,10 @@ public class LineManagerScript : MonoBehaviour {
 	int numPoint; 
 	int numTarget;
 	int wherePlayer;
+	int wherePlayerOld;
 	float lineWidth; 
 	bool 	lastPoint;
+	Vector3 playerOffset;
 	Vector3 playerOldOffset;
 	float   targetWidthInLine;
 	Vector3 TargetHitChecker;
@@ -95,10 +98,12 @@ public class LineManagerScript : MonoBehaviour {
 		float stageVertical = floor.transform.localScale.z * 5.0f;
 		
 		hitRenderer = (GameObject)GameObject.Find("HitTextBox");
+		SPlayer = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
 		//パラメータ初期化
 		numPoint 	= 0;
 		numTarget 	= 0;
 		wherePlayer = 0;
+		wherePlayerOld = 0;
 		lineID = tNum = tCnt = -1;
 		lineWidth = 3.0f;
 		lastPoint = false;
@@ -240,8 +245,42 @@ public class LineManagerScript : MonoBehaviour {
 	void Update () {
 	
 	}
-	
-	public Vector3 CalcPlayerPos(int timer, float offset)
+	//ライン上の位置算出
+	public Vector3 CalcPos(int timer, float offset)
+	{
+		Vector3 ret = new Vector3();
+		float length = (float)timer * 0.1f;
+		float lineLength = new float();
+		//今いるラインを算出(速度0.1として)
+		int lineIdx = new int();
+		for(lineIdx=0; lineIdx<numPoint-2; lineIdx++)
+		{
+			lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
+			if((length - lineLength) < 0.0f)
+				break;
+			length -= lineLength;
+		}
+		if(length > lineLength)
+		{
+			length = lineLength;
+		}
+		length = length / lineLength;//中心線のオフセット算出
+		
+		//基準点算出
+		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;
+		//方向算出
+		Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
+		dir = Vector3.Normalize(dir);
+		float tmp = dir.x;
+		dir.x = dir.z;
+		dir.z = -tmp;
+		//位置確定
+		ret = basePos + dir * offset * lineWidth;
+		
+		return ret;
+	}
+	//ライン上の位置算出（プレイヤーの移動処理内限定）
+	public Vector3 CalcPosWithHitCheck(int timer, float offset)
 	{
 		Vector3 ret = new Vector3();
 		float length = (float)timer * 0.1f;
@@ -274,19 +313,38 @@ public class LineManagerScript : MonoBehaviour {
 		ret = basePos + dir * offset * lineWidth;
 		
 		wherePlayer = lineIdx;
-		//ターゲットとのあたり判定をとる
-		Vector3 tmpVec = new Vector3(length, offset, 0.0f);
-		HitCheckTarget(wherePlayer, tmpVec, playerOldOffset);
-		playerOldOffset = tmpVec;
+		playerOffset = new Vector3(length, offset, 0.0f);
+		HitCheckPlayerWithTarget();
 		
 		return ret;
 	}
-	
-	private void HitCheckTarget(int lineID, Vector3 offset, Vector3 oldOffset)
+	public int HitCheckPlayerWithTarget()
+	{
+		int ret = 0;
+		int tmp = wherePlayerOld;
+		//ターゲットとのあたり判定をとる
+		if(wherePlayer != wherePlayerOld)
+		{
+			wherePlayerOld = wherePlayer;
+			//ターゲットの位置におけるプレイヤーの横方向オフセット算出
+			float transrate = playerOffset.x + (1.0f - playerOldOffset.x);
+			float pos   = 1.0f - playerOldOffset.x;
+			transrate = pos / transrate;
+			float H = playerOldOffset.y + (playerOffset.y-playerOldOffset.y)*transrate;
+			
+			ret += HitCheckTarget(tmp, new Vector3(1.0f, H, 0.0f), playerOldOffset);
+			ret += HitCheckTarget(wherePlayer, playerOffset, new Vector3(0.0f, H, 0.0f));
+		}
+		else
+			ret = HitCheckTarget(wherePlayer, playerOffset, playerOldOffset);
+		playerOldOffset = playerOffset;
+
+		return ret;
+	}
+	private int HitCheckTarget(int lineID, Vector3 offset, Vector3 oldOffset)
 	{
 		Vector3 targetPos;
-		
-		//hitRenderer.guiText.text = "";
+		int retValue = 0;
 		
 		if(targetArray[lineID].targetPosArray != null &&
 			targetArray[lineID].targetPosArray.Length > 0)
@@ -311,23 +369,32 @@ public class LineManagerScript : MonoBehaviour {
 							H > -TargetHitChecker.x * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "クリティカル！！";
+							SPlayer.CalcCombo(true);
+							SPlayer.CalcScore(100);
+							SPlayer.CalcConcentration(5);
 						}
 						//ノーマル
 						else if( H < TargetHitChecker.y * targetWidthInLine &&
 								 H > -TargetHitChecker.y * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "ノーマル";
+							SPlayer.CalcCombo(true);
+							SPlayer.CalcScore(50);
+							SPlayer.CalcConcentration(2);
 						}
 						//セーフ
 						else if( H < TargetHitChecker.z * targetWidthInLine &&
 								 H > -TargetHitChecker.z * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
+							SPlayer.CalcCombo(false);
+							SPlayer.CalcScore(20);
 						}
 						//ミス
 						else
 						{
 							hitRenderer.guiText.text = "ミス・・・";
+							SPlayer.CalcCombo(false);
 						}
 						
 						//通過したと判定させる
@@ -340,6 +407,7 @@ public class LineManagerScript : MonoBehaviour {
 					break;
 			}
 		}
+		return retValue;
 	}
 	
 	//ラインの本数を取得

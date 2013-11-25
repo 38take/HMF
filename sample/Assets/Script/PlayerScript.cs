@@ -12,8 +12,13 @@ public class PlayerScript : MonoBehaviour {
 	private float			HEIGHT;
 	private int				holdHorizontal;
 	private	bool			InitFlag = false;
+	private int				concentration;
+	private float 			timerAdd;
+	private float 			TIMERADD_MAX;
+	private float 			TIMERADD_MIN;
 
 	public	GameObject		obj_Particle;
+	public  GameObject		obj_CMonitor;
 	public	float			m_Offset;
 	public	int				m_Timer;
 	
@@ -35,6 +40,7 @@ public class PlayerScript : MonoBehaviour {
 		SCombo			= (ComboScript)GameObject.Find("ComboRenderer").GetComponent("ComboScript");
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
+		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -42,6 +48,10 @@ public class PlayerScript : MonoBehaviour {
 		
 		HEIGHT		= 8.0f;
 		height		= 0.0f;
+		
+		timerAdd = 0.0f;
+		TIMERADD_MAX = 4.0f;
+		TIMERADD_MIN = 1.0f;
 		
 		m_Timer		= 0;
 		m_Offset	= 0.0f;
@@ -56,7 +66,7 @@ public class PlayerScript : MonoBehaviour {
 		{
 			if( !InitFlag )
 			{
-				Vector3 startPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				Vector3 startPos = SLineManager.CalcPos(m_Timer-60, 0);
 				startPos = new Vector3( startPos.x, startPos.y+3.0f, startPos.z );
 				SCamera.SetStartCameraPos( startPos );
 				InitFlag = true;
@@ -65,14 +75,25 @@ public class PlayerScript : MonoBehaviour {
 			// デバッグ用
 			if(Input.GetKeyDown(KeyCode.Space))
 			{
-				Vector3 lastPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				Vector3 lastPos = SLineManager.CalcPos(m_Timer-60, 0);
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 			}
 
 			float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
-			m_Timer+=4;
+			
+			if(	Input.GetMouseButton(1) &&
+				concentration > 0)
+			{
+				timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
+				concentration--;
+			}
+			else
+				timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
+			
+			m_Timer += (int)timerAdd;
+			obj_CMonitor.guiText.text = concentration.ToString();
 			
 			//------------------------------------//
 			//移動
@@ -85,7 +106,7 @@ public class PlayerScript : MonoBehaviour {
 			}
 			if(m_Offset > 1.0f) m_Offset = 1.0f;
 			if(m_Offset < -1.0f) m_Offset = -1.0f;
-			Vector3 basePos = SLineManager.CalcPlayerPos(m_Timer, m_Offset);
+			Vector3 basePos = SLineManager.CalcPosWithHitCheck(m_Timer, m_Offset);
 			if(Input.GetMouseButton(0))
 				height += (HEIGHT-height)*0.1f;
 			else
@@ -113,7 +134,7 @@ public class PlayerScript : MonoBehaviour {
 			
 			if( SLineManager.isLastpoint() )
 			{
-				Vector3 lastPos = SLineManager.CalcPlayerPos(m_Timer-60, 0);
+				Vector3 lastPos = SLineManager.CalcPos(m_Timer-60, 0);
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
@@ -121,20 +142,35 @@ public class PlayerScript : MonoBehaviour {
 			
 		}
 	}
+	//切るかミスるかしたときに呼ばれる
+	public void CalcCombo(bool hitFlg)
+	{
+		SCombo.Notice(hitFlg);
+	}
+	//切るかミスるかしたときに呼ばれる
+	public void CalcScore(int score)
+	{
+		SScore.AddScore(score);
+	}
+	
+	public void CalcConcentration(int Value)
+	{
+		concentration += Value;
+		concentration %= 100;
+	}
 	
 	private void OnCollisionEnter(Collision collision)
 	{
 		if(collision.gameObject.name == "target(Clone)")
 		{
-			SScore.AddScore(100);
 			Destroy(collision.gameObject);
-			
+			//パーティクル発生
 			GameObject ins_obj =
 				(GameObject)Instantiate(obj_Particle,
 										collision.gameObject.transform.position,
 										collision.gameObject.transform.rotation);
 			Destroy(ins_obj, 1.0f);
-			SCombo.Notice(true);
+			//SCombo.Notice(true);
 		}
 		if(collision.gameObject.name == "DeadLine(Clone)")
 		{

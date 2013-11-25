@@ -6,15 +6,11 @@ public class ComboScript : MonoBehaviour {
 	int numCombo;
 	int validCnt;
 	int VALID_CNT;
-	bool render;
 	GameObject comboText;
 	
 	// Use this for initialization
 	void Start () {
 		numCombo = 0;
-		//validCnt = 0;
-		//VALID_CNT = 120;
-		render = false;
 		comboText = (GameObject)GameObject.Find("ComboTextBox");
 	}
 	
@@ -29,8 +25,6 @@ public class ComboScript : MonoBehaviour {
 	{
 		if(cut)	numCombo++;
 		else 	numCombo = 0;
-		
-		render = (numCombo > 1);
 	}
 	
 	public int GetNumCombo()

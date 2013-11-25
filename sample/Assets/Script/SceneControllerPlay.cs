@@ -88,7 +88,7 @@ public class SceneControllerPlay : MonoBehaviour {
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		
-		if( Input.GetMouseButtonDown(1) ||
+		if( Input.GetKeyUp(KeyCode.N) ||
 			SLineManager.isLastpoint() && Input.GetMouseButtonDown(0))
 		{
 			press = true;

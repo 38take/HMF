@@ -38,7 +38,7 @@ public class CameraScript : MonoBehaviour {
 				RelayPos	= transform.position;
 				workPos		= transform.position;
 								
-				transform.position = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer-60, 0);
+				transform.position = SLineManager.CalcPos(SPlayerScript.m_Timer-60, 0);
 				transform.position = new Vector3(	transform.position.x,
 													transform.position.y+3.0f,
 													transform.position.z );
@@ -64,10 +64,10 @@ public class CameraScript : MonoBehaviour {
 		// ゲームプレイ中のカメラ操作	
 		case PlayerScript.GAME_STATE.GAME_PLAY:
 			// 刃の座標を求める
-			TargetPos = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer, 0);
+			TargetPos = SLineManager.CalcPos(SPlayerScript.m_Timer, 0);
 			
 			// 現在の刃の座標から数秒前の位置にカメラをセットする
-			transform.position = SLineManager.CalcPlayerPos(SPlayerScript.m_Timer-60, 0);
+			transform.position = SLineManager.CalcPos(SPlayerScript.m_Timer-60, 0);
 			transform.position = new Vector3(	transform.position.x,
 												transform.position.y+3.0f,
 												transform.position.z );

@@ -11,7 +11,6 @@ public class LineScript : MonoBehaviour {
 	
 	Mesh mesh;
 	MeshFilter meshFilter;
-	MeshCollider meshCollider;
 	ParticleSystem particleSystem;
 	
 	Vector3[] vertices;
@@ -27,7 +26,6 @@ public class LineScript : MonoBehaviour {
 		
 		mesh 			= new Mesh();
 		meshFilter 		= (MeshFilter)GetComponent("MeshFilter");
-		meshCollider 	= (MeshCollider)GetComponent("MechCollider"); 
 		particleSystem  = (ParticleSystem)GetComponent("ParticleSystem");
 		mesh.Clear();
 		//頂点位置の算出
