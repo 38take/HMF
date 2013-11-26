@@ -342,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 385679543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!114 &385679545
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DrawEnable: 1
   text: 
-  color: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  color: {r: 0, g: 0, b: 0, a: 1}
   Style:
     m_Name: 
     m_Normal:
@@ -405,8 +405,8 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-    m_Font: {fileID: 0}
-    m_FontSize: 0
+    m_Font: {fileID: 12800000, guid: 295b79de4454c384c9d28fd9b6f8868a, type: 3}
+    m_FontSize: 5
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 0
@@ -419,7 +419,7 @@ MonoBehaviour:
     m_StretchWidth: 1
     m_StretchHeight: 0
   Position: {x: 0, y: 0}
-  Depth: 5
+  Depth: 4
 --- !u!1001 &696233882
 Prefab:
   m_ObjectHideFlags: 0
@@ -508,7 +508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DrawEnable: 1
-  texture: {fileID: 2800000, guid: df4c6513a3514e048bab1fdd62f81611, type: 3}
+  texture: {fileID: 2800000, guid: 3fb6c80012aaf8e47b84f4e19e047594, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   Position: {x: 100, y: 100}
   Width: 100

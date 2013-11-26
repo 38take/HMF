@@ -16,11 +16,14 @@ public class TextStyleBaseScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		SetText("grgerg");
+		SetText("aaaaaaaaaaaa");
 	}
 	
 	void OnGUI	(){
-		if( !DrawEnable ) return;
+		if( !DrawEnable ) {
+			Debug.Log ("Flag is false: DrawEnable for TextStyleBaseScript");
+			return;
+		}
 		
 		GUIStyle style = new GUIStyle( Style );
 		style.fontSize = (int)((float)style.fontSize * DefaultScreen.FontPar);
