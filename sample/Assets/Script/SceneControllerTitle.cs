@@ -35,17 +35,18 @@ public class SceneControllerTitle : MonoBehaviour {
 		shutterRight.DrawEnable = true;
 		
 		shutterPos = screenWidth/2.0f;
+		//shutterPos = 0.0f;
 		
 		//スタートボタンの設定
 		SButtonStart = ((GameObject)GameObject.Find("StartButton")).GetComponent<Tex2DBaseScript>();
 		SButtonStart.DrawEnable = true;
 		
 		//背景の設定
-		SBG_Atelier = ((GameObject)GameObject.Find("BG_Atelier")).GetComponent<Tex2DBaseScript>();
-		SBG_Atelier.SetSize(1536.0f*(screenWidth/1024.0f), 1280.0f*(screenHeight/768.0f));
-		BGPos = new Vector2(0.0f, 0.0f);
-		SBG_Atelier.SetPos(BGPos);
-		SBG_Atelier.DrawEnable = true;
+		//SBG_Atelier = ((GameObject)GameObject.Find("BG_Atelier")).GetComponent<Tex2DBaseScript>();
+		//SBG_Atelier.SetSize(1536.0f*(screenWidth/1024.0f), 1280.0f*(screenHeight/768.0f));
+		//BGPos = new Vector2(0.0f, 0.0f);
+		//SBG_Atelier.SetPos(BGPos);
+		//SBG_Atelier.DrawEnable = true;
 	}
 	
 	// Update is called once per frame
@@ -60,11 +61,11 @@ public class SceneControllerTitle : MonoBehaviour {
 			gameSystem.SystemOutPut(-gameSystem.GetActID());
 		}
 		//背景のスクロール
-		BGPos.x -= 3.0f;
-		if(BGPos.x <= -256.0f)	BGPos.x = 0.0f;
-		BGPos.y -= 3.0f;
-		if(BGPos.y <= -256.0f)	BGPos.y = 0.0f;
-		SBG_Atelier.SetPos(BGPos);
+		//BGPos.x -= 3.0f;
+		//if(BGPos.x <= -256.0f)	BGPos.x = 0.0f;
+		//BGPos.y -= 3.0f;
+		//if(BGPos.y <= -256.0f)	BGPos.y = 0.0f;
+		//SBG_Atelier.SetPos(BGPos);
 		
 		//シャッターの移動
 		if(press)
@@ -76,7 +77,7 @@ public class SceneControllerTitle : MonoBehaviour {
 		}
 		else
 		{
-			shutterPos += (0.0f-shutterPos)*0.2f;
+			//shutterPos += (0.0f-shutterPos)*0.2f;
 		}
 		//シャッターの初期位置設定
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);

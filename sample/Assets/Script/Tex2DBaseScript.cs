@@ -9,7 +9,7 @@ public class Tex2DBaseScript : MonoBehaviour {
 	public Vector2	Position;
 	public float	Width;
 	public float	Height;
-	public int		Depth = 5;
+	public int		Depth;
 	
 	public Vector2	UVPosition;
 	public float	UVWidth;
@@ -59,6 +59,7 @@ public class Tex2DBaseScript : MonoBehaviour {
 		
 		// 元に戻しておく.
 		GUI.color = Color.white;
+		//GUI.depth = 0;
 	}
 	
 	//座標（左上）取得 

@@ -173,17 +173,17 @@ public class PlayerScript : MonoBehaviour {
 			
 		}
 	}
-	//切るかミスるかしたときに呼ばれる
+	//コンボ計算
 	public void CalcCombo(bool hitFlg)
 	{
 		SCombo.Notice(hitFlg);
 	}
-	//切るかミスるかしたときに呼ばれる
+	//スコア計算
 	public void CalcScore(int score)
 	{
 		SScore.AddScore(score);
 	}
-	
+	//集中力計算
 	public void CalcConcentration(int Value)
 	{
 		concentration += (float)Value;
@@ -192,6 +192,7 @@ public class PlayerScript : MonoBehaviour {
 			concentration = CONCENTRATION_MAX;
 			
 			GameObject obj = (GameObject)Instantiate(obj_Bomb, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			concentration = 0;
 		}
 		if(concentration != concentrationGauge)
 			concentrationMoveCnt = CONCENTRATION_MOVECNT;

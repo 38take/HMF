@@ -386,10 +386,10 @@ MonoBehaviour:
   DrawEnable: 1
   texture: {fileID: 2800000, guid: c1a3a3167d6fd68488094c3daa4ed7e9, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: -100, y: 0}
-  Width: 400
-  Height: 100
-  Depth: 5
+  Position: {x: 0, y: 0}
+  Width: 256
+  Height: 256
+  Depth: 0
   UVPosition: {x: 0, y: 0}
   UVWidth: 1
   UVHeight: 1
@@ -3888,7 +3888,7 @@ MonoBehaviour:
   Position: {x: 0, y: 0}
   Width: 384
   Height: 192
-  Depth: 5
+  Depth: 0
   UVPosition: {x: 0, y: 0}
   UVWidth: 1
   UVHeight: 1
@@ -3989,7 +3989,6 @@ GameObject:
   - 20: {fileID: 1975303849}
   - 124: {fileID: 1975303848}
   - 92: {fileID: 1975303847}
-  - 81: {fileID: 1975303846}
   m_Layer: 8
   m_Name: GaugeCamera
   m_TagString: Untagged
@@ -4008,13 +4007,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!81 &1975303846
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1975303844}
-  m_Enabled: 1
 --- !u!92 &1975303847
 Behaviour:
   m_ObjectHideFlags: 0
@@ -4138,10 +4130,10 @@ MonoBehaviour:
   DrawEnable: 1
   texture: {fileID: 2800000, guid: 53c3fd2d3a0c7d24b87ae0552eefb1a6, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: -100, y: 0}
-  Width: 400
-  Height: 100
-  Depth: 5
+  Position: {x: 0, y: 0}
+  Width: 256
+  Height: 256
+  Depth: 0
   UVPosition: {x: 0, y: 0}
   UVWidth: 1
   UVHeight: 1

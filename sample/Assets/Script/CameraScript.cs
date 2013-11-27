@@ -12,6 +12,13 @@ public class CameraScript : MonoBehaviour {
 	private	float			Rota_timer;
 	public	GameObject		obj_TestObject;
 	
+	Vector3	shake;
+	bool	shakeFlg;
+	int		shakeDistance;
+	int		SHAKEDISTANCE;
+	float	shakeWidth;
+	float	lineWidth;
+	
 	// Use this for initialization
 	void Start () {
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
@@ -20,6 +27,11 @@ public class CameraScript : MonoBehaviour {
 		StartCameraFlag = false;
 		timer = 0;
 		Rota_timer = 0;
+		shake = new Vector3(0.0f, 0.0f, 0.0f);
+		shakeFlg = false;
+		shakeDistance = 0;
+		SHAKEDISTANCE = 200;
+		shakeWidth = 1.0f;
 	}
 
 	// Update is called once per frame
@@ -54,6 +66,7 @@ public class CameraScript : MonoBehaviour {
 				{
 					SPlayerScript.m_GameState = PlayerScript.GAME_STATE.GAME_PLAY;
 					timer = 0;
+					lineWidth = SLineManager.GetLineWidth();
 				}
 				
 				Rota_timer++;
@@ -63,13 +76,19 @@ public class CameraScript : MonoBehaviour {
 			
 		// ゲームプレイ中のカメラ操作	
 		case PlayerScript.GAME_STATE.GAME_PLAY:
-			// 刃の座標を求める
-			TargetPos = SLineManager.CalcPos(SPlayerScript.m_Timer, 0);
+			//カメラのブレ計算
+			shake.x = ((float)Random.Range(-shakeDistance, shakeDistance) / (float)SHAKEDISTANCE * shakeWidth)/lineWidth ;
+			shake.y = ((float)Random.Range(-shakeDistance, shakeDistance) / (float)SHAKEDISTANCE * shakeWidth);
+			if(shakeDistance > 0) shakeDistance--;
 			
+			// 刃の座標を求める
+			TargetPos = SLineManager.CalcPos(SPlayerScript.m_Timer, shake.x);
+			TargetPos = new Vector3(TargetPos.x, TargetPos.y+shake.y, TargetPos.z);
+				
 			// 現在の刃の座標から数秒前の位置にカメラをセットする
-			transform.position = SLineManager.CalcPos(SPlayerScript.m_Timer-60, 0);
+			transform.position = SLineManager.CalcPos(SPlayerScript.m_Timer-60, shake.x);
 			transform.position = new Vector3(	transform.position.x,
-												transform.position.y+3.0f,
+												transform.position.y+3.0f+shake.y,
 												transform.position.z );
 			transform.LookAt(TargetPos);
 			
@@ -119,4 +138,5 @@ public class CameraScript : MonoBehaviour {
 	
 	public void SetStartCameraPos( Vector3 pos ){	StartPos = pos; }
 	public void SetLastCameraPos( Vector3 pos )	{	LastPos = pos; }
+	public void SetShakeFlag(){ shakeFlg = true; shakeDistance = SHAKEDISTANCE; }
 }

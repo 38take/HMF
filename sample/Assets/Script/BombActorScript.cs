@@ -12,6 +12,8 @@ public class BombActorScript : MonoBehaviour {
 	public	GameObject	obj_LeftEffect;
 	BillboardScript SRightEffect;
 	BillboardScript SLeftEffect;
+	GameObject objR;
+	GameObject objL;
 	
 	//切り抜きスタンプ
 	public	GameObject	obj_Stamp;
@@ -26,8 +28,8 @@ public class BombActorScript : MonoBehaviour {
 	void Start () {
 		SLineManager = ((GameObject)GameObject.Find("LineManager")).GetComponent<LineManagerScript>();
 		SPlayer		 = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
-		GameObject objR = (GameObject)Instantiate(obj_RightEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-		GameObject objL = (GameObject)Instantiate(obj_LeftEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		objR = (GameObject)Instantiate(obj_RightEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		objL = (GameObject)Instantiate(obj_LeftEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		SRightEffect = objR.GetComponent<BillboardScript>();
 		SLeftEffect = objL.GetComponent<BillboardScript>();
 		//パラメータ初期化
@@ -38,6 +40,10 @@ public class BombActorScript : MonoBehaviour {
 		//乱数初期化
 		stampCntLeft = 0;
 		stampCntRight = 0;
+		
+		//カメラ揺らす
+		CameraScript SCamera = ((GameObject)GameObject.Find("Main Camera")).GetComponent<CameraScript>();
+		SCamera.SetShakeFlag();
 	}
 	
 	// Update is called once per frame
@@ -69,6 +75,13 @@ public class BombActorScript : MonoBehaviour {
 		{ 
 			obj = (GameObject)Instantiate(obj_Stamp, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			stampCntLeft = Random.Range(100, 150);
+		}
+		
+		if(timer > 200)
+		{
+			DestroyObject(objR);
+			DestroyObject(objL);
+			DestroyObject(gameObject);
 		}
 	}
 }
