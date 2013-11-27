@@ -30,4 +30,9 @@ public class BillboardScript : MonoBehaviour {
 		// ゲームオブジェクトの向きがカメラの方へ向くようにする
 		this.transform.LookAt(this.transform.position + m_Camera.transform.rotation * Vector3.back, m_Camera.transform.rotation * Vector3.up);
 	}
+	
+	public void SetPosition(Vector3 pos)
+	{
+		this.transform.position = pos;
+	}
 }

@@ -7,18 +7,25 @@ public class PlayerScript : MonoBehaviour {
 	ComboScript				SCombo;
 	LineManagerScript		SLineManager;
 	CameraScript			SCamera;
+	ParticleSystem			ConcentrateGauge;
 	private float			oldMouseX;
 	private float			height;
 	private float			HEIGHT;
 	private int				holdHorizontal;
 	private	bool			InitFlag = false;
-	private int				concentration;
+	private float			concentration;
+	private float			concentrationGauge;
+	private float 			CONCENTRATION_MAX;
+	private int				concentrationMoveCnt;
+	private int				CONCENTRATION_MOVECNT;
+	
 	private float 			timerAdd;
 	private float 			TIMERADD_MAX;
 	private float 			TIMERADD_MIN;
 
 	public	GameObject		obj_Particle;
 	public  GameObject		obj_CMonitor;
+	public	GameObject		obj_Bomb;
 	public	float			m_Offset;
 	public	int				m_Timer;
 	
@@ -41,6 +48,7 @@ public class PlayerScript : MonoBehaviour {
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
 		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");
+		ConcentrateGauge= ((GameObject)GameObject.Find("GaugeRenderer")).GetComponent<ParticleSystem>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -52,6 +60,12 @@ public class PlayerScript : MonoBehaviour {
 		timerAdd = 0.0f;
 		TIMERADD_MAX = 4.0f;
 		TIMERADD_MIN = 1.0f;
+		
+		concentration = 0.0f;
+		concentrationGauge = 0.0f;
+		concentrationMoveCnt = 0;
+		CONCENTRATION_MOVECNT = 30;
+		CONCENTRATION_MAX = 100.0f;
 		
 		m_Timer		= 0;
 		m_Offset	= 0.0f;
@@ -81,22 +95,39 @@ public class PlayerScript : MonoBehaviour {
 				m_GameState = GAME_STATE.GAME_END;
 			}
 
-			float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
-			
+			//------------------------------------//
+			//集中力ゲージ処理
+			if( concentration != concentrationGauge )
+			{
+				if(concentrationMoveCnt > 0)
+					concentrationMoveCnt--;
+				else if(concentrationMoveCnt == 0)
+				{
+					concentrationGauge += (concentration - concentrationGauge)*0.2f;
+					if(concentration == concentrationGauge)
+						concentrationMoveCnt = -1;
+				}
+				else
+					concentrationMoveCnt = CONCENTRATION_MOVECNT;
+			}
+			ConcentrateGauge.startLifetime = (concentration / CONCENTRATION_MAX)*20.0f;
+			//集中モード処理
 			if(	Input.GetMouseButton(1) &&
 				concentration > 0)
 			{
 				timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
-				concentration--;
+				concentration-=1.0f;
+				if(concentration < 0.0f)concentration = 0.0f;
 			}
 			else
 				timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
 			
 			m_Timer += (int)timerAdd;
-			obj_CMonitor.guiText.text = concentration.ToString();
+			obj_CMonitor.guiText.text = ((int)concentration).ToString() + ":" + ((int)concentrationGauge).ToString();
 			
 			//------------------------------------//
 			//移動
+			float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
 			if(holdHorizontal <= 0)
 				m_Offset += transX;
 			else
@@ -155,8 +186,15 @@ public class PlayerScript : MonoBehaviour {
 	
 	public void CalcConcentration(int Value)
 	{
-		concentration += Value;
-		concentration %= 100;
+		concentration += (float)Value;
+		if(concentration >= CONCENTRATION_MAX) 
+		{
+			concentration = CONCENTRATION_MAX;
+			
+			GameObject obj = (GameObject)Instantiate(obj_Bomb, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+		if(concentration != concentrationGauge)
+			concentrationMoveCnt = CONCENTRATION_MOVECNT;
 	}
 	
 	private void OnCollisionEnter(Collision collision)
@@ -170,7 +208,6 @@ public class PlayerScript : MonoBehaviour {
 										collision.gameObject.transform.position,
 										collision.gameObject.transform.rotation);
 			Destroy(ins_obj, 1.0f);
-			//SCombo.Notice(true);
 		}
 		if(collision.gameObject.name == "DeadLine(Clone)")
 		{

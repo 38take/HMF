@@ -245,6 +245,33 @@ public class LineManagerScript : MonoBehaviour {
 	void Update () {
 	
 	}
+	//ライン上の位置における横向きベクトル算出
+	public Vector3 CalcHorizontalDir(int timer)
+	{
+		float length = (float)timer * 0.1f;
+		float lineLength = new float();
+		//今いるラインを算出(速度0.1として)
+		int lineIdx = new int();
+		for(lineIdx=0; lineIdx<numPoint-2; lineIdx++)
+		{
+			lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
+			if((length - lineLength) < 0.0f)
+				break;
+			length -= lineLength;
+		}
+		if(length > lineLength)
+		{
+			length = lineLength;
+		}
+		length = length / lineLength;//中心線のオフセット算出
+		//方向算出
+		Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
+		dir = Vector3.Normalize(dir);
+		float tmp = dir.x;
+		dir.x = dir.z;
+		dir.z = -tmp;
+		return dir;
+	}
 	//ライン上の位置算出
 	public Vector3 CalcPos(int timer, float offset)
 	{
@@ -428,6 +455,10 @@ public class LineManagerScript : MonoBehaviour {
 	public Vector3 GetLineDirection(int id)
 	{
 		return lineDir[id];
+	}
+	//ラインの太さを取得
+	public float GetLineWidth(){
+		return lineWidth;
 	}
 	//プレイヤーがどのライン上にいるのか取得
 	public int GetPlyaerLineID()
