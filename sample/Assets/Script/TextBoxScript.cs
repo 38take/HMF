@@ -23,9 +23,12 @@ public class TextBoxScript : MonoBehaviour {
 	bool initialized;
 	bool valid;
 	
+	TextStyleBaseScript Text;
 	
 	// Use this for initialization
 	void Start () {
+		Text = GameObject.Find("TextBox").GetComponent<TextStyleBaseScript>();
+		Text.SetPos(100.0f,500.0f);
 		//---------------------------//
 		//パラメータの初期化
 		numStatement 	= 0;
@@ -122,7 +125,7 @@ public class TextBoxScript : MonoBehaviour {
 				}
 				
 				//テキスト表示
-				guiText.text = renderString;
+				Text.SetText(renderString);
 			}
 		}
 		else
@@ -130,6 +133,7 @@ public class TextBoxScript : MonoBehaviour {
 			initialized = Initialize();
 		}
 	}
+	
 	
 	public bool isValid()
 	{
@@ -140,3 +144,4 @@ public class TextBoxScript : MonoBehaviour {
 		return nextAct;
 	}
 }
+

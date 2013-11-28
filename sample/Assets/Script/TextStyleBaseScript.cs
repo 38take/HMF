@@ -16,7 +16,6 @@ public class TextStyleBaseScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		SetText("aaaaaaaaaaaa");
 	}
 	
 	void OnGUI	(){
@@ -32,7 +31,7 @@ public class TextStyleBaseScript : MonoBehaviour {
 		GUI.color = color;
 		GUI.Label( new Rect( 
 			Position.x 							* DefaultScreen.Par.x, 
-			(DefaultScreen.Height-Position.y)	* DefaultScreen.Par.y, 
+			/*(DefaultScreen.Height-Position.y)*/Position.y	* DefaultScreen.Par.y, 
 			0.0f, 
 			0.0f ),
 			text,
