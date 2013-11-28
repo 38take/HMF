@@ -10,7 +10,6 @@ public class CameraScript : MonoBehaviour {
 	private	bool			StartCameraFlag;
 	private	Quaternion		StartRota, EndRota;
 	private	float			Rota_timer;
-	public	GameObject		obj_TestObject;
 	
 	Vector3	shake;
 	bool	shakeFlg;
@@ -103,10 +102,8 @@ public class CameraScript : MonoBehaviour {
 //				Destroy( GameObject.Find("target(Clone)") );
 //				Destroy( GameObject.Find("Floor") );
 				
-				// 完成型オブジェクトを生成
-				Instantiate(obj_TestObject);
-				
 				SPlayerScript.m_GameState = PlayerScript.GAME_STATE.GAME_COMPLETION;
+				
 				timer = 0;
 			}
 			break;

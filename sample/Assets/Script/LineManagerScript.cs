@@ -25,6 +25,11 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject line;
 	public GameObject lineDead;
 	public GameObject hitRenderer;
+	
+	public GameObject effect_HitSafe;
+	public GameObject effect_HitNormal;
+	public GameObject effect_HitCritical;
+	public GameObject effect_Miss;
 	PlayerScript SPlayer;	
 	//ステージの構成データ
 	Vector3[] lineData;
@@ -370,7 +375,7 @@ public class LineManagerScript : MonoBehaviour {
 	}
 	private int HitCheckTarget(int lineID, Vector3 offset, Vector3 oldOffset)
 	{
-		Vector3 targetPos;
+		Vector3 targetPos, p_pos;
 		int retValue = 0;
 		
 		if(targetArray[lineID].targetPosArray != null &&
@@ -396,6 +401,15 @@ public class LineManagerScript : MonoBehaviour {
 							H > -TargetHitChecker.x * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "クリティカル！！";
+							// エフェクト発生
+							p_pos = SPlayer.transform.position;
+							p_pos.y += 1.0f;
+							GameObject ins_obj =
+								(GameObject)Instantiate(effect_HitCritical,
+														p_pos,
+														SPlayer.transform.rotation	);
+							Destroy(ins_obj, 1.0f);
+							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(100);
 							SPlayer.CalcConcentration(5);
@@ -405,6 +419,15 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.y * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "ノーマル";
+							// エフェクト発生
+							p_pos = SPlayer.transform.position;
+							p_pos.y += 1.0f;
+							GameObject ins_obj =
+								(GameObject)Instantiate(effect_HitNormal,
+														p_pos,
+														SPlayer.transform.rotation	);
+							Destroy(ins_obj, 1.0f);
+							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(50);
 							SPlayer.CalcConcentration(2);
@@ -414,6 +437,15 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.z * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
+							// エフェクト発生
+							p_pos = SPlayer.transform.position;
+							p_pos.y += 1.0f;
+							GameObject ins_obj =
+								(GameObject)Instantiate(effect_HitSafe,
+														p_pos,
+														SPlayer.transform.rotation	);
+							Destroy(ins_obj, 1.0f);
+							
 							SPlayer.CalcCombo(false);
 							SPlayer.CalcScore(20);
 						}
@@ -421,6 +453,15 @@ public class LineManagerScript : MonoBehaviour {
 						else
 						{
 							hitRenderer.guiText.text = "ミス・・・";
+							// エフェクト発生
+							p_pos = SPlayer.transform.position;
+							p_pos.y += 1.0f;
+							GameObject ins_obj =
+								(GameObject)Instantiate(effect_Miss,
+														p_pos,
+														SPlayer.transform.rotation	);
+							Destroy(ins_obj, 1.0f);
+							
 							SPlayer.CalcCombo(false);
 						}
 						

@@ -18,14 +18,17 @@ public class PlayerScript : MonoBehaviour {
 	private float 			CONCENTRATION_MAX;
 	private int				concentrationMoveCnt;
 	private int				CONCENTRATION_MOVECNT;
+	private	int				timer_comp;
 	
 	private float 			timerAdd;
 	private float 			TIMERADD_MAX;
 	private float 			TIMERADD_MIN;
-
-	public	GameObject		obj_Particle;
+	
+	public	GameObject		obj_ClearObject;
 	public  GameObject		obj_CMonitor;
 	public	GameObject		obj_Bomb;
+	public	GameObject		effect_Clear;
+
 	public	float			m_Offset;
 	public	int				m_Timer;
 	
@@ -60,6 +63,7 @@ public class PlayerScript : MonoBehaviour {
 		timerAdd = 0.0f;
 		TIMERADD_MAX = 4.0f;
 		TIMERADD_MIN = 1.0f;
+		timer_comp = 0;
 		
 		concentration = 0.0f;
 		concentrationGauge = 0.0f;
@@ -87,7 +91,7 @@ public class PlayerScript : MonoBehaviour {
 			}
 
 			// デバッグ用
-			if(Input.GetKeyDown(KeyCode.Space))
+			if(Input.GetKeyDown(KeyCode.F10))
 			{
 				Vector3 lastPos = SLineManager.CalcPos(m_Timer-60, 0);
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
@@ -170,7 +174,21 @@ public class PlayerScript : MonoBehaviour {
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 			}
-			
+		}
+		else if( m_GameState == GAME_STATE.GAME_COMPLETION )
+		{
+			// 完成型オブジェクトを生成
+			if( timer_comp == 0 )
+			{
+				GameObject ins_obj =
+					(GameObject)Instantiate(effect_Clear,
+											GameObject.Find("Floor").transform.position,
+											GameObject.Find("Floor").transform.rotation	);
+				Destroy(ins_obj, 2.0f);
+			}
+			else if( timer_comp == 60 )
+				Instantiate(obj_ClearObject);
+			timer_comp++;
 		}
 	}
 	//コンボ計算
@@ -203,12 +221,6 @@ public class PlayerScript : MonoBehaviour {
 		if(collision.gameObject.name == "target(Clone)")
 		{
 			Destroy(collision.gameObject);
-			//パーティクル発生
-			GameObject ins_obj =
-				(GameObject)Instantiate(obj_Particle,
-										collision.gameObject.transform.position,
-										collision.gameObject.transform.rotation);
-			Destroy(ins_obj, 1.0f);
 		}
 		if(collision.gameObject.name == "DeadLine(Clone)")
 		{
