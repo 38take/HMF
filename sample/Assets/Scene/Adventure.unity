@@ -218,6 +218,7 @@ GameObject:
   - 4: {fileID: 191971183}
   - 132: {fileID: 191971182}
   - 114: {fileID: 191971184}
+  - 114: {fileID: 191971185}
   m_Layer: 0
   m_Name: TextBox
   m_TagString: Untagged
@@ -270,6 +271,81 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55735a8b55afb24cbe21c90e1aba1ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &191971185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 191971181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fa52c32f02cb34e8593f2898a78546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DrawEnable: 1
+  text: 
+  color: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+  Style:
+    m_Name: 
+    m_Normal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Active:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Focused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 12800000, guid: 295b79de4454c384c9d28fd9b6f8868a, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_Alignment: 0
+    m_WordWrap: 0
+    m_RichText: 1
+    m_TextClipping: 0
+    m_ImagePosition: 0
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 0
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  Position: {x: 0, y: 0}
+  Depth: 5
 --- !u!1001 &284011062
 Prefab:
   m_ObjectHideFlags: 0
@@ -406,7 +482,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Font: {fileID: 12800000, guid: 295b79de4454c384c9d28fd9b6f8868a, type: 3}
-    m_FontSize: 5
+    m_FontSize: 60
     m_FontStyle: 0
     m_Alignment: 0
     m_WordWrap: 0
@@ -648,10 +724,10 @@ MonoBehaviour:
   DrawEnable: 1
   texture: {fileID: 2800000, guid: c1a3a3167d6fd68488094c3daa4ed7e9, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: -100, y: 0}
-  Width: 400
-  Height: 100
-  Depth: 5
+  Position: {x: 0, y: 0}
+  Width: 256
+  Height: 256
+  Depth: 0
   UVPosition: {x: 0, y: 0}
   UVWidth: 1
   UVHeight: 1
@@ -882,10 +958,10 @@ MonoBehaviour:
   DrawEnable: 1
   texture: {fileID: 2800000, guid: 53c3fd2d3a0c7d24b87ae0552eefb1a6, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: -100, y: 0}
-  Width: 400
-  Height: 100
-  Depth: 5
+  Position: {x: 0, y: 0}
+  Width: 256
+  Height: 256
+  Depth: 0
   UVPosition: {x: 0, y: 0}
   UVWidth: 1
   UVHeight: 1

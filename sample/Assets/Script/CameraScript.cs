@@ -30,7 +30,7 @@ public class CameraScript : MonoBehaviour {
 		shakeFlg = false;
 		shakeDistance = 0;
 		SHAKEDISTANCE = 200;
-		shakeWidth = 1.0f;
+		shakeWidth = 0.2f;
 	}
 
 	// Update is called once per frame

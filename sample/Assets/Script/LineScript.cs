@@ -5,13 +5,11 @@ using System.Collections;
 [RequireComponent( typeof( MeshRenderer ) )]
 [RequireComponent( typeof( MeshFilter ) )]
 [RequireComponent( typeof( MeshCollider ) )]
-[RequireComponent( typeof( ParticleSystem ) )]
 
 public class LineScript : MonoBehaviour {
 	
 	Mesh mesh;
 	MeshFilter meshFilter;
-	ParticleSystem particleSystem;
 	
 	Vector3[] vertices;
 	int[] triangles;
@@ -26,7 +24,6 @@ public class LineScript : MonoBehaviour {
 		
 		mesh 			= new Mesh();
 		meshFilter 		= (MeshFilter)GetComponent("MeshFilter");
-		particleSystem  = (ParticleSystem)GetComponent("ParticleSystem");
 		mesh.Clear();
 		//頂点位置の算出
 		bool[] vecValid = new bool[]{false, false, false};
@@ -91,7 +88,6 @@ public class LineScript : MonoBehaviour {
 		meshFilter.sharedMesh.name = "SimpleMesh";
 		
 		//パーティクルエミッタ
-		particleSystem.transform.position = (point1 + point2)/2.0f;
 	}
 	
 	// Update is called once per frame

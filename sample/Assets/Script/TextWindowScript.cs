@@ -23,13 +23,13 @@ public class TextWindowScript : MonoBehaviour {
 		//Set Pos & Size & UV
 		Position.x = 0.0f;Position.y = DefaultScreen.Height/2.0f;;
 		Size.x = 100.0f;Size.y = 50.0f;//0.0f&0.0f
-		UVPosition.x = 0.0f;UVPosition.y = 0.666666f;
-		UVSize.x = 1.0f;UVSize.y = 0.33333f;
+		UVPosition.x = 0.0f;UVPosition.y = 0.0f;
+		UVSize.x = 1.0f;UVSize.y = 1.0f;
 		tex2d.SetPos(Position.x,Position.y);
 		tex2d.SetSize(Size.x,Size.y);
 		tex2d.SetUV(UVPosition,UVSize.x,UVSize.y);
 		//Set MaxSize
-		MaxSize.x = DefaultScreen.Width;
+		MaxSize.x = DefaultScreen.Width*1.1f;
 		MaxSize.y = DefaultScreen.Height/2.0f;
 		//Set Frame
 		MaxFrame = 10;
