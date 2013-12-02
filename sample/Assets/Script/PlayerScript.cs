@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour {
 	void Start () {
 		// 他スクリプトの関数を参照可能にする
 		SScore			= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
-		SCombo			= (ComboScript)GameObject.Find("ComboRenderer").GetComponent("ComboScript");
+		SCombo			= (ComboScript)GameObject.Find("ComboManager").GetComponent("ComboScript");
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
 		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");

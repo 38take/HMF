@@ -5,6 +5,7 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	
 	public Texture[]		m_Textures;
 	private int				m_TexID;
+	public bool				StaticTexture;
 	
 	public bool		DrawEnable = true;
 	public Color	color = new Color( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -20,9 +21,12 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		m_TexID = 0;
+		if(StaticTexture)
+		{
+			m_TexID = 0;
+			guiTexture.texture = m_Textures[m_TexID];
+		}
 		guiTexture.color = color;
-		guiTexture.texture = m_Textures[m_TexID];
 		
 		RestoreTextureRect();
 	}
@@ -103,7 +107,7 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 		RestoreTextureRect();
 	}
 	
-	public void SwitchTexture ( int id ){
+	public virtual void SwitchTexture ( int id ){
 		if(id < m_Textures.Length) {
 			m_TexID = id;
 			guiTexture.texture = m_Textures[m_TexID];

@@ -51,7 +51,7 @@ public class LineManagerScript : MonoBehaviour {
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
 	{
-		LineScript obj = new LineScript();
+		LineScript obj;
 		switch(kind)
 		{
 		case 0:
@@ -61,6 +61,7 @@ public class LineManagerScript : MonoBehaviour {
 			obj = ((GameObject)Instantiate(lineDead)).GetComponent<LineScript>();	
 			break;
 		default:
+			obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();
 			break;
 			
 		}

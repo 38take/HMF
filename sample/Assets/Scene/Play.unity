@@ -4478,70 +4478,6 @@ Prefab:
   m_RootGameObject: {fileID: 278238711}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1001 &1221691455
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1751672772}
-    m_Modifications:
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -.103599653
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 13.8723373
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1.6032865
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: m_Name
-      value: ComboLogo
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: texture
-      value: 
-      objectReference: {fileID: 2800000, guid: 3b9ad6fa5a68b4a4e8005efad7973c7d, type: 3}
-    - target: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: Position.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: Width
-      value: 384
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: Height
-      value: 192
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-      propertyPath: DrawEnable
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-  m_RootGameObject: {fileID: 1856225901}
-  m_IsPrefabParent: 0
-  m_IsExploded: 1
 --- !u!1 &1398798318
 GameObject:
   m_ObjectHideFlags: 0
@@ -4789,7 +4725,7 @@ GameObject:
   - 4: {fileID: 1751672772}
   - 114: {fileID: 1751672773}
   m_Layer: 0
-  m_Name: ComboRenderer
+  m_Name: ComboManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4805,7 +4741,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1856225902}
   - {fileID: 52727317}
   m_Father: {fileID: 0}
 --- !u!114 &1751672773
@@ -4819,6 +4754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b8ac65921d4f945bdda6dff81d63e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obj_ComboRenderer: {fileID: 100000, guid: 07cdc222bb9876b488dd06c6dd7f5496, type: 2}
+  renderTimer: 120
+  Width: 50
+  Height: 100
 --- !u!1 &1761173633
 GameObject:
   m_ObjectHideFlags: 0
@@ -5170,56 +5109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e5b9b4a29cbb24cb9fce5289529234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1856225901
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 100000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-  m_PrefabInternal: {fileID: 1221691455}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1856225902}
-  - 114: {fileID: 1856225903}
-  m_Layer: 0
-  m_Name: ComboLogo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1856225902
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 400000, guid: 24349a1c956ca5846b1ff887201ed6c4, type: 2}
-  m_PrefabInternal: {fileID: 1221691455}
-  m_GameObject: {fileID: 1856225901}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.103599653, y: 13.8723373, z: -1.6032865}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1751672772}
---- !u!114 &1856225903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 24349a1c956ca5846b1ff887201ed6c4,
-    type: 2}
-  m_PrefabInternal: {fileID: 1221691455}
-  m_GameObject: {fileID: 1856225901}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf260d2a5e4b04e49a5fc710d8ab8e3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DrawEnable: 0
-  texture: {fileID: 2800000, guid: 3b9ad6fa5a68b4a4e8005efad7973c7d, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
-  Position: {x: 0, y: 0}
-  Width: 384
-  Height: 192
-  Depth: 0
-  UVPosition: {x: 0, y: 0}
-  UVWidth: 1
-  UVHeight: 1
-  cnt: 0
 --- !u!1 &1890970610
 GameObject:
   m_ObjectHideFlags: 0

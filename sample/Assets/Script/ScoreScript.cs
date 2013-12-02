@@ -49,7 +49,8 @@ public class ScoreScript : MonoBehaviour {
 		}
 		if(tmpScore > 0)
 			((Tex2DGUITextureScript)numArray[tmpDigit]).SwitchTexture(tmpScore%10);
-		
+		else
+			((Tex2DGUITextureScript)numArray[tmpDigit]).SwitchTexture(0);
 	}
 	
 	public void AddScore( float scr )
