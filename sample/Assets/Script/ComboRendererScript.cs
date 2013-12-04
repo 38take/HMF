@@ -42,11 +42,20 @@ public class ComboRendererScript : MonoBehaviour {
 		}
 	}
 	
-	public void SetData(int combo, int timer, int width, int height)
+	public void SetData(int combo, int timer, int width, int height, Vector3 playerPos)
 	{
 		Init();
-		renderPos.x = 512.0f;
-		renderPos.y = 384.0f;
+		//位置計算
+		Camera gameCamera = ((GameObject)GameObject.Find("CameraMain")).GetComponent<Camera>();
+		Camera orthCamera = ((GameObject)GameObject.Find("Camera2D")).GetComponent<Camera>();
+		//文字を発生させる座標（Base_UIPos）をPerspectiveカメラのワールド座標からスクリーン座標に変換
+		Vector3 UIPos = gameCamera.WorldToScreenPoint(playerPos);
+		//Ｚ（奥行き）の位置は固定
+		UIPos.z = 1.0f;
+		//文字の座標をスクリーン座標からOrthographicカメラのワールド座標に反映
+		//UIPos = orthCamera.ScreenToWorldPoint(UIPos);
+		renderPos.x = UIPos.x * DefaultScreen.ParInv.x;
+		renderPos.y = UIPos.y * DefaultScreen.ParInv.y;
 		SLogo.SetPos(renderPos);
 		m_Timer = timer;
 		//桁数計算
@@ -69,7 +78,7 @@ public class ComboRendererScript : MonoBehaviour {
 		objArray.Add(obj.gameObject);
 		numArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)width, (float)height);
-		((Tex2DGUITextureScript)numArray[digit]).SetPos( renderPos.x -(float)((width+10)*digit), (768.0f - renderPos.y) - (float)height);
+		((Tex2DGUITextureScript)numArray[digit]).SetPos( renderPos.x -(float)((width)*(digit+1)), (/*768.0f - */renderPos.y)/* - (float)height*/);
 		((Tex2DGUITextureScript)numArray[digit]).SwitchTexture(num);
 		digit++;
 	}

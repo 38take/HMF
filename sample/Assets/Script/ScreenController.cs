@@ -10,6 +10,8 @@ public class ScreenController : MonoBehaviour {
 	void Start () {
 		DefaultScreen.Par.x = (float)Screen.width / (float)DefaultScreen.Width;
 		DefaultScreen.Par.y = (float)Screen.height / (float)DefaultScreen.Height;
+		DefaultScreen.ParInv.x =  (float)DefaultScreen.Width  / (float)Screen.width ;
+		DefaultScreen.ParInv.y =  (float)DefaultScreen.Height / (float)Screen.height;
 	}
 	
 	// Update is called once per frame
@@ -20,6 +22,8 @@ public class ScreenController : MonoBehaviour {
 			OldHeight = Screen.height;
 			DefaultScreen.Par.x = (float)Screen.width / (float)DefaultScreen.Width;
 			DefaultScreen.Par.y = (float)Screen.height / (float)DefaultScreen.Height;
+			DefaultScreen.ParInv.x =  (float)DefaultScreen.Width  / (float)Screen.width ;
+			DefaultScreen.ParInv.y =  (float)DefaultScreen.Height / (float)Screen.height;
 			DefaultScreen.FontPar = (DefaultScreen.Par.x + DefaultScreen.Par.y) / 2.0f;
 		}
 	}

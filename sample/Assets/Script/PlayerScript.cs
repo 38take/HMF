@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour {
 		SScore			= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
 		SCombo			= (ComboScript)GameObject.Find("ComboManager").GetComponent("ComboScript");
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
-		SCamera			= (CameraScript)GameObject.Find("Main Camera").GetComponent("CameraScript");
+		SCamera			= (CameraScript)GameObject.Find("CameraMain").GetComponent("CameraScript");
 		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");
 		ConcentrateGauge= ((GameObject)GameObject.Find("GaugeRenderer")).GetComponent<ParticleSystem>();
 		// FPSを60に設定

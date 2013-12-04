@@ -10,6 +10,7 @@ public class CameraScript : MonoBehaviour {
 	private	bool			StartCameraFlag;
 	private	Quaternion		StartRota, EndRota;
 	private	float			Rota_timer;
+	private float			offset;
 	
 	Vector3	shake;
 	bool	shakeFlg;
@@ -17,6 +18,8 @@ public class CameraScript : MonoBehaviour {
 	int		SHAKEDISTANCE;
 	float	shakeWidth;
 	float	lineWidth;
+	
+	public bool followCamera;
 	
 	// Use this for initialization
 	void Start () {
@@ -31,6 +34,7 @@ public class CameraScript : MonoBehaviour {
 		shakeDistance = 0;
 		SHAKEDISTANCE = 200;
 		shakeWidth = 0.2f;
+		offset = 0;
 	}
 
 	// Update is called once per frame
@@ -80,6 +84,12 @@ public class CameraScript : MonoBehaviour {
 			shake.y = ((float)Random.Range(-shakeDistance, shakeDistance) / (float)SHAKEDISTANCE * shakeWidth);
 			if(shakeDistance > 0) shakeDistance--;
 			
+			//プレイヤーの左右移動に合わせて動く
+			if(followCamera)
+			{
+				offset += ( SPlayerScript.m_Offset - offset )*0.1f;
+				shake.x += offset;
+			}
 			// 刃の座標を求める
 			TargetPos = SLineManager.CalcPos(SPlayerScript.m_Timer, shake.x);
 			TargetPos = new Vector3(TargetPos.x, TargetPos.y+shake.y, TargetPos.z);

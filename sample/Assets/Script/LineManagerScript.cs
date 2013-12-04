@@ -41,7 +41,7 @@ public class LineManagerScript : MonoBehaviour {
 	int numTarget;
 	int wherePlayer;
 	int wherePlayerOld;
-	float lineWidth; 
+	public float lineWidth; 
 	bool 	lastPoint;
 	Vector3 playerOffset;
 	Vector3 playerOldOffset;
@@ -111,7 +111,7 @@ public class LineManagerScript : MonoBehaviour {
 		wherePlayer = 0;
 		wherePlayerOld = 0;
 		lineID = tNum = tCnt = -1;
-		lineWidth = 3.0f;
+		//lineWidth = 3.0f;
 		lastPoint = false;
 		playerOldOffset = new Vector3(0.0f, 0.0f, 0.0f);
 		TargetHitChecker = new Vector3(0.1f, 0.3f, 1.0f);

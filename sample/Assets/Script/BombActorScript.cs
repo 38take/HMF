@@ -42,7 +42,7 @@ public class BombActorScript : MonoBehaviour {
 		stampCntRight = 0;
 		
 		//カメラ揺らす
-		CameraScript SCamera = ((GameObject)GameObject.Find("Main Camera")).GetComponent<CameraScript>();
+		CameraScript SCamera = ((GameObject)GameObject.Find("CameraMain")).GetComponent<CameraScript>();
 		SCamera.SetShakeFlag();
 	}
 	
