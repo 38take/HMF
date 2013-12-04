@@ -7,17 +7,12 @@ public class PlayerScript : MonoBehaviour {
 	ComboScript				SCombo;
 	LineManagerScript		SLineManager;
 	CameraScript			SCamera;
-	ParticleSystem			ConcentrateGauge;
+	ConcentrateScript		ConcentrateGauge;
 	private float			oldMouseX;
 	private float			height;
 	private float			HEIGHT;
 	private int				holdHorizontal;
 	private	bool			InitFlag = false;
-	private float			concentration;
-	private float			concentrationGauge;
-	private float 			CONCENTRATION_MAX;
-	private int				concentrationMoveCnt;
-	private int				CONCENTRATION_MOVECNT;
 	private	int				timer_comp;
 	
 	private float 			timerAdd;
@@ -25,7 +20,6 @@ public class PlayerScript : MonoBehaviour {
 	private float 			TIMERADD_MIN;
 	
 	public	GameObject		obj_ClearObject;
-	public  GameObject		obj_CMonitor;
 	public	GameObject		obj_Bomb;
 	public	GameObject		effect_Clear;
 
@@ -50,8 +44,7 @@ public class PlayerScript : MonoBehaviour {
 		SCombo			= (ComboScript)GameObject.Find("ComboManager").GetComponent("ComboScript");
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("CameraMain").GetComponent("CameraScript");
-		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");
-		ConcentrateGauge= ((GameObject)GameObject.Find("GaugeRenderer")).GetComponent<ParticleSystem>();
+		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -64,12 +57,6 @@ public class PlayerScript : MonoBehaviour {
 		TIMERADD_MAX = 4.0f;
 		TIMERADD_MIN = 1.0f;
 		timer_comp = 0;
-		
-		concentration = 0.0f;
-		concentrationGauge = 0.0f;
-		concentrationMoveCnt = 0;
-		CONCENTRATION_MOVECNT = 30;
-		CONCENTRATION_MAX = 100.0f;
 		
 		m_Timer		= 0;
 		m_Offset	= 0.0f;
@@ -100,34 +87,17 @@ public class PlayerScript : MonoBehaviour {
 			}
 
 			//------------------------------------//
-			//集中力ゲージ処理
-			if( concentration != concentrationGauge )
-			{
-				if(concentrationMoveCnt > 0)
-					concentrationMoveCnt--;
-				else if(concentrationMoveCnt == 0)
-				{
-					concentrationGauge += (concentration - concentrationGauge)*0.2f;
-					if(concentration == concentrationGauge)
-						concentrationMoveCnt = -1;
-				}
-				else
-					concentrationMoveCnt = CONCENTRATION_MOVECNT;
-			}
-			ConcentrateGauge.startLifetime = (concentration / CONCENTRATION_MAX)*20.0f;
 			//集中モード処理
 			if(	Input.GetMouseButton(1) &&
-				concentration > 0)
+				ConcentrateGauge.isExist())
 			{
 				timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
-				concentration-=1.0f;
-				if(concentration < 0.0f)concentration = 0.0f;
+				ConcentrateGauge.AddConcentrate(-1.0f);
 			}
 			else
 				timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
 			
 			m_Timer += (int)timerAdd;
-			obj_CMonitor.guiText.text = ((int)concentration).ToString() + ":" + ((int)concentrationGauge).ToString();
 			
 			//------------------------------------//
 			//移動
@@ -204,16 +174,11 @@ public class PlayerScript : MonoBehaviour {
 	//集中力計算
 	public void CalcConcentration(int Value)
 	{
-		concentration += (float)Value;
-		if(concentration >= CONCENTRATION_MAX) 
+		if(ConcentrateGauge.AddConcentrate((float)Value)) 
 		{
-			concentration = CONCENTRATION_MAX;
-			
 			GameObject obj = (GameObject)Instantiate(obj_Bomb, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-			concentration = 0;
+			ConcentrateGauge.AddConcentrate(-ConcentrateGauge.GetConcentration());
 		}
-		if(concentration != concentrationGauge)
-			concentrationMoveCnt = CONCENTRATION_MOVECNT;
 	}
 	
 	private void OnCollisionEnter(Collision collision)
