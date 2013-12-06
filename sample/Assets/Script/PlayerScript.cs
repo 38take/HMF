@@ -22,9 +22,16 @@ public class PlayerScript : MonoBehaviour {
 	public	GameObject		obj_ClearObject;
 	public	GameObject		obj_Bomb;
 	public	GameObject		effect_Clear;
+	public GameObject		obj_Edge;
 
 	public	float			m_Offset;
+	private	float			m_OffsetPrev;
+	private	float			m_OffsetBottom;
 	public	int				m_Timer;
+	private int				m_TimerPrev;
+	private int				m_TimerBottom;
+	public  int				CreateEdgeSpan;
+	private CutEdgeScript	SCutEdge;
 	
 	public enum GAME_STATE
 	{
@@ -59,6 +66,7 @@ public class PlayerScript : MonoBehaviour {
 		timer_comp = 0;
 		
 		m_Timer		= 0;
+		m_TimerPrev = m_TimerBottom = 0;
 		m_Offset	= 0.0f;
 		
 		holdHorizontal = 0;
@@ -144,6 +152,25 @@ public class PlayerScript : MonoBehaviour {
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 			}
+			//------------------------------------//
+			//切り口生成
+			if(m_Timer - m_TimerPrev > CreateEdgeSpan)
+			{
+				Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
+				Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
+				Vector3 bottomPos = SLineManager.CalcPos(m_TimerBottom, m_OffsetBottom);
+				if(m_TimerPrev > 0.0f)
+					SCutEdge.AdjustMesh(currentPos, prevPos);
+				GameObject obj = (GameObject)Instantiate(obj_Edge, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+				SCutEdge = obj.GetComponent<CutEdgeScript>();
+				SCutEdge.SetMesh(currentPos, prevPos, bottomPos);
+				//今のデータを格納
+				m_TimerBottom = m_TimerPrev;
+				m_TimerPrev = m_Timer;
+				m_OffsetBottom = m_OffsetPrev;
+				m_OffsetPrev = m_Offset;
+			}
+			
 		}
 		else if( m_GameState == GAME_STATE.GAME_COMPLETION )
 		{

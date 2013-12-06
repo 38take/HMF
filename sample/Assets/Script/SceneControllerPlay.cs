@@ -60,16 +60,16 @@ public class SceneControllerPlay : MonoBehaviour {
 			else 
 				nextAct = 3;
 			
-			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			if(gameSystem.isLastAct())
+			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+			if(gamesys.isLastAct())
 			{
 				Application.LoadLevel("Result");
-				gameSystem.SystemOutPut(nextAct);
+				gamesys.SystemOutPut(nextAct);
 			}
 			else
 			{
 				Application.LoadLevel("Adventure");
-				gameSystem.SystemOutPut(nextAct);
+				gamesys.SystemOutPut(nextAct);
 			}
 		}
 		//シャッターの移動

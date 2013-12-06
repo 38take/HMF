@@ -118,7 +118,20 @@ public class LineManagerScript : MonoBehaviour {
 		targetWidthInLine = 5.0f / (lineWidth*2);
 		//==================================================
 		//ステージファイルの読み込み
-		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage.txt");
+		GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+		int stageID = 1;
+		switch(gamesys.GetActID())
+		{
+		case 1:		stageID = 1;
+			break;
+		case 5:		stageID = 2;
+			break;
+		case 9:		stageID = 3;
+			break;
+		default:	stageID = 1;
+			break;
+		}
+		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage/stage"+stageID+".txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
         while( sr.Peek() != -1 )
 		{

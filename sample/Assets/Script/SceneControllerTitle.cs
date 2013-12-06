@@ -56,9 +56,9 @@ public class SceneControllerTitle : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
+			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 			Application.LoadLevel("Adventure");
-			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			gameSystem.SystemOutPut(-gameSystem.GetActID());
+			gamesys.SystemOutPut(-gamesys.GetActID());
 		}
 		//背景のスクロール
 		//BGPos.x -= 3.0f;

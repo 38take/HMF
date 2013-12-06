@@ -44,16 +44,16 @@ public class SceneControllerADV : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			GameSystemScript gameSystem = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			if(gameSystem.isLastAct())
+			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+			if(gamesys.isLastAct())
 			{
 				Application.LoadLevel("Result");
-				gameSystem.SystemOutPut(StextBox.GetNextAct());
+				gamesys.SystemOutPut(StextBox.GetNextAct());
 			}
 			else
 			{
 				Application.LoadLevel("Play");
-				gameSystem.SystemOutPut(StextBox.GetNextAct());
+				gamesys.SystemOutPut(StextBox.GetNextAct());
 			}
 		}
 		//シャッターの移動
