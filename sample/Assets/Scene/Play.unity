@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Offset: 0
   m_Timer: 0
   CreateEdgeSpan: 10
+  CreateCutEdge: 1
   m_GameState: 0
 --- !u!1 &85493844
 GameObject:

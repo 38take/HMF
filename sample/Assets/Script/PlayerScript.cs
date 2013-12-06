@@ -32,6 +32,7 @@ public class PlayerScript : MonoBehaviour {
 	private int				m_TimerBottom;
 	public  int				CreateEdgeSpan;
 	private CutEdgeScript	SCutEdge;
+	public  bool			CreateCutEdge;
 	
 	public enum GAME_STATE
 	{
@@ -154,7 +155,8 @@ public class PlayerScript : MonoBehaviour {
 			}
 			//------------------------------------//
 			//切り口生成
-			if(m_Timer - m_TimerPrev > CreateEdgeSpan)
+			if( CreateCutEdge &&
+				m_Timer - m_TimerPrev > CreateEdgeSpan)
 			{
 				Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
 				Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
