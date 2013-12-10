@@ -5318,8 +5318,8 @@ MonoBehaviour:
   lineDead: {fileID: 100000, guid: 76522a1f200a0fc48aa468efbf55f2e3, type: 2}
   hitRenderer: {fileID: 0}
   effect_HitSafe: {fileID: 100002, guid: bf454b7c75047034691f91fe38d00ecd, type: 2}
-  effect_HitNormal: {fileID: 100002, guid: 21a9af130c37c724f83a4043e8a83a4d, type: 2}
-  effect_HitCritical: {fileID: 100006, guid: 7751baff9f26ee24cbfc6fa1a54e53f7, type: 2}
+  effect_HitNormal: {fileID: 100004, guid: 21a9af130c37c724f83a4043e8a83a4d, type: 2}
+  effect_HitCritical: {fileID: 100000, guid: 7751baff9f26ee24cbfc6fa1a54e53f7, type: 2}
   effect_Miss: {fileID: 100000, guid: 87da043e53343124b820fe880d13982f, type: 2}
   lineWidth: 4
 --- !u!1 &2137090851
