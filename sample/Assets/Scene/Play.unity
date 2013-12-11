@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UPHeight: 8
-  TIMERADD_MAX: 100
+  TIMERADD_MAX: 5
   TIMERADD_MIN: 1
   obj_ClearObject: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
   obj_Bomb: {fileID: 100000, guid: 4b72b75cacf2e2943998a4c2e055c40e, type: 2}
