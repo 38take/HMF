@@ -6,6 +6,14 @@ using System.Collections.Generic;
 
 public class LineManagerScript : MonoBehaviour {
 	
+	public enum JUDGE
+	{
+		GOOD,
+		NORMAL,
+		SAFE,
+		MISS,
+		NUM_JUDGE
+	};
 	private enum STATE
 	{
 		LINE,
@@ -47,6 +55,10 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3 playerOldOffset;
 	float   targetWidthInLine;
 	Vector3 TargetHitChecker;
+	//リザルトの用パラメータ
+	int[] numJudge;
+	int   criticalCombo;
+	int   criticalComboMax;
 	
 	//線の生成
 	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
@@ -257,6 +269,12 @@ public class LineManagerScript : MonoBehaviour {
        	}
        	sr.Close();
 		//Instantiate(obj, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		
+		//判定用パラメータ初期化
+		numJudge = new int[(int)JUDGE.NUM_JUDGE];
+		for(int i=0; i<(int)JUDGE.NUM_JUDGE; i++)
+			numJudge[i] = 0;
+		criticalCombo = criticalComboMax = 0;
 	}
 	
 	
@@ -415,6 +433,8 @@ public class LineManagerScript : MonoBehaviour {
 							H > -TargetHitChecker.x * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "クリティカル！！";
+							numJudge[(int)JUDGE.GOOD]++;
+							criticalCombo++;
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -433,6 +453,8 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.y * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "ノーマル";
+							numJudge[(int)JUDGE.NORMAL]++;
+							criticalCombo = 0;
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -451,6 +473,8 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.z * targetWidthInLine)
 						{
 							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
+							numJudge[(int)JUDGE.SAFE]++;
+							criticalCombo = 0;
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -467,6 +491,8 @@ public class LineManagerScript : MonoBehaviour {
 						else
 						{
 							hitRenderer.guiText.text = "ミス・・・";
+							numJudge[(int)JUDGE.MISS]++;
+							criticalCombo = 0;
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -483,6 +509,9 @@ public class LineManagerScript : MonoBehaviour {
 						targetArray[lineID].pastArray[i] = true;
 						targetArray[lineID].seek++;
 						Debug.Log("pass");
+						//クリティカルのコンボ計算
+						if(criticalCombo > criticalComboMax)
+							criticalComboMax = criticalCombo;
 					}
 				}
 				else
@@ -493,36 +522,22 @@ public class LineManagerScript : MonoBehaviour {
 	}
 	
 	//ラインの本数を取得
-	public int GetNumLine(){
-		return numPoint-1;
-	}
+	public int GetNumLine()	{	return numPoint-1;	}
 	//ターゲットの個数を取得
-	public int GetNumTarget(){
-		return numTarget;
-	}
+	public int GetNumTarget()	{	return numTarget;	}
 	
 	//ラインの始点を取得
-	public Vector3 GetLineStartPoint(int id)
-	{
-		return lineData[id];
-	}
+	public Vector3 GetLineStartPoint(int id)	{	return lineData[id];	}
 	//ラインの方向を取得
-	public Vector3 GetLineDirection(int id)
-	{
-		return lineDir[id];
-	}
+	public Vector3 GetLineDirection(int id)	{	return lineDir[id];	}
 	//ラインの太さを取得
-	public float GetLineWidth(){
-		return lineWidth;
-	}
+	public float GetLineWidth()	{	return lineWidth;	}
 	//プレイヤーがどのライン上にいるのか取得
-	public int GetPlyaerLineID()
-	{
-		return wherePlayer;
-	}
+	public int GetPlyaerLineID()	{	return wherePlayer;	}
 	//プレイヤーが最終地点にいるか取得
-	public bool isLastpoint()
-	{
-		return lastPoint;
-	}
+	public bool isLastpoint()	{	return lastPoint;	}
+	
+	//各判定の数を取得
+	public int GetNumJudge(int kind)	{	return numJudge[kind];	}
+	public int GetNumCriticalCombo()	{	return criticalComboMax;}
 }

@@ -7,8 +7,8 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	private int				m_TexID;
 	public bool				StaticTexture;
 	
-	public bool		DrawEnable = true;
 	public Color	color = new Color( 1.0f, 1.0f, 1.0f, 1.0f );
+	public bool		PresetRect;
 	public Vector2	Position;
 	public float	Width;
 	public float	Height;
@@ -21,20 +21,24 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		
+		guiTexture.color = color;
+		if(PresetRect)
+		{
+			SetPos(Position);
+			SetSize(Width, Height);
+		}
+		else
+			RestoreTextureRect();
 		if(StaticTexture)
 		{
 			m_TexID = 0;
 			guiTexture.texture = m_Textures[m_TexID];
 		}
-		guiTexture.color = color;
-		
-		RestoreTextureRect();
 	}
 
 	// Update is called once per frame
 	void Update () {	
-		
-		
 	}
 	
 	//--------------------------------------------------------------------//
@@ -68,19 +72,19 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	//セッター
 	public virtual void SetPos	( float setX, float setY ){
 		Position.x = setX;
-		Position.y = setY;
+		Position.y = (DefaultScreen.Height - setY - Height);
+		RestoreTextureRect();
+	}
+	public void SetPos(float setX, float setY, bool convert)
+	{
+		Position.x = setX;
+		if(convert)	Position.y = (DefaultScreen.Height - setY - Height);
+		else     	Position.y = setY;
 		RestoreTextureRect();
 	}
 	
 	public virtual void SetPos	( Vector2 Pos ){
-		Position = Pos;
-		RestoreTextureRect();
-	}
-	
-	public virtual void SetSize	( Vector2 Size ){
-		Width = Size.x;
-		Height = Size.y;
-		RestoreTextureRect();
+		SetPos(Pos.x, Pos.y);
 	}
 	
 	public virtual void SetSize	( float setWidth, float setHeight ){
@@ -88,6 +92,10 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 		Height = setHeight;
 		RestoreTextureRect();
 	}
+	public virtual void SetSize	( Vector2 Size ){
+		SetSize(Size.x, Size.y);
+	}
+	
 	
 	public virtual void SetSizeCenter ( Vector2 Size ){
 		Vector2 Offset = new Vector2( Size.x - Width, Size.y - Height );
@@ -114,10 +122,18 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 		}
 	}
 	
-	private void RestoreTextureRect(){
+	public void RestoreTextureRect(){
 		guiTexture.pixelInset = new Rect(	Position.x 	* DefaultScreen.Par.x, 
 											Position.y 	* DefaultScreen.Par.y,
 											Width 		* DefaultScreen.Par.x, 	
 											Height 		* DefaultScreen.Par.y); 
+	}
+	
+	public void SetRenderFlag(bool flg)
+	{
+		if(flg)
+			guiTexture.texture = m_Textures[m_TexID];
+		else
+			guiTexture.texture = null;
 	}
 }

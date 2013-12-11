@@ -78,7 +78,7 @@ public class ComboRendererScript : MonoBehaviour {
 		objArray.Add(obj.gameObject);
 		numArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)width, (float)height);
-		((Tex2DGUITextureScript)numArray[digit]).SetPos( renderPos.x -(float)((width)*(digit+1)), (/*768.0f - */renderPos.y)/* - (float)height*/);
+		((Tex2DGUITextureScript)numArray[digit]).SetPos( renderPos.x -(float)((width)*(digit+1)), (renderPos.y));
 		((Tex2DGUITextureScript)numArray[digit]).SwitchTexture(num);
 		digit++;
 	}

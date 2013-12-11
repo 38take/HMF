@@ -10,6 +10,7 @@ public class ComboScript : MonoBehaviour {
 	public int Height;
 	
 	int numCombo;
+	int maxCombo;
 	int validCnt;
 	int VALID_CNT;
 	GameObject comboText;
@@ -20,6 +21,7 @@ public class ComboScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		numCombo = 0;
+		maxCombo = 0;
 		comboText = (GameObject)GameObject.Find("ComboTextBox");
 		SCombeRenderer = null;
 		obj_Player = ((GameObject)GameObject.Find("ナイフ5"));
@@ -42,6 +44,7 @@ public class ComboScript : MonoBehaviour {
 		if(cut)	
 		{
 			numCombo++;
+			if(numCombo > maxCombo) maxCombo = numCombo;
 			GameObject obj = (GameObject)Instantiate(obj_ComboRenderer, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			
 			SCombeRenderer = obj.GetComponent<ComboRendererScript>();
@@ -54,5 +57,9 @@ public class ComboScript : MonoBehaviour {
 	public int GetNumCombo()
 	{
 		return numCombo;
+	}
+	public int GetMaxCombo()
+	{
+		return maxCombo;
 	}
 }

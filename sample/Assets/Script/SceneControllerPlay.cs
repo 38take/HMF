@@ -8,6 +8,7 @@ public class SceneControllerPlay : MonoBehaviour {
 	Tex2DBaseScript shutterRight;
 	ScoreScript		SScore;
 	LineManagerScript SLineManager;
+	ResultRendererScript SResultRenderer;
 	float screenWidth;
 	float screenHeight;
 	float shutterPos;
@@ -37,6 +38,8 @@ public class SceneControllerPlay : MonoBehaviour {
 		SScore = ((GameObject)GameObject.Find("ScoreTextBox")).GetComponent<ScoreScript>();
 		//ステージへのアクセス準備
 		SLineManager = ((GameObject)GameObject.Find("LineManager")).GetComponent<LineManagerScript>();
+		//結果表示スクリプト
+		SResultRenderer = ((GameObject)GameObject.Find("ResultRenderer")).GetComponent<ResultRendererScript>();
 	}
 	
 	// Update is called once per frame
@@ -89,7 +92,7 @@ public class SceneControllerPlay : MonoBehaviour {
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		
 		if( Input.GetKeyUp(KeyCode.N) ||
-			SLineManager.isLastpoint() && Input.GetMouseButtonDown(0))
+			SResultRenderer.isEnd() && Input.GetMouseButtonDown(0))
 		{
 			press = true;
 		}

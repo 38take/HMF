@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  - 131: {fileID: 13100000}
+  m_Layer: 0
+  m_Name: ResultAchievement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd6bc878f3d3b34c9ea195dc0a24e3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Textures:
+  - {fileID: 2800000, guid: 30af846b4ae9103429e79b41ca7f56bf, type: 3}
+  - {fileID: 2800000, guid: 41adec4e73a1e574095b9ede9c2bf973, type: 3}
+  - {fileID: 2800000, guid: 3a0640e35801b0944a72dee10aad3987, type: 3}
+  - {fileID: 2800000, guid: fdfb739f8e6ec0841a66d8fa54b37be9, type: 3}
+  - {fileID: 2800000, guid: 22e07831ac175fb4b9e27fb3c89ad402, type: 3}
+  - {fileID: 2800000, guid: 699bdbdb8f6b07d4aade61ad0481d9c2, type: 3}
+  - {fileID: 2800000, guid: 14223100e96b0c845a7385e1f0f09997, type: 3}
+  - {fileID: 2800000, guid: fedf6a3bbdec29642b8838b08c69fdb4, type: 3}
+  - {fileID: 2800000, guid: 392d6fcb077d80f4f96faeea4774265f, type: 3}
+  - {fileID: 2800000, guid: 94b677231e1b05246b2c5745b3e91a05, type: 3}
+  - {fileID: 2800000, guid: f77e0bf6f5ae82c49a75046f3f0aadf7, type: 3}
+  - {fileID: 2800000, guid: 790842f8668622842a5df8dc6c4d53c5, type: 3}
+  - {fileID: 2800000, guid: 5f56aa41aef8aa447b12f854eb2febbc, type: 3}
+  - {fileID: 2800000, guid: d90396fc29ab09f4db7dfd7fcf170a7b, type: 3}
+  - {fileID: 2800000, guid: 7f9c2b1f91227444c9d0a2bd1eca2534, type: 3}
+  - {fileID: 2800000, guid: e6b17c2d92d0f83438419ce6658e3020, type: 3}
+  - {fileID: 2800000, guid: 40dbf9f957f25444c8af8df99655de16, type: 3}
+  - {fileID: 2800000, guid: 7c22dc16970b2f745b45d173d4f2ce74, type: 3}
+  - {fileID: 2800000, guid: bf2e78a3011a808449804b81eb3fe57a, type: 3}
+  - {fileID: 2800000, guid: 3615a60a62f750940a0ddb53ee2ac368, type: 3}
+  - {fileID: 2800000, guid: 6eb32ed094ce8a94a852f6f9e4223c07, type: 3}
+  - {fileID: 2800000, guid: c42a3450e8c1b9a44b1c7b1112a58ddc, type: 3}
+  - {fileID: 2800000, guid: c3421feee3e1ef04389012aac64e2c7f, type: 3}
+  - {fileID: 2800000, guid: 68bb7d52a22215b428fd7bd29fd043d8, type: 3}
+  - {fileID: 2800000, guid: f90ddf645ea39bc428248f7ca4dc3699, type: 3}
+  - {fileID: 2800000, guid: 5f05bdbc4e3c68342b39708b8b89a2b8, type: 3}
+  - {fileID: 2800000, guid: 4bcc6b0cac371a04b95c873fe56728a3, type: 3}
+  - {fileID: 2800000, guid: fe2d51010eb5f6b48aff468fbf7691d8, type: 3}
+  - {fileID: 2800000, guid: a3ce8682ed14810409814bd3da2bda28, type: 3}
+  - {fileID: 2800000, guid: 86aa7129c1a574745881c61b85b263b4, type: 3}
+  - {fileID: 2800000, guid: 149557ca3bb4d85418bbc8f234144cf9, type: 3}
+  - {fileID: 2800000, guid: 3cd8070afa2092648a3f7eb1b66f328c, type: 3}
+  - {fileID: 2800000, guid: d8d604d0673bdda43ad2f1c170ae99b1, type: 3}
+  - {fileID: 2800000, guid: 93ae5373b5070c14dbbfcb03dc39dc9c, type: 3}
+  StaticTexture: 0
+  DrawEnable: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  Position: {x: 0, y: 0}
+  Width: 0
+  Height: 0
+  UVPosition: {x: 0, y: 0}
+  UVWidth: 0
+  UVHeight: 0
+  cnt: 0
+--- !u!131 &13100000
+GUITexture:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_Texture: {fileID: 0}
+  m_Color: {r: .5, g: .5, b: .5, a: .5}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

@@ -10,14 +10,15 @@ public class PlayerScript : MonoBehaviour {
 	ConcentrateScript		ConcentrateGauge;
 	private float			oldMouseX;
 	private float			height;
-	private float			HEIGHT;
+	public  float			UPHeight;
+	private int				upCnt;
 	private int				holdHorizontal;
 	private	bool			InitFlag = false;
 	private	int				timer_comp;
 	
 	private float 			timerAdd;
-	private float 			TIMERADD_MAX;
-	private float 			TIMERADD_MIN;
+	public  float 			TIMERADD_MAX;
+	public  float 			TIMERADD_MIN;
 	
 	public	GameObject		obj_ClearObject;
 	public	GameObject		obj_Bomb;
@@ -34,6 +35,9 @@ public class PlayerScript : MonoBehaviour {
 	private CutEdgeScript	SCutEdge;
 	public  bool			CreateCutEdge;
 	
+	//リザルト用パラメータ
+	int numBomb;
+	
 	public enum GAME_STATE
 	{
 		GAME_START,				// ゲーム開始前のカメラ操作状態
@@ -41,6 +45,11 @@ public class PlayerScript : MonoBehaviour {
 		GAME_END,				// ゲームクリア時のカメラ操作状態
 		GAME_COMPLETION,		// 次の状態遷移可能
 	}
+	public enum ACHIEVEMENT_FLAG
+	{
+		
+		NUM_ACHIEVEMENT
+	};
 	
 	public	GAME_STATE		m_GameState = GAME_STATE.GAME_START;
 	
@@ -58,12 +67,13 @@ public class PlayerScript : MonoBehaviour {
 		// 初期位置格納
 		oldMouseX = Input.mousePosition.x;
 		
-		HEIGHT		= 8.0f;
+		//UPHeight	= 8.0f;
 		height		= 0.0f;
+		upCnt       = 0;
 		
 		timerAdd = 0.0f;
-		TIMERADD_MAX = 4.0f;
-		TIMERADD_MIN = 1.0f;
+		//TIMERADD_MAX = 4.0f;
+		//TIMERADD_MIN = 1.0f;
 		timer_comp = 0;
 		
 		m_Timer		= 0;
@@ -71,6 +81,8 @@ public class PlayerScript : MonoBehaviour {
 		m_Offset	= 0.0f;
 		
 		holdHorizontal = 0;
+		
+		numBomb = 0;
 	}
 	
 	// Update is called once per frame
@@ -122,7 +134,7 @@ public class PlayerScript : MonoBehaviour {
 			if(m_Offset < -1.0f) m_Offset = -1.0f;
 			Vector3 basePos = SLineManager.CalcPosWithHitCheck(m_Timer, m_Offset);
 			if(Input.GetMouseButton(0))
-				height += (HEIGHT-height)*0.1f;
+				height += (UPHeight-height)*0.1f;
 			else
 				height += (0.0f-height)*0.1f;
 			transform.position = new Vector3(basePos.x, basePos.y+height, basePos.z);
@@ -152,6 +164,7 @@ public class PlayerScript : MonoBehaviour {
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
+				
 			}
 			//------------------------------------//
 			//切り口生成
@@ -185,8 +198,15 @@ public class PlayerScript : MonoBehaviour {
 											GameObject.Find("Floor").transform.rotation	);
 				Destroy(ins_obj, 2.0f);
 			}
-			else if( timer_comp == 60 )
+			if( timer_comp == 60 )
+			{
 				Instantiate(obj_ClearObject);
+			}
+			if(timer_comp == 90)
+			{
+				ResultRendererScript SResult = ((GameObject)GameObject.Find("ResultRenderer")).GetComponent<ResultRendererScript>();
+				SResult.Validate();
+			}
 			timer_comp++;
 		}
 	}
@@ -207,8 +227,13 @@ public class PlayerScript : MonoBehaviour {
 		{
 			GameObject obj = (GameObject)Instantiate(obj_Bomb, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			ConcentrateGauge.AddConcentrate(-ConcentrateGauge.GetConcentration());
+			numBomb++;
 		}
 	}
+	
+	//ゲッタ
+	public int GetNumBomb(){	return numBomb;	}
+	public int GetNumUp(){	return upCnt;	}
 	
 	private void OnCollisionEnter(Collision collision)
 	{

@@ -72,7 +72,7 @@ public class ScoreScript : MonoBehaviour {
 		GameObject obj = (GameObject)Instantiate(obj_NumTex, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		numArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)Width, (float)Height);
-		((Tex2DGUITextureScript)numArray[digit]).SetPos( RenderPos.x - (float)((Width+10)*digit), (768.0f - RenderPos.y) - (float)Height);
+		((Tex2DGUITextureScript)numArray[digit]).SetPos( RenderPos.x - (float)((Width+10)*digit), RenderPos.y);
 		digit++;
 	}
 }
