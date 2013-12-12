@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UPHeight: 8
-  TIMERADD_MAX: 5
+  TIMERADD_MAX: 200
   TIMERADD_MIN: 1
   obj_ClearObject: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
   obj_Bomb: {fileID: 100000, guid: 4b72b75cacf2e2943998a4c2e055c40e, type: 2}
@@ -3803,7 +3803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973293888facdf64b9347df929662336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obj_Achievement: {fileID: 100000, guid: 95f2b3ac11fa3fc41bb3df38e8807579, type: 2}
   obj_ScoreRenderer: {fileID: 100000, guid: a6c8d165f80677e4b9a27bbbde06c194, type: 2}
+  posAchievement: {x: 262, y: 500}
 --- !u!1 &868096768
 GameObject:
   m_ObjectHideFlags: 0
