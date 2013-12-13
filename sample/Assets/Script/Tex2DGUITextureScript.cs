@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Tex2DGUITextureScript : MonoBehaviour {
 	
+	public bool 			PreRender = false;
 	public Texture[]		m_Textures;
 	private int				m_TexID;
 	public bool				StaticTexture;
@@ -35,6 +36,10 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 			m_TexID = 0;
 			guiTexture.texture = m_Textures[m_TexID];
 		}
+		if(PreRender)
+			SetRenderFlag(true);
+		else
+			SetRenderFlag(false);
 	}
 
 	// Update is called once per frame

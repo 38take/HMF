@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: StampMaterial
-  m_Shader: {fileID: 4800000, guid: 1901c7cc2e1473546a7139d2fe89cf38, type: 3}
+  m_Name: AterierWallBackM
+  m_Shader: {fileID: 4800000, guid: 96d9de371a697134dac4638ab992ba60, type: 3}
   m_ShaderKeywords: []
   m_SavedProperties:
     serializedVersion: 2
@@ -16,20 +16,12 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: b4be851d5839233428b974fdd47bcb76, type: 3}
+          m_Texture: {fileID: 2800000, guid: e2c13c6b64f9f11458835060a071076e, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
-      data:
-        first:
-          name: _Shininess
-        second: .078125
+    m_Floats: {}
     m_Colors:
       data:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
-      data:
-        first:
-          name: _SpecColor
-        second: {r: .5, g: .5, b: .5, a: 1}

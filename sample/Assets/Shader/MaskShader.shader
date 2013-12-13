@@ -5,6 +5,7 @@
 	SubShader {
 		Tags { "RenderType"="Opaque" }
 		LOD 200
+		ZTest Always
 		
 		CGPROGRAM
 		#pragma surface surf Lambert
