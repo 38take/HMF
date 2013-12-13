@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UPHeight: 8
-  TIMERADD_MAX: 200
+  TIMERADD_MAX: 5
   TIMERADD_MIN: 1
   obj_ClearObject: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
   obj_Bomb: {fileID: 100000, guid: 4b72b75cacf2e2943998a4c2e055c40e, type: 2}
@@ -4062,7 +4062,7 @@ GameObject:
   - 124: {fileID: 943496293}
   - 92: {fileID: 943496292}
   - 81: {fileID: 943496291}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CameraEdge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6206,6 +6206,10 @@ MonoBehaviour:
   effect_HitCritical: {fileID: 100006, guid: 7751baff9f26ee24cbfc6fa1a54e53f7, type: 2}
   effect_Miss: {fileID: 100000, guid: 87da043e53343124b820fe880d13982f, type: 2}
   lineWidth: 4
+  ScoreCritical: 100
+  ScoreNormal: 50
+  ScoreSafe: 30
+  ScoreMiss: 0
 --- !u!1 &2137090851
 GameObject:
   m_ObjectHideFlags: 0

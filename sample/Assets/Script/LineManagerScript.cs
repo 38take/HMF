@@ -16,6 +16,7 @@ public class LineManagerScript : MonoBehaviour {
 	};
 	private enum STATE
 	{
+        LINEWIDTH,
 		LINE,
 		TARGET,
 		NUM_STATE,
@@ -55,6 +56,11 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3 playerOldOffset;
 	float   targetWidthInLine;
 	Vector3 TargetHitChecker;
+	//スコア
+	public int ScoreCritical;
+	public int ScoreNormal;
+	public int ScoreSafe;
+	public int ScoreMiss;
 	//リザルトの用パラメータ
 	int[] numJudge;
 	int   criticalCombo;
@@ -153,6 +159,15 @@ public class LineManagerScript : MonoBehaviour {
 			
 			switch(state)
 			{
+            case (char)STATE.LINEWIDTH:
+                if (split[0] == "LinePoint")
+                {
+                    state = (char)STATE.LINE;
+                    break;
+                }
+                lineWidth = float.Parse(split[0]);
+                break;
+
 			case (char)STATE.LINE:
 				//マーカー目印がきたらラインの生成
 				if(split[0] == "Marker")
@@ -260,8 +275,10 @@ public class LineManagerScript : MonoBehaviour {
 				break;
 				
 			case (char)STATE.NUM_STATE:
-				if(split[0] == "LinePoint")
-					state = (char)STATE.LINE;
+				if(split[0] == "LineWidth")
+					state = (char)STATE.LINEWIDTH;
+                if(split[0] == "LinePoint")
+                    state = (char)STATE.LINE;
 				break;
 			default:
 				break;
@@ -445,7 +462,7 @@ public class LineManagerScript : MonoBehaviour {
 							Destroy(ins_obj, 1.0f);
 							
 							SPlayer.CalcCombo(true);
-							SPlayer.CalcScore(100);
+							SPlayer.CalcScore(ScoreCritical);
 							SPlayer.CalcConcentration(5);
 						}
 						//ノーマル
@@ -465,7 +482,7 @@ public class LineManagerScript : MonoBehaviour {
 							Destroy(ins_obj, 1.0f);
 							
 							SPlayer.CalcCombo(true);
-							SPlayer.CalcScore(50);
+							SPlayer.CalcScore(ScoreNormal);
 							SPlayer.CalcConcentration(2);
 						}
 						//セーフ
@@ -485,7 +502,7 @@ public class LineManagerScript : MonoBehaviour {
 							Destroy(ins_obj, 1.0f);
 							
 							SPlayer.CalcCombo(false);
-							SPlayer.CalcScore(20);
+							SPlayer.CalcScore(ScoreSafe);
 						}
 						//ミス
 						else
@@ -503,6 +520,7 @@ public class LineManagerScript : MonoBehaviour {
 							Destroy(ins_obj, 1.0f);
 							
 							SPlayer.CalcCombo(false);
+							SPlayer.CalcScore(ScoreMiss);
 						}
 						
 						//通過したと判定させる
