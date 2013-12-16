@@ -73,6 +73,7 @@ public class ScoreRendererScript : MonoBehaviour {
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)Width, (float)Height);
 		((Tex2DGUITextureScript)numArray[digit]).SetPos( Position.x - (float)((Width+10)*digit)-Width, Position.y);
 		((Tex2DGUITextureScript)numArray[digit]).SwitchTexture(0);
+		((Tex2DGUITextureScript)numArray[digit]).SetRenderFlag(true);
 		digit = digit+1;
 	}
 	

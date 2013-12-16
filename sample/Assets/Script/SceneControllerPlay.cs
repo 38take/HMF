@@ -64,6 +64,7 @@ public class SceneControllerPlay : MonoBehaviour {
 				nextAct = 3;
 			
 			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+			gamesys.SetScore(SLineManager.GetStageID()-1, score);	
 			if(gamesys.isLastAct())
 			{
 				Application.LoadLevel("Result");

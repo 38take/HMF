@@ -6,6 +6,8 @@ public class SceneControllerResult : MonoBehaviour {
 	bool press;
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
+	Tex2DGUITextureScript SResultBG;
+	TotalResultScript STotalResult;
 	float screenWidth;
 	float screenHeight;
 	float shutterPos;
@@ -30,6 +32,14 @@ public class SceneControllerResult : MonoBehaviour {
 		shutterRight.SetPos(screenWidth/2.0f, 0.0f);
 		
 		shutterPos = screenWidth/2.0f;
+		
+		//リザルトへのアクセス準備
+		STotalResult = ((GameObject)GameObject.Find("TotalResult")).GetComponent<TotalResultScript>();
+		SResultBG    = ((GameObject)GameObject.Find("ResultBG")).GetComponent<Tex2DGUITextureScript>();
+		
+		SResultBG.SwitchTexture(0);
+		SResultBG.SetRenderFlag(true);
+		SResultBG.RestoreTextureRect();
 	}
 	
 	// Update is called once per frame
@@ -59,7 +69,7 @@ public class SceneControllerResult : MonoBehaviour {
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		//マウスクリック判定
-		if(!press && Input.GetMouseButton(0))
+		if(STotalResult.isEnd() && !press && Input.GetMouseButton(0))
 			press = true;
 	}
 }

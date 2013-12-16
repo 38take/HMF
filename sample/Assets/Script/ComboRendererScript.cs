@@ -57,13 +57,16 @@ public class ComboRendererScript : MonoBehaviour {
 		renderPos.x = UIPos.x * DefaultScreen.ParInv.x;
 		renderPos.y = UIPos.y * DefaultScreen.ParInv.y;
 		SLogo.SetPos(renderPos);
+		SLogo.SetRenderFlag(true);
 		m_Timer = timer;
 		//桁数計算
 		int tmpDigit = 0;
 		int tmpCombo = combo;
+		int digitNum = 0;
 		//各桁に数字設定
 		for(tmpDigit=0; tmpCombo>9; tmpDigit++){
-			AddDigit(width, height, tmpCombo%10);
+			digitNum = tmpCombo%10;
+			AddDigit(width, height, digitNum);
 			tmpCombo /= 10;
 		}
 		if(tmpCombo > 0)
@@ -80,6 +83,7 @@ public class ComboRendererScript : MonoBehaviour {
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)width, (float)height);
 		((Tex2DGUITextureScript)numArray[digit]).SetPos( renderPos.x -(float)((width)*(digit+1)), (renderPos.y));
 		((Tex2DGUITextureScript)numArray[digit]).SwitchTexture(num);
+		((Tex2DGUITextureScript)numArray[digit]).SetRenderFlag(true);
 		digit++;
 	}
 }

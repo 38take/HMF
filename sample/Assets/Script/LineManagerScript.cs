@@ -41,6 +41,7 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject effect_Miss;
 	PlayerScript SPlayer;	
 	//ステージの構成データ
+	int stageID;
 	Vector3[] lineData;
 	int[]	  lineKind;
 	Vector3[] lineDir;
@@ -137,7 +138,7 @@ public class LineManagerScript : MonoBehaviour {
 		//==================================================
 		//ステージファイルの読み込み
 		GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-		int stageID = 1;
+		stageID = 1;
 		switch(gamesys.GetActID())
 		{
 		case 1:		stageID = 1;
@@ -558,4 +559,5 @@ public class LineManagerScript : MonoBehaviour {
 	//各判定の数を取得
 	public int GetNumJudge(int kind)	{	return numJudge[kind];	}
 	public int GetNumCriticalCombo()	{	return criticalComboMax;}
+	public int GetStageID()				{	return stageID;	}
 }

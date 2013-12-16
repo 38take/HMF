@@ -16,17 +16,22 @@ public class ScoreScript : MonoBehaviour {
 	
 	private	float Score = 0.0f;
 	private	float RenderScore = 0.0f;
-	// Use this for initialization
-	void Start () {
-		//guiText.text = "スコア：" + Score;
+	
+	private bool initiarized = false;
+	
+	
+	void Init()
+	{
 		digit = 0;
 		numArray = new ArrayList();
 		AddDigit();
+		initiarized = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//guiText.text = "スコア：" + Score;
+		if(!initiarized)
+			Init();
 		
 		//描画用スコア処理
 		int addScore = 1;
@@ -43,8 +48,10 @@ public class ScoreScript : MonoBehaviour {
 		for(;tmpDigit > digit;){	AddDigit();	}
 		//各桁に数字設定
 		tmpScore = (int)RenderScore;
+		int num = 0;
 		for(tmpDigit=0; tmpScore>9; tmpDigit++){
-			((Tex2DGUITextureScript)numArray[tmpDigit]).SwitchTexture(tmpScore%10);
+			num = tmpScore%10;
+			((Tex2DGUITextureScript)numArray[tmpDigit]).SwitchTexture(num);
 			tmpScore /= 10;
 		}
 		if(tmpScore > 0)
@@ -73,6 +80,7 @@ public class ScoreScript : MonoBehaviour {
 		numArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
 		((Tex2DGUITextureScript)numArray[digit]).SetSize( (float)Width, (float)Height);
 		((Tex2DGUITextureScript)numArray[digit]).SetPos( RenderPos.x - (float)((Width+10)*digit), RenderPos.y);
+		((Tex2DGUITextureScript)numArray[digit]).SetRenderFlag(true);
 		digit++;
 	}
 }

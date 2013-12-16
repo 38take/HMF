@@ -1,6 +1,6 @@
 ﻿Shader "Custom/CreateMaskShader" {
 	Properties {
-		_MainTex ("Base (RGB)", 2D) = "white" {}
+		_MainTex ("Base (RGBA)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" "LightMode"="Always" }

@@ -57,6 +57,10 @@ public class SceneControllerTitle : MonoBehaviour {
 		if(dummyLoadCnt > 10)
 		{
 			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+			//各ステージのスコアクリア
+			gamesys.SetScore(0, 0);
+			gamesys.SetScore(1, 0);
+			gamesys.SetScore(2, 0);
 			Application.LoadLevel("Adventure");
 			gamesys.SystemOutPut(-gamesys.GetActID());
 		}

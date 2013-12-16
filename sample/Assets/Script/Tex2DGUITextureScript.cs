@@ -20,9 +20,11 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	
 	public int cnt;
 	
-	// Use this for initialization
-	void Start () {
-		
+	private bool initiarized = false;
+
+	
+	void Init()
+	{
 		guiTexture.color = color;
 		if(PresetRect)
 		{
@@ -40,10 +42,13 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 			SetRenderFlag(true);
 		else
 			SetRenderFlag(false);
+		initiarized = true;
 	}
 
 	// Update is called once per frame
 	void Update () {	
+		if(!initiarized)
+			Init();
 	}
 	
 	//--------------------------------------------------------------------//
@@ -137,7 +142,10 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	public void SetRenderFlag(bool flg)
 	{
 		if(flg)
+		{
 			guiTexture.texture = m_Textures[m_TexID];
+			PreRender = true;
+		}
 		else
 			guiTexture.texture = null;
 	}
