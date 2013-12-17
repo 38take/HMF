@@ -5,12 +5,17 @@ public class SceneControllerADV : MonoBehaviour {
 	
 	TextBoxScript StextBox;
 	bool press;
+	
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
 	float screenWidth;
 	float screenHeight;
+	float shutterFlg;
 	float shutterPos;
+	float masterPos;
 	int   dummyLoadCnt;//演出用
+	
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -61,12 +66,16 @@ public class SceneControllerADV : MonoBehaviour {
 		{
 			shutterPos += ((screenWidth/2.0f)-shutterPos)*0.2f;
 			//遷移までのカウンタ設定
-			if(shutterPos >= screenWidth/2.01f && dummyLoadCnt <= 0)
+			if(shutterPos >= screenWidth/2.01f && dummyLoadCnt <= 0){
 				dummyLoadCnt = 1;
+			}
 		}
 		else
 		{
 			shutterPos += (0.0f-shutterPos)*0.2f;
+		}
+		if(shutterPos <= 0.05f){
+			//shutter open!!
 		}
 		//シャッターの初期位置設定
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);
