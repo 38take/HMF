@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour {
 	LineManagerScript		SLineManager;
 	CameraScript			SCamera;
 	ConcentrateScript		ConcentrateGauge;
+	CutEdgeManagerScript    SCutEdge;
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
@@ -32,7 +33,7 @@ public class PlayerScript : MonoBehaviour {
 	private int				m_TimerPrev;
 	private int				m_TimerBottom;
 	public  int				CreateEdgeSpan;
-	private CutEdgeScript	SCutEdge;
+	//private CutEdgeScript	SCutEdge;
 	public  bool			CreateCutEdge;
 	
 	//リザルト用パラメータ
@@ -62,6 +63,7 @@ public class PlayerScript : MonoBehaviour {
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("CameraMain").GetComponent("CameraScript");
 		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
+		SCutEdge		= ((GameObject)GameObject.Find("CutEdgeManager")).GetComponent<CutEdgeManagerScript>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -171,14 +173,15 @@ public class PlayerScript : MonoBehaviour {
 			if( CreateCutEdge &&
 				m_Timer - m_TimerPrev > CreateEdgeSpan)
 			{
-				Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
-				Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
-				Vector3 bottomPos = SLineManager.CalcPos(m_TimerBottom, m_OffsetBottom);
-				if(m_TimerPrev > 0.0f)
-					SCutEdge.AdjustMesh(currentPos, prevPos);
-				GameObject obj = (GameObject)Instantiate(obj_Edge, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-				SCutEdge = obj.GetComponent<CutEdgeScript>();
-				SCutEdge.SetMesh(currentPos, prevPos, bottomPos);
+				SCutEdge.AddPoint(SLineManager.CalcPos(m_Timer, m_Offset));
+		//		Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
+		//		Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
+		//		Vector3 bottomPos = SLineManager.CalcPos(m_TimerBottom, m_OffsetBottom);
+		//		if(m_TimerPrev > 0.0f)
+		//			SCutEdge.AdjustMesh(currentPos, prevPos);
+		//		GameObject obj = (GameObject)Instantiate(obj_Edge, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		//		SCutEdge = obj.GetComponent<CutEdgeScript>();
+		//		SCutEdge.SetMesh(currentPos, prevPos, bottomPos);
 				//今のデータを格納
 				m_TimerBottom = m_TimerPrev;
 				m_TimerPrev = m_Timer;

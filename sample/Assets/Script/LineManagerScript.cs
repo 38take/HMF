@@ -57,6 +57,7 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3 playerOldOffset;
 	float   targetWidthInLine;
 	Vector3 TargetHitChecker;
+	bool    exist = false;
 	//スコア
 	public int ScoreCritical;
 	public int ScoreNormal;
@@ -293,6 +294,8 @@ public class LineManagerScript : MonoBehaviour {
 		for(int i=0; i<(int)JUDGE.NUM_JUDGE; i++)
 			numJudge[i] = 0;
 		criticalCombo = criticalComboMax = 0;
+		
+		exist = true;
 	}
 	
 	
@@ -560,4 +563,5 @@ public class LineManagerScript : MonoBehaviour {
 	public int GetNumJudge(int kind)	{	return numJudge[kind];	}
 	public int GetNumCriticalCombo()	{	return criticalComboMax;}
 	public int GetStageID()				{	return stageID;	}
+	public bool isExist()				{	return exist;	}
 }
