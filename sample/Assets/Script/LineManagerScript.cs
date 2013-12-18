@@ -101,6 +101,7 @@ public class LineManagerScript : MonoBehaviour {
 		dir.x = -tmp;
 		//位置確定
 		Vector3 pos = basePos + dir * (-offset.y) * lineWidth;//1,ofは線の太さ
+		pos = new Vector3(pos.x, 0.3f, pos.z);
 		//ターゲット生成
 		Instantiate(target, pos, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		
