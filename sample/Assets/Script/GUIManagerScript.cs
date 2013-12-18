@@ -30,8 +30,9 @@ public class GUIManagerScript : MonoBehaviour {
 	void Start () {
 		//Get MasterActScript of GUIManager
 		MasterManager 	= ((GameObject)GameObject.Find("GUIManager")).GetComponent<MasterActScript>();
-		TextWin 		= ((GameObject)GameObject.Find("TextWindow")).GetComponent<TextWindowScript>();
+		TextWin 		= ((GameObject)GameObject.Find("GUIManager")).GetComponent<TextWindowScript>();
 		TextBox 		= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
+		
 	}
 	
 	// Update is called once per frame
@@ -47,8 +48,8 @@ public class GUIManagerScript : MonoBehaviour {
 			//Action
 			else{
 				//MasterActScript: SetAction()-SetEmotion-()-SetIdleFlg()
-				MasterManager.SetAction(ActorAct.OnStage);
-				MasterManager.SetEmotion(Emotion.Normal);
+				MasterManager.SetAction(0);
+				MasterManager.SetEmotion(0);
 				if(ActFlg == false){
 					MasterManager.SetIdleFlg(false);
 					ActFlg = true;
@@ -61,10 +62,10 @@ public class GUIManagerScript : MonoBehaviour {
 						TextWindowArray 	= TextBox.GetBalloonArray();
 						TextWindowSizeArray = TextBox.GetBalloonSizeArray();
 						///////////////////
-						Debug.Log("AAAAAAAAA:"+NumStatement);
+						/*Debug.Log("AAAAAAAAA:"+NumStatement);
 						for(int i = 0;i<NumStatement;i++){
 							Debug.Log("TextString["+i+"]:"+TextString[i]);
-						}
+						}*/
 					
 						advstate = ADVState.PLAY;
 					}
@@ -72,54 +73,36 @@ public class GUIManagerScript : MonoBehaviour {
 			}
 			break;
 		case ADVState.PLAY:
-			
-			
+			if(TextWin.GetWindowState()==0){
+				switch(TextWin.GetWindowState()){
+				case 0:
+					TextWin.SetWindowState(1);
+					TextWin.SetWindowSize(2);
+					MasterManager.SetAction(1);
+					MasterManager.SetEmotion(1);
+					MasterManager.SetLoopFlg(true);
+					MasterManager.SetIdleFlg(false);
+				Debug.Log("Press S Key.SetEmo angry");
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+					break;
+				}
+			}else if(TextWin.GetWindowState()==2){
+				TextBox.SetTextInsertFlg(true);
+			}
 			break;
 		case ADVState.END:
 			
 			break;
 		}
 		
-	
-		//For Debug
-		if(Input.GetKeyDown("a")){
-			Debug.Log("Press A Key.LoopFlg is True");
-			MasterManager.SetLoopFlg(true);
-		}
-		if(Input.GetKeyDown("q")){
-			Debug.Log("Press Q Key.LoopFlg is False");
-			MasterManager.SetLoopFlg(false);
-		}
-		if(Input.GetKeyDown("d")){
-			MasterManager.SetAction(ActorAct.Angry);
-			MasterManager.SetEmotion(Emotion.Angry);
-			MasterManager.SetIdleFlg(false);
-			Debug.Log("Press S Key.SetEmo angry");
-		}
-		if(Input.GetKeyDown("s")){
-			MasterManager.SetAction(ActorAct.OnStage);
-			MasterManager.SetEmotion(Emotion.Normal);
-			MasterManager.SetIdleFlg(false);
-			Debug.Log("Press D Key.SetAct Onstage");
-		}
-		if(Input.GetKeyDown("f")){
-			MasterManager.SetAction(ActorAct.Laugh);
-			MasterManager.SetEmotion(Emotion.Grad);
-			MasterManager.SetIdleFlg(false);
-			Debug.Log("Press D Key.SetEmo grad");
-		}
-		if(Input.GetKeyDown("g")){
-			MasterManager.SetAction(ActorAct.Panic);
-			MasterManager.SetEmotion(Emotion.Panic);
-			MasterManager.SetIdleFlg(false);
-			Debug.Log("Press D Key.SetEmo Panic");
-		}
-		
 	}
 	
-	
-	public void SceneStart(){
-		SceneStartFlg = true;
-	}
 	
 }

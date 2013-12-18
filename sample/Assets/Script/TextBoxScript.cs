@@ -90,17 +90,19 @@ public class TextBoxScript : MonoBehaviour {
 			data.Add(int.Parse(split[2]));	//TextBoxID
 			data.Add(int.Parse(split[3]));	//TextBoxSize
 			data.Add(split[4]);				//Text1
+			data.Add(split[5]);				//Text1
+			data.Add(split[6]);				//Text1
         }
        	srData.Close();
 		//会話データ格納
-		numStatement = (int)(data.Count/5);//セリフ数
+		numStatement = (int)(data.Count/7);//セリフ数
 		Debug.Log("talk_num:"+numStatement);
 		balloonArray 	= new int[numStatement];
 		strArray 		= new string[numStatement];
 		for(int i=0; i<numStatement; i++)
 		{
-			balloonArray[i] = (int)data[i*5+2];
-			strArray[i] 	= data[i*5+4].ToString();
+			balloonArray[i] = (int)data[i*7+2];
+			strArray[i] 	= data[i*7+4].ToString();
 			Debug.Log("balloonArray["+i+"]:"+balloonArray[i]);
 			Debug.Log("strArray["+i+"]:"+strArray[i]);
 		}
@@ -178,6 +180,10 @@ public class TextBoxScript : MonoBehaviour {
 	
 	public int GetNumStatement(){
 		return numStatement;
+	}
+	
+	public void SetTextInsertFlg(bool s_flg){
+		textinsert = s_flg;
 	}
 }
 

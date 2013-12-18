@@ -66,9 +66,11 @@ public class MasterActScript : MonoBehaviour {
 		
 		ActorBody.SetSize(BodySize.x,BodySize.y);
 		ActorBody.SetPos(Position.x,Position.y);
+		ActorBody.SetDepth(5);
 		
 		ActorHead.SetSize(BodySize.x,BodySize.y);
 		ActorHead.SetPos(Position.x+Offset.x,Position.y+Offset.y);
+		ActorHead.SetDepth(5);
 		
 		ChangeEmotionUV();
 		
@@ -173,8 +175,26 @@ public class MasterActScript : MonoBehaviour {
 	}
 	
 	//Setter of Action
-	public void SetAction(ActorAct Act){
-		CharaAct_Sub = Act;
+	public void SetAction(int sAct){
+		switch(sAct){
+		case 0:
+			CharaAct_Sub = ActorAct.OnStage;
+			break;
+		case 1:
+			CharaAct_Sub = ActorAct.OutStage;
+			break;
+		case 2:
+			CharaAct_Sub = ActorAct.Laugh;
+			break;
+		case 3:
+			CharaAct_Sub = ActorAct.Angry;
+			break;
+		case 4:
+			CharaAct_Sub = ActorAct.Panic;
+			break;
+		default:
+			break;
+		}
 	}
 	//Getter of Action
 	public ActorAct GetAction(){
@@ -182,8 +202,23 @@ public class MasterActScript : MonoBehaviour {
 	}
 	
 	//Setter of Emotion
-	public void SetEmotion(Emotion sEmo){
-		CharaEmo_Sub = sEmo;
+	public void SetEmotion(int sEmo){
+		switch(sEmo){
+		case 0:
+			CharaEmo_Sub = Emotion.Normal;
+			break;
+		case 1:
+			CharaEmo_Sub = Emotion.Grad;
+			break;
+		case 2:
+			CharaEmo_Sub = Emotion.Angry;
+			break;
+		case 3:
+			CharaEmo_Sub = Emotion.Panic;
+			break;
+		default:
+			break;
+		}
 	}
 	//Getter of Emotion
 	public Emotion GetEmotion(){

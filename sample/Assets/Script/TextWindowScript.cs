@@ -21,7 +21,7 @@ public enum WINDOW_TYPE{
 
 public class TextWindowScript : MonoBehaviour {
 
-	public Tex2DBaseScript 	tex2d;
+	Tex2DBaseScript 	tex2d;
 	public Vector2 		Position;
 	public Vector2 		Size = new Vector2(0.0f,0.0f);
 	public Vector2 		UVPosition;
@@ -30,24 +30,25 @@ public class TextWindowScript : MonoBehaviour {
 	public int			FrameCount;
 	public int			MaxFrame;
 	public bool			WindowSetFlg = false;
-	public WINDOW_STATE	WinState = WINDOW_STATE.ON;
-	public WINDOW_SIZE 	WinSize = WINDOW_SIZE.SMALL;
-	public WINDOW_TYPE	WinType = WINDOW_TYPE.HEARTED;
+	public WINDOW_STATE	WinState;
+	public WINDOW_SIZE 	WinSize;
+	public WINDOW_TYPE	WinType;
 	
 	// initializate
 	void Start() {
 		//Find GameObject
 		tex2d = ((GameObject)GameObject.Find("TextWindow")).GetComponent<Tex2DBaseScript>();
 		//Set Pos & Size & UV
-		Position.x = 0.0f;Position.y = DefaultScreen.Height/2.0f;;
-		//SetWindowSize(0);
-		//SetWindowType(0);
+		Position.x = 0.0f;Position.y = DefaultScreen.Height/2.0f;
+		SetWindowState(0);
+		SetWindowSize(0);
+		SetWindowType(0);
 		tex2d.SetPos(Position.x,Position.y);
 		tex2d.SetSize(Size.x,Size.y);
 		tex2d.SetUV(UVPosition,UVSize.x,UVSize.y);
 		//Set Frame
 		MaxFrame = 10;
-		WinState = 0;
+		//WinState = 0;
 	}
 	
 	void Update(){
@@ -67,7 +68,7 @@ public class TextWindowScript : MonoBehaviour {
 				tex2d.SetSize(Size.x,Size.y);
 				FrameCount++;
 			}else{
-				//FrameCount = 0;
+				WinState = WINDOW_STATE.RUN;
 			}
 			break;
 		//RUN
@@ -95,34 +96,49 @@ public class TextWindowScript : MonoBehaviour {
 		MaxFrame = FCount;
 	}
 	
-	public WINDOW_STATE GetWindowState(){
-		return WinState;
+	public int GetWindowState(){
+		switch(WinState){
+		case WINDOW_STATE.IDLE:
+			return 0;
+			break;
+		case WINDOW_STATE.ON:
+			return 1;
+			break;
+		case WINDOW_STATE.RUN:
+			return 2;
+			break;
+		case WINDOW_STATE.OFF:
+			return 3;
+			break;
+		default:
+			return 99;
+			break;
+		}
+		return 99;
 	}
 	
-	public void SetWindowState(WINDOW_STATE wState){
-		WinState = wState;
+	public void SetWindowState(int wState){
+		switch(wState){
+			case 0:
+				WinState = WINDOW_STATE.IDLE;
+				break;
+			case 1:
+				WinState = WINDOW_STATE.ON;	
+				break;
+			case 2:
+				WinState = WINDOW_STATE.RUN;
+				break;
+			case 3:
+				WinState = WINDOW_STATE.OFF;
+				break;
+			default:
+				break;
+		}
 	}
 	
 	public void OffWindowState(){
 		WinState = WINDOW_STATE.OFF;
 	}
-	
-/*	void SetWindowSize(WINDOW_SIZE wSize){
-		switch(wSize){
-		case WINDOW_SIZE.SMALL:
-			MaxSize.x = DefaultScreen.Width;
-			MaxSize.y = 150.0f;
-			break;
-		case WINDOW_SIZE.MIDIUM:
-			MaxSize.x = DefaultScreen.Width;
-			MaxSize.y = 250.0f;		
-			break;
-		case WINDOW_SIZE.BIG:
-			MaxSize.x = DefaultScreen.Width;
-			MaxSize.y = 350.0f;
-			break;
-		}
-	}*/
 	
 	public void SetWindowSize(int wSize){
 		switch(wSize){
@@ -143,37 +159,22 @@ public class TextWindowScript : MonoBehaviour {
 		}
 	}
 	
-/*	public void SetWindowType(WINDOW_TYPE wType){	
-		switch(wType){
-		case WINDOW_TYPE.NORMAL:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.66666f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			break;
-		case WINDOW_TYPE.SCREAM:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.00000f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			break;
-		case WINDOW_TYPE.HEARTED:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.33333f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			break;
-		}
-	}
-*/
-	
 	public void SetWindowType(int wType){	
 		switch(wType){
 		case 0:
 			UVPosition.x = 0.00000f;UVPosition.y = 0.66666f;
 			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
+			WinType = WINDOW_TYPE.NORMAL;
 			break;
 		case 1:
 			UVPosition.x = 0.00000f;UVPosition.y = 0.00000f;
 			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
+			WinType = WINDOW_TYPE.SCREAM;
 			break;
 		case 2:
 			UVPosition.x = 0.00000f;UVPosition.y = 0.33333f;
 			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
+			WinType = WINDOW_TYPE.HEARTED;
 			break;
 		default:
 			break;

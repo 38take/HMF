@@ -32,10 +32,6 @@ public class Tex2DBaseScript : MonoBehaviour {
 	public void OnGUI () {
 		
 		if( !DrawEnable || texture == null ){
-		//	if(!DrawEnable)
-		//		Debug.Log ("Drawflag is false!!");
-		//	if(texture == null)
-		//		Debug.Log("texture is NULL!!");
 			return;
 		}
 		
@@ -126,12 +122,13 @@ public class Tex2DBaseScript : MonoBehaviour {
 		texture = tex;
 	}
 	
-	public void SetUV ( Vector2 s_UVPos , float s_UVWidth, float s_UVHeight){
-		
+	public void SetUV ( Vector2 s_UVPos , float s_UVWidth, float s_UVHeight){	
 		UVPosition = s_UVPos;
 		UVWidth = s_UVWidth;
 		UVHeight = s_UVHeight;
-		
+	}
+	public void SetDepth(int s_Depth){
+		Depth = s_Depth;
 	}
 	
 }
