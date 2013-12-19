@@ -76,6 +76,7 @@ public class SceneControllerADV : MonoBehaviour {
 		}
 		if(shutterPos <= 0.05f){
 			//shutter open!!
+			
 		}
 		//シャッターの初期位置設定
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);

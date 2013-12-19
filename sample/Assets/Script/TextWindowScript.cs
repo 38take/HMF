@@ -46,6 +46,7 @@ public class TextWindowScript : MonoBehaviour {
 		tex2d.SetPos(Position.x,Position.y);
 		tex2d.SetSize(Size.x,Size.y);
 		tex2d.SetUV(UVPosition,UVSize.x,UVSize.y);
+		tex2d.SetDepth(4);
 		//Set Frame
 		MaxFrame = 10;
 		//WinState = 0;

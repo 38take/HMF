@@ -12,15 +12,28 @@ public class TextBoxScript : MonoBehaviour {
 	
 	int strIdx;
 	int charIdx;
+	int charIdx2;
+	int charIdx3;
 	
 	int readCnt;
 	int READCNT;
 	
+	int[] emotionArray;
+	int[] actionArray;
 	int[] balloonArray;
 	int[] balloonSize;
+	//
 	string[] strArray;
+	string[] strArray2;
+	string[] strArray3;
+	//string
 	string renderString;
+	string renderString2;
+	string renderString3;
 	string renderBase;
+	string renderBase2;
+	string renderBase3;
+	
 	bool initialized;
 	bool valid;
 	bool textinsert=false;
@@ -32,16 +45,18 @@ public class TextBoxScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TextBox1 = GameObject.Find("Text1").GetComponent<TextStyleBaseScript>();
-		TextBox1.SetPos(100.0f,500.0f);
+		TextBox1.SetPos(80.0f,280.0f);
 		TextBox2 = GameObject.Find("Text2").GetComponent<TextStyleBaseScript>();
-		TextBox2.SetPos(100.0f,600.0f);
+		TextBox2.SetPos(80.0f,200.0f);
 		TextBox3 = GameObject.Find("Text3").GetComponent<TextStyleBaseScript>();
-		TextBox3.SetPos(100.0f,700.0f);
+		TextBox3.SetPos(80.0f,120.0f);
 		//---------------------------//
 		//パラメータの初期化
 		numStatement 	= 0;
 		strIdx 			= 0;
 		charIdx			= 0;
+		charIdx2		= 0;
+		charIdx3		= 0;
 		readCnt 		= 0;
 		READCNT 		= 2;
 		initialized = false;
@@ -71,8 +86,8 @@ public class TextBoxScript : MonoBehaviour {
 			{
 				actID = int.Parse(split[1]);
 				nextAct = int.Parse(split[2]);
-				Debug.Log("actID"+actID);
-				Debug.Log("nextAct"+nextAct);
+				Debug.Log("actID:"+actID);
+				Debug.Log("nextAct:"+nextAct);
 				break;
 			}
         }
@@ -85,8 +100,9 @@ public class TextBoxScript : MonoBehaviour {
 			tmp = srData.ReadLine();
 			strBase = tmp.Split(';');
 			split = strBase[0].Split(',');
+			
 			data.Add(int.Parse(split[0]));	//Emotion
-			data.Add(int.Parse(split[2]));	//Action
+			data.Add(int.Parse(split[1]));	//Action
 			data.Add(int.Parse(split[2]));	//TextBoxID
 			data.Add(int.Parse(split[3]));	//TextBoxSize
 			data.Add(split[4]);				//Text1
@@ -96,17 +112,24 @@ public class TextBoxScript : MonoBehaviour {
        	srData.Close();
 		//会話データ格納
 		numStatement = (int)(data.Count/7);//セリフ数
-		Debug.Log("talk_num:"+numStatement);
+		//Debug.Log("talk_num:"+numStatement);
+		actionArray		= new int[numStatement];
+		emotionArray	= new int[numStatement];
 		balloonArray 	= new int[numStatement];
+		balloonSize		= new int[numStatement];
 		strArray 		= new string[numStatement];
+		strArray2		= new string[numStatement];
+		strArray3		= new string[numStatement];
 		for(int i=0; i<numStatement; i++)
 		{
 			balloonArray[i] = (int)data[i*7+2];
 			strArray[i] 	= data[i*7+4].ToString();
-			Debug.Log("balloonArray["+i+"]:"+balloonArray[i]);
-			Debug.Log("strArray["+i+"]:"+strArray[i]);
+			strArray2[i]	= data[i*7+5].ToString();
+			strArray3[i]	= data[i*7+6].ToString();
 		}
 		renderBase = strArray[0];//.ToString();
+		renderBase2 = strArray2[0];//.ToString();
+		renderBase3 = strArray3[0];//.ToString();
 		return true;
 	}
 	
@@ -118,17 +141,24 @@ public class TextBoxScript : MonoBehaviour {
 			{
 				if(strIdx < numStatement)
 				{
-					if(string.Compare(renderString, renderBase) == 0)
+					if(string.Compare(renderString3, renderBase3) == 0)
 					{
 						if(Input.GetMouseButtonDown(0))
 						{
 							renderString = "";
+							renderString2 = "";
+							renderString3 = "";
 							strIdx++;
-							if(strIdx < numStatement)
+							if(strIdx < numStatement){
 								renderBase = strArray[strIdx].ToString();
-							else
+								renderBase2 = strArray2[strIdx].ToString();
+								renderBase3 = strArray3[strIdx].ToString();
+							}else{
 								valid = false;
+							}
 							charIdx = 0;
+							charIdx2 = 0;
+							charIdx3 = 0;
 						}
 					}
 					else
@@ -137,14 +167,27 @@ public class TextBoxScript : MonoBehaviour {
 							readCnt--;
 						else
 						{
-							renderString += renderBase.Substring(charIdx, 1);
-							charIdx=charIdx+1;
+							if(string.Compare(renderString,renderBase)!=0){
+								renderString += renderBase.Substring(charIdx, 1);
+								charIdx=charIdx+1;
+							}else if(string.Compare(renderString,renderBase)==0 &&
+								string.Compare(renderString2,renderBase2)!=0){
+								renderString2 += renderBase2.Substring(charIdx2, 1);
+								charIdx2=charIdx2+1;
+							}else if(string.Compare(renderString,renderBase)==0 &&
+								string.Compare(renderString2,renderBase2)==0 &&
+								string.Compare(renderString3,renderBase3)!=0){
+								renderString3 += renderBase3.Substring(charIdx3, 1);
+								charIdx3=charIdx3+1;
+							}
 							readCnt = READCNT;
 						}
 					}
 				
 					//textset
 					TextBox1.SetText(renderString);
+					TextBox2.SetText(renderString2);
+					TextBox3.SetText(renderString3);
 					//Debug.Log("renderString:"+renderString);
 				}
 			}
@@ -166,6 +209,14 @@ public class TextBoxScript : MonoBehaviour {
 		return nextAct;
 	}
 	
+	public int[] GetEmotionArray(){
+		return emotionArray;
+	}
+	
+	public int[] GetActionArray(){
+		return actionArray;
+	}
+	
 	public int[] GetBalloonArray(){
 		return balloonArray;
 	}
@@ -184,6 +235,10 @@ public class TextBoxScript : MonoBehaviour {
 	
 	public void SetTextInsertFlg(bool s_flg){
 		textinsert = s_flg;
+	}
+	
+	public bool GetTextInsertFlg(){
+		return textinsert;
 	}
 }
 

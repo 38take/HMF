@@ -8,10 +8,11 @@ public class TextStyleBaseScript : MonoBehaviour {
 	public Color	color = new Color( 0.2f, 0.2f, 0.2f, 1.0f );
 	public GUIStyle Style = new GUIStyle();
 	public Vector2	Position;
-	public int		Depth = 5;
+	public int		Depth = 3;
 	
 	// Use this for initialization
 	void Start () {
+		Depth = 3;
 	}
 	
 	// Update is called once per frame
@@ -31,7 +32,7 @@ public class TextStyleBaseScript : MonoBehaviour {
 		GUI.color = color;
 		GUI.Label( new Rect( 
 			Position.x 							* DefaultScreen.Par.x, 
-			/*(DefaultScreen.Height-Position.y)*/Position.y	* DefaultScreen.Par.y, 
+			(DefaultScreen.Height-Position.y)	* DefaultScreen.Par.y, 
 			0.0f, 
 			0.0f ),
 			text,
