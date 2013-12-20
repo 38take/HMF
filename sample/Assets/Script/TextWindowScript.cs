@@ -39,7 +39,7 @@ public class TextWindowScript : MonoBehaviour {
 		//Find GameObject
 		tex2d = ((GameObject)GameObject.Find("TextWindow")).GetComponent<Tex2DBaseScript>();
 		//Set Pos & Size & UV
-		Position.x = 0.0f;Position.y = DefaultScreen.Height/2.0f;
+		Position.x = 0.0f;Position.y = (DefaultScreen.Height/2.0f)+40.0f;
 		SetWindowState(0);
 		SetWindowSize(0);
 		SetWindowType(0);
@@ -65,12 +65,13 @@ public class TextWindowScript : MonoBehaviour {
 		case WINDOW_STATE.ON:
 			if(MaxFrame != FrameCount){	
 				Size.x = (MaxSize.x/MaxFrame)*FrameCount;
-				Size.y = (MaxSize.y/MaxFrame)*FrameCount; 
+				Size.y = (MaxSize.y/MaxFrame)*FrameCount;
 				tex2d.SetSize(Size.x,Size.y);
-				FrameCount++;
 			}else{
+				FrameCount=0;
 				WinState = WINDOW_STATE.RUN;
 			}
+			FrameCount++;
 			break;
 		//RUN
 		case WINDOW_STATE.RUN:
@@ -91,6 +92,7 @@ public class TextWindowScript : MonoBehaviour {
 		default:
 			break;
 		}
+		//Debug.Log(WINDOW_STATE);
 	}
 	
 	public void SetFrameCount(int FCount){
@@ -144,20 +146,25 @@ public class TextWindowScript : MonoBehaviour {
 	public void SetWindowSize(int wSize){
 		switch(wSize){
 		case 0:
-			MaxSize.x = DefaultScreen.Width;
+			MaxSize.x = DefaultScreen.Width+50.0f;
 			MaxSize.y = 150.0f;
+	//		Debug.Log ("SetWindowSize: Small");
 			break;
 		case 1:
-			MaxSize.x = DefaultScreen.Width;
-			MaxSize.y = 250.0f;		
+			MaxSize.x = DefaultScreen.Width+50.0f;
+			MaxSize.y = 250.0f;
+	//		Debug.Log ("SetWindowSize: Middle");
 			break;
 		case 2:
-			MaxSize.x = DefaultScreen.Width;
+			MaxSize.x = DefaultScreen.Width+50.0f;
 			MaxSize.y = 350.0f;
+	//		Debug.Log ("SetWindowSize: Big");
 			break;
 		default:
 			break;
 		}
+	//	Debug.Log ("MaxSize.y:"+MaxSize.y);
+		
 	}
 	
 	public void SetWindowType(int wType){	
@@ -180,6 +187,7 @@ public class TextWindowScript : MonoBehaviour {
 		default:
 			break;
 		}
+		tex2d.SetUV(UVPosition,UVSize.x,UVSize.y);
 	}
 	
 }

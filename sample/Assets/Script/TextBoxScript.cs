@@ -22,6 +22,9 @@ public class TextBoxScript : MonoBehaviour {
 	int[] actionArray;
 	int[] balloonArray;
 	int[] balloonSize;
+	
+	int[] InfoWinFlg;
+	int[] InfoContain;
 	//
 	string[] strArray;
 	string[] strArray2;
@@ -45,11 +48,11 @@ public class TextBoxScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		TextBox1 = GameObject.Find("Text1").GetComponent<TextStyleBaseScript>();
-		TextBox1.SetPos(80.0f,280.0f);
+		TextBox1.SetPos(60.0f,275.0f);
 		TextBox2 = GameObject.Find("Text2").GetComponent<TextStyleBaseScript>();
-		TextBox2.SetPos(80.0f,200.0f);
+		TextBox2.SetPos(60.0f,200.0f);
 		TextBox3 = GameObject.Find("Text3").GetComponent<TextStyleBaseScript>();
-		TextBox3.SetPos(80.0f,120.0f);
+		TextBox3.SetPos(60.0f,120.0f);
 		//---------------------------//
 		//パラメータの初期化
 		numStatement 	= 0;
@@ -86,8 +89,8 @@ public class TextBoxScript : MonoBehaviour {
 			{
 				actID = int.Parse(split[1]);
 				nextAct = int.Parse(split[2]);
-				Debug.Log("actID:"+actID);
-				Debug.Log("nextAct:"+nextAct);
+				//Debug.Log("actID:"+actID);
+				//Debug.Log("nextAct:"+nextAct);
 				break;
 			}
         }
@@ -108,6 +111,8 @@ public class TextBoxScript : MonoBehaviour {
 			data.Add(split[4]);				//Text1
 			data.Add(split[5]);				//Text1
 			data.Add(split[6]);				//Text1
+			//data.Add(split[7]);				//InfoWindowFlg
+			//data.Add(split[8]);				//InfoWindowContain			
         }
        	srData.Close();
 		//会話データ格納
@@ -122,7 +127,10 @@ public class TextBoxScript : MonoBehaviour {
 		strArray3		= new string[numStatement];
 		for(int i=0; i<numStatement; i++)
 		{
-			balloonArray[i] = (int)data[i*7+2];
+			emotionArray[i]	= (int)data[i*7+0];
+			actionArray[i]	= (int)data[i*7+1];
+			balloonArray[i]	= (int)data[i*7+2];
+			balloonSize[i]	= (int)data[i*7+3];
 			strArray[i] 	= data[i*7+4].ToString();
 			strArray2[i]	= data[i*7+5].ToString();
 			strArray3[i]	= data[i*7+6].ToString();
@@ -149,8 +157,9 @@ public class TextBoxScript : MonoBehaviour {
 							renderString2 = "";
 							renderString3 = "";
 							strIdx++;
+							textinsert = false;
 							if(strIdx < numStatement){
-								renderBase = strArray[strIdx].ToString();
+								renderBase 	= strArray[strIdx].ToString();
 								renderBase2 = strArray2[strIdx].ToString();
 								renderBase3 = strArray3[strIdx].ToString();
 							}else{
@@ -222,7 +231,7 @@ public class TextBoxScript : MonoBehaviour {
 	}
 	
 	public int[] GetBalloonSizeArray(){
-		return balloonArray;
+		return balloonSize;
 	}
 	
 	public string[] GetStrArray(){

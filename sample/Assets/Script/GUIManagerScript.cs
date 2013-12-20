@@ -21,11 +21,15 @@ public class GUIManagerScript : MonoBehaviour {
 	int 		NumStatement;
 	int[]		TextWindowArray;
 	int[]		TextWindowSizeArray;
-	string[] 	TextString;
+	int[] 		ActionTypeArray;
+	int[]		EmotionTypeArray;
 	//Counter for WAIT
 	int 		SceneCounter = 0;
 	//State of ADV
 	ADVState 	advstate;
+	//ActDataIndex
+	int 		ActIndexCnt;
+	
 	
 	// Use this for initialization
 	void Start () {
@@ -45,63 +49,84 @@ public class GUIManagerScript : MonoBehaviour {
 	void Update () {
 		
 		bool Idle;
-//		if (StartFlg==true){
-			switch(advstate){
-			case ADVState.WAIT:
-				//Wait
-				if(SceneCounter != 40){
-					SceneCounter++;
-				}
-				//Action
-				else{
-					//MasterActScript: SetAction()-SetEmotion-()-SetIdleFlg()
-					MasterManager.SetAction(0);
-					MasterManager.SetEmotion(0);
-					if(ActFlg == false){
-						MasterManager.SetIdleFlg(false);
-						ActFlg = true;
-					}else{
-						IdleFlg = MasterManager.GetIdleFlg();
-						if(IdleFlg==true){
-							//Get Information//
-							NumStatement 		= TextBox.GetNumStatement();
-							TextString 			= TextBox.GetStrArray();
-							TextWindowArray 	= TextBox.GetBalloonArray();
-							TextWindowSizeArray = TextBox.GetBalloonSizeArray();
-							///////////////////
-					
-							advstate = ADVState.PLAY;
-						}
+		switch(advstate){
+			
+		case ADVState.WAIT:
+			//Wait
+			if(SceneCounter != 40){
+				SceneCounter++;
+			}
+			//Action
+			else{
+				//MasterActScript: SetAction()-SetEmotion-()-SetIdleFlg()
+				MasterManager.SetAction(0);
+				MasterManager.SetEmotion(0);
+				if(ActFlg == false){
+					MasterManager.SetIdleFlg(false);
+					ActFlg = true;
+				}else{
+					IdleFlg = MasterManager.GetIdleFlg();
+					if(IdleFlg==true){
+						//Get Information//
+						NumStatement 		= TextBox.GetNumStatement();
+						TextWindowArray 	= TextBox.GetBalloonArray();
+						TextWindowSizeArray = TextBox.GetBalloonSizeArray();
+						ActionTypeArray		= TextBox.GetActionArray();
+						EmotionTypeArray	= TextBox.GetEmotionArray();
+						
+						//for Debug
+		
+						///////////////////
+						ActIndexCnt = 0;
+						
+						advstate = ADVState.PLAY;
 					}
 				}
-				break;
-				case ADVState.PLAY:
-					//if(TextWin.GetWindowState()==0){
-					switch(TextWin.GetWindowState()){
-					case 0:
+			}
+			break;
+			case ADVState.PLAY:
+				//if(TextWin.GetWindowState()==0){
+				switch(TextWin.GetWindowState()){
+				case 0:
+				//Debug.Log ("aaaaa");
+				//Debug.Log("NumStateMent:"+NumStatement);
+				if(ActIndexCnt!=NumStatement){
+					if(MasterManager.GetIdleFlg()==true){
 						//Set Information
-						TextWin.SetWindowState(1);
-						TextWin.SetWindowSize(1);
-						MasterManager.SetAction(0);
-						MasterManager.SetEmotion(3);
+						//Debug.Log("ActIndex:"+ActIndexCnt);
+						//Debug.Log("ActionTypeArray["+ActIndexCnt+"]:"+ActionTypeArray[ActIndexCnt]);
+						//Debug.Log("EmotionTypeArray["+ActIndexCnt+"]:"+EmotionTypeArray[ActIndexCnt]);
+						//Debug.Log("TextWindowArray["+ActIndexCnt+"]:"+TextWindowArray[ActIndexCnt]);
+						//Debug.Log("TextWindowSizeArray["+ActIndexCnt+"]:"+TextWindowSizeArray[ActIndexCnt]);
+						//master
+						MasterManager.SetAction(ActionTypeArray[ActIndexCnt]);
+						MasterManager.SetEmotion(EmotionTypeArray[ActIndexCnt]);
 						MasterManager.SetLoopFlg(true);
 						MasterManager.SetIdleFlg(false);
-						break;
-					case 1:
-						break;
-					case 2:
-						if(TextBox.GetTextInsertFlg()==false){
-					
-						}
-						break;
-					case 3:
-						break;
-					default:
-						break;
+						//testwindow
+						TextWin.SetWindowType(TextWindowArray[ActIndexCnt]);
+						TextWin.SetWindowSize(TextWindowSizeArray[ActIndexCnt]);
+						TextWin.SetWindowState(1);
 					}
-				//}else if(TextWin.GetWindowState()==2){
-				//	TextBox.SetTextInsertFlg(true);
-				//}
+				}
+					break;
+				case 1:
+					TextBox.SetTextInsertFlg(true);
+					break;
+				case 2:
+					
+					if(TextBox.GetTextInsertFlg()==false){
+						MasterManager.SetLoopFlg(false);
+						MasterManager.SetIdleFlg(true);
+						TextWin.SetWindowState(3);
+						ActIndexCnt++;
+					}
+					break;
+				case 3:
+					break;
+				default:
+					break;
+				}
 				break;
 			case ADVState.END:
 			

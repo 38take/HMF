@@ -141,7 +141,7 @@ public class MasterActScript : MonoBehaviour {
 		if(LoopFlg == false){
 			CharaAct = ActorAct.Idle;
 			IdleFlg = true;
-			Debug.Log("IdleFlg is true");
+//			Debug.Log("IdleFlg is true");
 		}
 	}
 	
@@ -151,24 +151,24 @@ public class MasterActScript : MonoBehaviour {
 		case Emotion.Normal:
 			ActorHead.SetUV(new Vector2(0.5f,0.0f),0.25f,1.0f);
 			ActorBody.SetUV(new Vector2(0.0f,0.0f),0.5f,1.0f);
-			Debug.Log("MasterEmotion is Normal.");
+			//Debug.Log("MasterEmotion is Normal.");
 			break;
 		case Emotion.Grad:
 			ActorHead.SetUV(new Vector2(0.25f,0.0f),0.25f,1.0f);
 			ActorBody.SetUV(new Vector2(0.0f,0.0f),0.5f,1.0f);
 			SetMaxFrame(20);
-			Debug.Log("MasterEmotion is Grad.");
+			//Debug.Log("MasterEmotion is Grad.");
 			break;
 		case Emotion.Angry:
 			ActorHead.SetUV(new Vector2(0.0f,0.0f),0.25f,1.0f);
 			ActorBody.SetUV(new Vector2(0.0f,0.0f),0.5f,1.0f);
 			SetMaxFrame(10);
-			Debug.Log("MasterEmotion is Angry.");
+			//Debug.Log("MasterEmotion is Angry.");
 			break;
 		case Emotion.Panic:
 			ActorHead.SetUV(new Vector2(0.75f,0.0f),0.25f,1.0f);
 			ActorBody.SetUV(new Vector2(0.5f,0.0f),0.5f,1.0f);
-			Debug.Log("MasterEmotion is Panic.");
+			//Debug.Log("MasterEmotion is Panic.");
 			SetMaxFrame(10);
 			break;
 		}
