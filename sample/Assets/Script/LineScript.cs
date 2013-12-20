@@ -17,7 +17,7 @@ public class LineScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		transform.position = new Vector3(0.0f, 0.1f, 0.0f);
+		transform.position = new Vector3(0.0f, 0.05f, 0.0f);
 	}
 	
 	public void SetData(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, float width) {

@@ -42,7 +42,7 @@ public class CutEdgeManagerScript : MonoBehaviour {
 	public float MaxWidth;
 	// Use this for initialization
 	void Start () {
-		transform.position = new Vector3(0.0f, 0.15f, 0.0f);
+		transform.position = new Vector3(0.0f, 0.0f, 0.0f);
 	}
 	void Init()
 	{

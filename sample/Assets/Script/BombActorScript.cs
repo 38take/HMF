@@ -52,8 +52,8 @@ public class BombActorScript : MonoBehaviour {
 		timerAdd += (TIMERADD_MAX-timerAdd) * 0.001f;
 		timer += (int)timerAdd;
 		//位置・横向きベクトル算出
-		Vector3 bombPos = SLineManager.CalcPos(SPlayer.m_Timer+timer, 0.0f);
-		Vector3 bombDir = SLineManager.CalcHorizontalDir(SPlayer.m_Timer+timer);
+		Vector3 bombPos = SLineManager.CalcPos((int)SPlayer.m_Timer+timer, 0.0f);
+		Vector3 bombDir = SLineManager.CalcHorizontalDir((int)SPlayer.m_Timer+timer);
 		float lineWidth = SLineManager.GetLineWidth();
 		
 		//パーティクルセット

@@ -4,8 +4,8 @@ using System.Collections;
 public class SceneControllerTitle : MonoBehaviour {
 
 	bool press;
-	Tex2DBaseScript shutterLeft;
-	Tex2DBaseScript shutterRight;
+	Tex2DGUITextureScript shutterLeft;
+	Tex2DGUITextureScript shutterRight;
 	Tex2DBaseScript SBG_Atelier;
 	Tex2DBaseScript SButtonStart;
 	float screenWidth;
@@ -24,15 +24,15 @@ public class SceneControllerTitle : MonoBehaviour {
 		screenHeight = DefaultScreen.Height;//Screen.height;
 		
 		//シャッターの初期設定
-		shutterLeft = ((GameObject)GameObject.Find("ShutterLeft")).GetComponent<Tex2DBaseScript>();
-		shutterLeft.SetSize(screenWidth/2.0f, screenHeight);
+		shutterLeft = ((GameObject)GameObject.Find("ShutterLeft")).GetComponent<Tex2DGUITextureScript>();
+		//shutterLeft.SetSize(screenWidth/2.0f, screenHeight);
 		shutterLeft.SetPos(0.0f, 0.0f);
-		shutterLeft.DrawEnable = true;
+		shutterLeft.SetRenderFlag(true);
 		
-		shutterRight = ((GameObject)GameObject.Find("ShutterRight")).GetComponent<Tex2DBaseScript>();
-		shutterRight.SetSize(screenWidth/2.0f, screenHeight);
+		shutterRight = ((GameObject)GameObject.Find("ShutterRight")).GetComponent<Tex2DGUITextureScript>();
+		//shutterRight.SetSize(screenWidth/2.0f, screenHeight);
 		shutterRight.SetPos(screenWidth/2.0f, 0.0f);
-		shutterRight.DrawEnable = true;
+		shutterRight.SetRenderFlag(true);
 		
 		shutterPos = screenWidth/2.0f;
 		//shutterPos = 0.0f;

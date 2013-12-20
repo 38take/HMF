@@ -29,9 +29,9 @@ public class PlayerScript : MonoBehaviour {
 	public	float			m_Offset;
 	private	float			m_OffsetPrev;
 	private	float			m_OffsetBottom;
-	public	int				m_Timer;
-	private int				m_TimerPrev;
-	private int				m_TimerBottom;
+	public	float			m_Timer;
+	private float			m_TimerPrev;
+	private float			m_TimerBottom;
 	public  int				CreateEdgeSpan;
 	//private CutEdgeScript	SCutEdge;
 	public  bool			CreateCutEdge;
@@ -78,8 +78,8 @@ public class PlayerScript : MonoBehaviour {
 		//TIMERADD_MIN = 1.0f;
 		timer_comp = 0;
 		
-		m_Timer		= 0;
-		m_TimerPrev = m_TimerBottom = 0;
+		m_Timer		= 0.0f;
+		m_TimerPrev = m_TimerBottom = 0.0f;
 		m_Offset	= 0.0f;
 		
 		holdHorizontal = 0;
@@ -94,7 +94,7 @@ public class PlayerScript : MonoBehaviour {
 		{
 			if( !InitFlag )
 			{
-				Vector3 startPos = SLineManager.CalcPos(m_Timer-60, 0);
+				Vector3 startPos = SLineManager.CalcPos((int)m_Timer-60, 0);
 				startPos = new Vector3( startPos.x, startPos.y+3.0f, startPos.z );
 				SCamera.SetStartCameraPos( startPos );
 				InitFlag = true;
@@ -103,7 +103,7 @@ public class PlayerScript : MonoBehaviour {
 			// デバッグ用
 			if(Input.GetKeyDown(KeyCode.F10))
 			{
-				Vector3 lastPos = SLineManager.CalcPos(m_Timer-60, 0);
+				Vector3 lastPos = SLineManager.CalcPos((int)m_Timer-60, 0);
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
@@ -120,7 +120,7 @@ public class PlayerScript : MonoBehaviour {
 			else
 				timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
 			
-			m_Timer += (int)timerAdd;
+			m_Timer += timerAdd;
 			
 			//------------------------------------//
 			//移動
@@ -134,35 +134,39 @@ public class PlayerScript : MonoBehaviour {
 			}
 			if(m_Offset > 1.0f) m_Offset = 1.0f;
 			if(m_Offset < -1.0f) m_Offset = -1.0f;
-			Vector3 basePos = SLineManager.CalcPosWithHitCheck(m_Timer, m_Offset);
+			Vector3 basePos = SLineManager.CalcPosWithHitCheck((int)m_Timer, m_Offset);
 			if(Input.GetMouseButton(0))
 				height += (UPHeight-height)*0.1f;
 			else
 				height += (0.0f-height)*0.1f;
-			transform.position = new Vector3(basePos.x, basePos.y+height, basePos.z);
+			basePos = new Vector3(basePos.x, basePos.y+height, basePos.z);
+			transform.position = basePos;
 			oldMouseX = Input.mousePosition.x;
 			//------------------------------------//
 			//回転処理
 			//向くべき方向を算出
-			int inLineID = SLineManager.GetPlyaerLineID();
-			Vector3 dir = SLineManager.GetLineDirection(inLineID+1)-SLineManager.GetLineDirection(inLineID);
-			dir = Vector3.Normalize(dir);
-			
-	        // モデルのデフォルト向きによって基準ベクトルは任意調整
-			Vector3 vecDefault = new Vector3(1.0f,0.0f,0.0f);
-		
-		        // 0~360の値が欲しいので２倍
-			float rad = Mathf.Atan2(dir.x-vecDefault.x,dir.z-vecDefault.z)*2.0f;
-			float deg = rad * Mathf.Rad2Deg -180.0f;
-			
-		    //一度角度をリセットしてから回転する
-			transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-		    // X軸基準に回す
-			transform.Rotate(310.0f, deg,0);
-			
+	//		int inLineID = SLineManager.GetPlyaerLineID();
+	//		Vector3 dir = SLineManager.GetLineDirection(inLineID+1)-SLineManager.GetLineDirection(inLineID);
+	//		dir = Vector3.Normalize(dir);
+	//		
+	//        // モデルのデフォルト向きによって基準ベクトルは任意調整
+	//		Vector3 vecDefault = new Vector3(1.0f,0.0f,0.0f);
+	//	
+	//	        // 0~360の値が欲しいので２倍
+	//		float rad = Mathf.Atan2(dir.x-vecDefault.x,dir.z-vecDefault.z)*2.0f;
+	//		float deg = rad * Mathf.Rad2Deg -180.0f;
+	//		
+	//	    //一度角度をリセットしてから回転する
+	//		transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+	//	    // X軸基準に回す
+	//		//transform.Rotate(310.0f, deg,0);
+	//		transform.Rotate(90.0f, deg,0);
+	//		
+			//------------------------------------//
+			//終了判定
 			if( SLineManager.isLastpoint() )
 			{
-				Vector3 lastPos = SLineManager.CalcPos(m_Timer-60, 0);
+				Vector3 lastPos = SLineManager.CalcPos((int)m_Timer-60, 0);
 				lastPos = new Vector3( lastPos.x, lastPos.y+3.0f, lastPos.z );
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
@@ -171,9 +175,9 @@ public class PlayerScript : MonoBehaviour {
 			//------------------------------------//
 			//切り口生成
 			if( CreateCutEdge &&
-				m_Timer - m_TimerPrev > CreateEdgeSpan)
+				((int)(m_Timer - m_TimerPrev)) > CreateEdgeSpan)
 			{
-				SCutEdge.AddPoint(SLineManager.CalcPos(m_Timer, m_Offset));
+				SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
 		//		Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
 		//		Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
 		//		Vector3 bottomPos = SLineManager.CalcPos(m_TimerBottom, m_OffsetBottom);
@@ -183,10 +187,10 @@ public class PlayerScript : MonoBehaviour {
 		//		SCutEdge = obj.GetComponent<CutEdgeScript>();
 		//		SCutEdge.SetMesh(currentPos, prevPos, bottomPos);
 				//今のデータを格納
-				m_TimerBottom = m_TimerPrev;
-				m_TimerPrev = m_Timer;
-				m_OffsetBottom = m_OffsetPrev;
-				m_OffsetPrev = m_Offset;
+		//		m_TimerBottom = m_TimerPrev;
+		//		m_TimerPrev = m_Timer;
+		//		m_OffsetBottom = m_OffsetPrev;
+		//		m_OffsetPrev = m_Offset;
 			}
 			
 		}
