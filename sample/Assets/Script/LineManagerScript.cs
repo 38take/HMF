@@ -19,6 +19,7 @@ public class LineManagerScript : MonoBehaviour {
         LINEWIDTH,
 		LINE,
 		TARGET,
+		STOPPOINT,
 		NUM_STATE,
 	};
 	//各ラインのターゲット配列
@@ -42,10 +43,12 @@ public class LineManagerScript : MonoBehaviour {
 	PlayerScript SPlayer;	
 	//ステージの構成データ
 	int stageID;
-	Vector3[] lineData;
-	int[]	  lineKind;
-	Vector3[] lineDir;
+	Vector3[] 	lineData;
+	int[]	  	lineKind;
+	Vector3[] 	lineDir;
 	TARGET_ARRAY[] targetArray;
+	int[]		stopLineArray;
+	int 		lineIndex;
 	//各種パラメータ
 	int numPoint; 
 	int numTarget;
@@ -132,6 +135,7 @@ public class LineManagerScript : MonoBehaviour {
 		wherePlayer = 0;
 		wherePlayerOld = 0;
 		lineID = tNum = tCnt = -1;
+		lineIndex = 0;
 		//lineWidth = 3.0f;
 		lastPoint = false;
 		playerOldOffset = new Vector3(0.0f, 0.0f, 0.0f);
@@ -143,14 +147,11 @@ public class LineManagerScript : MonoBehaviour {
 		stageID = 1;
 		switch(gamesys.GetActID())
 		{
-		case 1:		stageID = 1;
-			break;
-		case 5:		stageID = 2;
-			break;
-		case 9:		stageID = 3;
-			break;
-		default:	stageID = 1;
-			break;
+		case 1:			stageID = 0; 	break;	//チュートリアル
+		case 2:			stageID = 1;	break;	//ステージ１
+		case 7:			stageID = 2;	break;	//ステージ２
+		case 12:		stageID = 3;	break;	//ステージ３
+		default:		stageID = 1;	break;
 		}
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage/stage"+stageID+".txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
@@ -235,6 +236,11 @@ public class LineManagerScript : MonoBehaviour {
 					data.Clear();
 					break;
 				}
+				if(split[0] ==	"StopPoint")
+				{
+                    state = (char)STATE.STOPPOINT;
+                    break;
+				}
 				//ラインID取得
 				if(lineID < 0){
 					lineID = int.Parse(split[0]);
@@ -276,6 +282,20 @@ public class LineManagerScript : MonoBehaviour {
 					tNum = -1;
 				}
 				break;
+			case (char)STATE.STOPPOINT:
+				if(split[0] == "EOF")
+				{
+					stopLineArray = new int[data.Count];
+					for(int i=0; i<data.Count; i++)
+					{
+						stopLineArray[i] = (int)data[i];
+					}
+					data.Clear();
+					break;
+				}
+				//数値を格納
+				data.Add(int.Parse(split[0]));
+				break;
 				
 			case (char)STATE.NUM_STATE:
 				if(split[0] == "LineWidth")
@@ -302,7 +322,9 @@ public class LineManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(wherePlayer > stopLineArray[lineIndex])
+			lineIndex++;
+			
 	}
 	//ライン上の位置における横向きベクトル算出
 	public Vector3 CalcHorizontalDir(int timer)
@@ -398,7 +420,15 @@ public class LineManagerScript : MonoBehaviour {
 		//位置確定
 		ret = basePos + dir * offset * lineWidth;
 		
+		//停止属性のラインまで来たらプレイヤーを停止(チュートリアル用)
 		wherePlayer = lineIdx;
+		if(stopLineArray != null && wherePlayer == stopLineArray[lineIndex])
+		{
+			SPlayer.Stop();
+			//会話スタート
+			
+			lineIndex++;
+		}
 		playerOffset = new Vector3(length, offset, 0.0f);
 		HitCheckPlayerWithTarget();
 		

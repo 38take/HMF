@@ -56,7 +56,8 @@ public class GameSystemScript : MonoBehaviour {
 	}
 	public void SetScore(int id, int value)
 	{
-		score[id] = value;
+		if(id >= 0)
+			score[id] = value;
 	}
 	
 	public bool isValid()

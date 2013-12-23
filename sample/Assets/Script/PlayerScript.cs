@@ -35,6 +35,7 @@ public class PlayerScript : MonoBehaviour {
 	public  int				CreateEdgeSpan;
 	//private CutEdgeScript	SCutEdge;
 	public  bool			CreateCutEdge;
+	private bool			stop = false;
 	
 	//リザルト用パラメータ
 	int numBomb;
@@ -108,40 +109,55 @@ public class PlayerScript : MonoBehaviour {
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 			}
-
-			//------------------------------------//
-			//集中モード処理
-			if(	Input.GetMouseButton(1) &&
-				ConcentrateGauge.isExist())
+			//
+			if(stop)
 			{
-				timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
-				ConcentrateGauge.AddConcentrate(-1.0f);
+				if(Input.GetMouseButtonUp(0))
+					stop = false;
 			}
 			else
-				timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
-			
-			m_Timer += timerAdd;
-			
-			//------------------------------------//
-			//移動
-			float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
-			if(holdHorizontal <= 0)
-				m_Offset += transX;
-			else
 			{
-				holdHorizontal--;
-				Debug.Log(holdHorizontal);
+				//------------------------------------//
+				//集中モード処理
+				if(	Input.GetMouseButton(1) &&
+					ConcentrateGauge.isExist())
+				{
+					timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
+					ConcentrateGauge.AddConcentrate(-1.0f);
+				}
+				else
+					timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
+				
+				m_Timer += timerAdd;
+				
+				//------------------------------------//
+				//移動
+				float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
+				if(holdHorizontal <= 0)
+					m_Offset += transX;
+				else
+				{
+					holdHorizontal--;
+					Debug.Log(holdHorizontal);
+				}
+				if(m_Offset > 1.0f) m_Offset = 1.0f;
+				if(m_Offset < -1.0f) m_Offset = -1.0f;
+				Vector3 basePos = SLineManager.CalcPosWithHitCheck((int)m_Timer, m_Offset);
+				if(Input.GetMouseButton(0))
+					height += (UPHeight-height)*0.1f;
+				else
+					height += (0.0f-height)*0.1f;
+				basePos = new Vector3(basePos.x, basePos.y+height, basePos.z);
+				transform.position = basePos;
+				oldMouseX = Input.mousePosition.x;
+				//------------------------------------//
+				//切り口生成
+				if( CreateCutEdge && ((int)(m_Timer - m_TimerPrev)) > CreateEdgeSpan)
+				{
+					SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
+					m_TimerPrev = m_Timer;
+				}
 			}
-			if(m_Offset > 1.0f) m_Offset = 1.0f;
-			if(m_Offset < -1.0f) m_Offset = -1.0f;
-			Vector3 basePos = SLineManager.CalcPosWithHitCheck((int)m_Timer, m_Offset);
-			if(Input.GetMouseButton(0))
-				height += (UPHeight-height)*0.1f;
-			else
-				height += (0.0f-height)*0.1f;
-			basePos = new Vector3(basePos.x, basePos.y+height, basePos.z);
-			transform.position = basePos;
-			oldMouseX = Input.mousePosition.x;
 			//------------------------------------//
 			//回転処理
 			//向くべき方向を算出
@@ -171,26 +187,6 @@ public class PlayerScript : MonoBehaviour {
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 				
-			}
-			//------------------------------------//
-			//切り口生成
-			if( CreateCutEdge &&
-				((int)(m_Timer - m_TimerPrev)) > CreateEdgeSpan)
-			{
-				SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
-		//		Vector3 currentPos = SLineManager.CalcPos(m_Timer, m_Offset);
-		//		Vector3 prevPos = SLineManager.CalcPos(m_TimerPrev, m_OffsetPrev);
-		//		Vector3 bottomPos = SLineManager.CalcPos(m_TimerBottom, m_OffsetBottom);
-		//		if(m_TimerPrev > 0.0f)
-		//			SCutEdge.AdjustMesh(currentPos, prevPos);
-		//		GameObject obj = (GameObject)Instantiate(obj_Edge, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-		//		SCutEdge = obj.GetComponent<CutEdgeScript>();
-		//		SCutEdge.SetMesh(currentPos, prevPos, bottomPos);
-				//今のデータを格納
-		//		m_TimerBottom = m_TimerPrev;
-		//		m_TimerPrev = m_Timer;
-		//		m_OffsetBottom = m_OffsetPrev;
-		//		m_OffsetPrev = m_Offset;
 			}
 			
 		}
@@ -241,6 +237,9 @@ public class PlayerScript : MonoBehaviour {
 	//ゲッタ
 	public int GetNumBomb(){	return numBomb;	}
 	public int GetNumUp(){	return upCnt;	}
+	//停止・移動
+	public void Stop()	{	stop = true;	}
+	public void Move()	{	stop = false;	}
 	
 	private void OnCollisionEnter(Collision collision)
 	{
