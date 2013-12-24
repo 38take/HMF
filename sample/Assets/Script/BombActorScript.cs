@@ -15,10 +15,15 @@ public class BombActorScript : MonoBehaviour {
 	GameObject objR;
 	GameObject objL;
 	
+	
 	//切り抜きスタンプ
 	public	GameObject	obj_Stamp;
 	int stampCntLeft;
 	int	stampCntRight;
+	//エフェクト
+	public	GameObject	effect_Cut;
+	int effectCntLeft;
+	int effectCntRight;
 	
 	//パラメータ
 	int timer;
@@ -28,18 +33,20 @@ public class BombActorScript : MonoBehaviour {
 	void Start () {
 		SLineManager = ((GameObject)GameObject.Find("LineManager")).GetComponent<LineManagerScript>();
 		SPlayer		 = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
-		objR = (GameObject)Instantiate(obj_RightEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-		objL = (GameObject)Instantiate(obj_LeftEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-		SRightEffect = objR.GetComponent<BillboardScript>();
-		SLeftEffect = objL.GetComponent<BillboardScript>();
+	//	objR = (GameObject)Instantiate(obj_RightEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+	//	objL = (GameObject)Instantiate(obj_LeftEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+	//	SRightEffect = objR.GetComponent<BillboardScript>();
+	//	SLeftEffect = objL.GetComponent<BillboardScript>();
 		//パラメータ初期化
 		timer 			= 0;
 		timerAdd 	 	= 1.0f;
 		TIMERADD_MAX 	= 5.0f;
 		
 		//乱数初期化
-		stampCntLeft = 0;
-		stampCntRight = 0;
+		stampCntLeft 	= 0;
+		stampCntRight 	= 0;
+		effectCntLeft 	= Random.Range(10, 20);
+		effectCntRight 	= Random.Range(10, 20);
 		
 		//カメラ揺らす
 		CameraScript SCamera = ((GameObject)GameObject.Find("CameraMain")).GetComponent<CameraScript>();
@@ -57,26 +64,47 @@ public class BombActorScript : MonoBehaviour {
 		float lineWidth = SLineManager.GetLineWidth();
 		
 		//パーティクルセット
-		SRightEffect.SetPosition(bombPos+(bombDir*lineWidth));
-		SLeftEffect.SetPosition(bombPos-(bombDir*lineWidth));
+	//	SRightEffect.SetPosition(bombPos+(bombDir*lineWidth));
+	//	SLeftEffect.SetPosition(bombPos-(bombDir*lineWidth));
 		
 		//スタンプを張り付ける
-		GameObject obj;
+		GameObject objSR;
+		GameObject objSL;
 		if(stampCntRight > 0)
 			stampCntRight--;
 		else
 		{ 
-			obj = (GameObject)Instantiate(obj_Stamp, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-			stampCntRight = Random.Range(100, 150);
+			objSR = (GameObject)Instantiate(obj_Stamp, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			stampCntRight = Random.Range(10, 20);
 		}
 		if(stampCntLeft > 0)
 			stampCntLeft--;
 		else
 		{ 
-			obj = (GameObject)Instantiate(obj_Stamp, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-			stampCntLeft = Random.Range(100, 150);
+			objSL = (GameObject)Instantiate(obj_Stamp, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			stampCntLeft = Random.Range(10, 20);
+		}
+		//エフェクトを生成する
+		GameObject objER;
+		GameObject objEL;
+		if(effectCntRight > 0)
+			effectCntRight--;
+		else
+		{ 
+			objER = (GameObject)Instantiate(effect_Cut, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			effectCntRight = Random.Range(10, 20);
+			Destroy(objER, 1.0f);
+		}
+		if(effectCntLeft > 0)
+			effectCntLeft--;
+		else
+		{ 
+			objEL = (GameObject)Instantiate(effect_Cut, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			effectCntLeft = Random.Range(10, 20);
+			Destroy(objEL, 1.0f);
 		}
 		
+		//タイマーが規定値を超えるとDestroy
 		if(timer > 200)
 		{
 			DestroyObject(objR);

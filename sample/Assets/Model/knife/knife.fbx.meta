@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 7bd9094c232695c4393278dd74729c09
+guid: 63a307ab69c56ce4496d13c9a9f2289b
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: pCube1
-    100002: pCylinder1
-    100004: //RootNode
-    400000: pCube1
-    400002: pCylinder1
-    400004: //RootNode
+    100000: //RootNode
+    100002: pCube1
+    100004: pCylinder1
+    400000: //RootNode
+    400002: pCube1
+    400004: pCylinder1
     2300000: pCube1
     2300002: pCylinder1
     3300000: pCube1
@@ -32,7 +32,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: .300000012
+    globalScale: .100000001
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

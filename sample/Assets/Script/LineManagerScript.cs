@@ -322,7 +322,7 @@ public class LineManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(wherePlayer > stopLineArray[lineIndex])
+		if(stopLineArray != null && lineIndex < stopLineArray.Length && wherePlayer > stopLineArray[lineIndex])
 			lineIndex++;
 			
 	}
@@ -422,7 +422,7 @@ public class LineManagerScript : MonoBehaviour {
 		
 		//停止属性のラインまで来たらプレイヤーを停止(チュートリアル用)
 		wherePlayer = lineIdx;
-		if(stopLineArray != null && wherePlayer == stopLineArray[lineIndex])
+		if(stopLineArray != null && lineIndex < stopLineArray.Length && wherePlayer == stopLineArray[lineIndex])
 		{
 			SPlayer.Stop();
 			//会話スタート

@@ -64,7 +64,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .555958092, g: .83088237, b: .557854056, a: 1}
+        second: {r: .555958092, g: .83088237, b: .557854056, a: .501960814}
       data:
         first:
           name: _SpecularColor

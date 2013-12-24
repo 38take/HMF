@@ -37,6 +37,18 @@ public class PlayerScript : MonoBehaviour {
 	public  bool			CreateCutEdge;
 	private bool			stop = false;
 	
+	public bool				MoveByAngle = false;
+	public float			MaxAngle = 45.0f;
+	public float			MaxSlideSpeed = 1.0f;
+	private float			angle = 0.0f;
+	
+	public bool 			ExistSpeed = false;
+	public float			MaxSpeed = 1.0f;
+	public float			MinSpeed = 0.1f;
+	private float			speed;
+	private float			speedValue;
+	
+	
 	//リザルト用パラメータ
 	int numBomb;
 	
@@ -49,7 +61,6 @@ public class PlayerScript : MonoBehaviour {
 	}
 	public enum ACHIEVEMENT_FLAG
 	{
-		
 		NUM_ACHIEVEMENT
 	};
 	
@@ -82,6 +93,9 @@ public class PlayerScript : MonoBehaviour {
 		m_Timer		= 0.0f;
 		m_TimerPrev = m_TimerBottom = 0.0f;
 		m_Offset	= 0.0f;
+		
+		speed = 1.0f;
+		speedValue = 1.0f;
 		
 		holdHorizontal = 0;
 		
@@ -119,6 +133,7 @@ public class PlayerScript : MonoBehaviour {
 			{
 				//------------------------------------//
 				//集中モード処理
+				float addValue;
 				if(	Input.GetMouseButton(1) &&
 					ConcentrateGauge.isExist())
 				{
@@ -127,14 +142,30 @@ public class PlayerScript : MonoBehaviour {
 				}
 				else
 					timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
+				addValue = timerAdd;
+				if(ExistSpeed)
+				{
+					speed += (speedValue - speed) * 0.1f;
+					addValue *= speed;
+				}
 				
-				m_Timer += timerAdd;
+				m_Timer += addValue;
 				
 				//------------------------------------//
 				//移動
 				float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
+				//ペナルティ食らってなければ移動
 				if(holdHorizontal <= 0)
-					m_Offset += transX;
+				{
+					angle += transX*50.0f;
+					if(angle > MaxAngle) angle = MaxAngle;
+					if(angle <-MaxAngle) angle = -MaxAngle;
+					//角度で制御するか判定
+					if(MoveByAngle)
+						m_Offset += MaxSlideSpeed * (angle / MaxAngle);
+					else
+						m_Offset += transX;
+				}
 				else
 				{
 					holdHorizontal--;
@@ -161,23 +192,24 @@ public class PlayerScript : MonoBehaviour {
 			//------------------------------------//
 			//回転処理
 			//向くべき方向を算出
-	//		int inLineID = SLineManager.GetPlyaerLineID();
-	//		Vector3 dir = SLineManager.GetLineDirection(inLineID+1)-SLineManager.GetLineDirection(inLineID);
-	//		dir = Vector3.Normalize(dir);
-	//		
-	//        // モデルのデフォルト向きによって基準ベクトルは任意調整
-	//		Vector3 vecDefault = new Vector3(1.0f,0.0f,0.0f);
-	//	
-	//	        // 0~360の値が欲しいので２倍
-	//		float rad = Mathf.Atan2(dir.x-vecDefault.x,dir.z-vecDefault.z)*2.0f;
-	//		float deg = rad * Mathf.Rad2Deg -180.0f;
-	//		
-	//	    //一度角度をリセットしてから回転する
-	//		transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
-	//	    // X軸基準に回す
-	//		//transform.Rotate(310.0f, deg,0);
-	//		transform.Rotate(90.0f, deg,0);
-	//		
+			int inLineID = SLineManager.GetPlyaerLineID();
+			Vector3 dir = SLineManager.GetLineStartPoint(inLineID+1)-SLineManager.GetLineStartPoint(inLineID);
+			dir = Vector3.Normalize(dir);
+			
+	        // モデルのデフォルト向きによって基準ベクトルは任意調整
+			Vector3 vecDefault = new Vector3(1.0f,0.0f,0.0f);
+		
+		        // 0~360の値が欲しいので２倍
+			float rad = Mathf.Atan2(dir.x-vecDefault.x,dir.z-vecDefault.z)*2.0f;
+			float deg = rad * Mathf.Rad2Deg -180.0f;
+			
+		    //一度角度をリセットしてから回転する
+			transform.rotation = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+		    // X軸基準に回す
+			transform.Rotate(0, deg, 0);
+			transform.Rotate(angle, 0, 0);
+			transform.Rotate(0, 0, 10.0f + (MaxAngle-10.0f)*(speed / MaxSpeed) );
+			
 			//------------------------------------//
 			//終了判定
 			if( SLineManager.isLastpoint() )
@@ -217,6 +249,13 @@ public class PlayerScript : MonoBehaviour {
 	public void CalcCombo(bool hitFlg)
 	{
 		SCombo.Notice(hitFlg);
+		SCamera.CalcDistance(hitFlg);
+		//速度計算
+		if(hitFlg)
+			speedValue += (MaxSpeed - (MaxSpeed - speedValue)) * 0.01f;
+		else 
+			speedValue = MinSpeed;
+		if(speedValue > MaxSpeed) speedValue = MaxSpeed;
 	}
 	//スコア計算
 	public void CalcScore(int score)

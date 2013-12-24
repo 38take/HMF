@@ -41,6 +41,7 @@ MonoBehaviour:
   obj_RightEffect: {fileID: 100000, guid: fcc7e758ab4306c43a143d0394e5f021, type: 2}
   obj_LeftEffect: {fileID: 100000, guid: fcc7e758ab4306c43a143d0394e5f021, type: 2}
   obj_Stamp: {fileID: 100000, guid: 42463a1495000d14aa18fb25f1883d47, type: 2}
+  effect_Cut: {fileID: 100000, guid: fc92949aa9a1a9740b1a72b5d272abba, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

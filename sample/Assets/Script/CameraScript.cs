@@ -11,6 +11,10 @@ public class CameraScript : MonoBehaviour {
 	private	Quaternion		StartRota, EndRota;
 	private	float			Rota_timer;
 	private float			offset;
+	public 	float 			MaxDistance = 90.0f;
+	public 	float 			MinDistance = 30.0f;
+	private float           distanceValue = 70.0f;
+	private float			distance = 70.0f;
 	
 	Vector3	shake;
 	bool	shakeFlg;
@@ -53,7 +57,7 @@ public class CameraScript : MonoBehaviour {
 				RelayPos	= transform.position;
 				workPos		= transform.position;
 								
-				transform.position = SLineManager.CalcPos(((int)SPlayerScript.m_Timer)-60, 0);
+				transform.position = SLineManager.CalcPos(((int)SPlayerScript.m_Timer)-(int)distance, 0);
 				transform.position = new Vector3(	transform.position.x,
 													transform.position.y+3.0f,
 													transform.position.z );
@@ -95,10 +99,13 @@ public class CameraScript : MonoBehaviour {
 			TargetPos = new Vector3(TargetPos.x, TargetPos.y+shake.y, TargetPos.z);
 				
 			// 現在の刃の座標から数秒前の位置にカメラをセットする
-			transform.position = SLineManager.CalcPos(((int)SPlayerScript.m_Timer-60), shake.x);
+			distance += (distanceValue-distance) * 0.1f;
+			transform.position = SLineManager.CalcPos(((int)SPlayerScript.m_Timer-(int)distance), shake.x);
 			transform.position = new Vector3(	transform.position.x,
-												transform.position.y+3.0f+shake.y,
+												transform.position.y+1.0f+(3.0f*(distance/MaxDistance))+shake.y,
 												transform.position.z );
+			//注視点の算出
+			TargetPos = SLineManager.CalcPos((int)SPlayerScript.m_Timer+(int)(MaxDistance-distance), shake.x);
 			transform.LookAt(TargetPos);
 			
 			break;
@@ -117,10 +124,22 @@ public class CameraScript : MonoBehaviour {
 				timer = 0;
 			}
 			break;
-			
 		}
 	}
 
+	//Playerとの距離を計算
+	public void CalcDistance(bool hit)
+	{
+		if(hit)
+		{
+			distanceValue += (MaxDistance - (MaxDistance-distanceValue)) * 0.1f;
+			if(distanceValue > MaxDistance) distanceValue = MaxDistance;
+		}
+		else
+		{
+			distanceValue = MinDistance;
+		}
+	}
 	// 直線地点補間
 	public float	PointInterpolationLerp( Vector3 start_pos, Vector3 end_pos, float MOVE_TIME )
 	{
