@@ -9,6 +9,7 @@ public class GameSystemScript : MonoBehaviour {
 	private int actID;
 	private int lastAct;
 	private int[] score;
+	private String nextScene;
 	
 	// Use this for initialization
 	void Start () {
@@ -24,6 +25,33 @@ public class GameSystemScript : MonoBehaviour {
 			score[2] = int.Parse(sr.ReadLine());
             }
        	sr.Close();
+		//次のシーンIDを確認
+		string[] strBase;
+		string[] split;
+		string   tmp;
+        fi = new FileInfo(Application.dataPath+"/GameData/act.txt");
+        sr = new StreamReader(fi.OpenRead());
+		int nextSceneID = 0;
+        while( sr.Peek() != -1 ){
+			tmp = sr.ReadLine();
+			strBase = tmp.Split(';');
+			split = strBase[0].Split(',');
+			if(int.Parse(split[0]) == actID)
+			{
+				nextSceneID = int.Parse(split[3]);
+				break;
+			}
+        }
+       	sr.Close();
+		switch(nextSceneID)
+		{
+		case 0:	nextScene = "Adventure";
+			break;
+		case 1:	nextScene = "Play";
+			break;
+		case 2:	nextScene = "Result";
+			break;
+		}
 		
 		valid = true;
 	}
@@ -58,6 +86,10 @@ public class GameSystemScript : MonoBehaviour {
 	{
 		if(id >= 0)
 			score[id] = value;
+	}
+	public string GetNextScene()
+	{
+		return nextScene;
 	}
 	
 	public bool isValid()

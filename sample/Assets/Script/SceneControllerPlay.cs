@@ -66,15 +66,9 @@ public class SceneControllerPlay : MonoBehaviour {
 			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 			gamesys.SetScore(SLineManager.GetStageID()-1, score);
 			if(gamesys.GetActID() == 1)
-			{
-				Application.LoadLevel("Play");
-				gamesys.SystemOutPut(1);
-			}
-			else
-			{
-				Application.LoadLevel("Adventure");
-				gamesys.SystemOutPut(nextAct);
-			}
+				nextAct = 1;
+			Application.LoadLevel(gamesys.GetNextScene());
+			gamesys.SystemOutPut(nextAct);
 		}
 		//シャッターの移動
 		if(press)

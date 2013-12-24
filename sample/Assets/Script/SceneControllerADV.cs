@@ -50,16 +50,18 @@ public class SceneControllerADV : MonoBehaviour {
 		if(dummyLoadCnt > 10)
 		{
 			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			if(gamesys.isLastAct())
-			{
-				Application.LoadLevel("Result");
-				gamesys.SystemOutPut(StextBox.GetNextAct());
-			}
-			else
-			{
-				Application.LoadLevel("Play");
-				gamesys.SystemOutPut(StextBox.GetNextAct());
-			}
+			Application.LoadLevel(gamesys.GetNextScene());
+			gamesys.SystemOutPut(StextBox.GetNextAct());
+			//if(gamesys.isLastAct())
+			//{
+			//	Application.LoadLevel("Result");
+			//	gamesys.SystemOutPut(StextBox.GetNextAct());
+			//}
+			//else
+			//{
+			//	Application.LoadLevel("Play");
+			//	gamesys.SystemOutPut(StextBox.GetNextAct());
+			//}
 		}
 		//シャッターの移動
 		if(press)

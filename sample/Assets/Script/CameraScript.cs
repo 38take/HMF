@@ -87,7 +87,7 @@ public class CameraScript : MonoBehaviour {
 			//プレイヤーの左右移動に合わせて動く
 			if(followCamera)
 			{
-				offset += ( SPlayerScript.m_Offset - offset )*0.1f;
+				offset += ( SPlayerScript.m_Offset - offset )*0.2f;
 				shake.x += offset;
 			}
 			// 刃の座標を求める
