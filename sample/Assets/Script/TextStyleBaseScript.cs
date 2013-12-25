@@ -26,6 +26,7 @@ public class TextStyleBaseScript : MonoBehaviour {
 		}
 		
 		GUIStyle style = new GUIStyle( Style );
+		style.fontSize = (int)45.0f;
 		style.fontSize = (int)((float)style.fontSize * DefaultScreen.FontPar);
 		
 		GUI.depth = Depth;

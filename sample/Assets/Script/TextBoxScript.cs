@@ -36,6 +36,8 @@ public class TextBoxScript : MonoBehaviour {
 	string renderBase;
 	string renderBase2;
 	string renderBase3;
+	//outflg
+	bool[] outflag;
 	
 	bool initialized;
 	bool valid;
@@ -77,6 +79,7 @@ public class TextBoxScript : MonoBehaviour {
 		//データIDを取得
 		GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 		int dataID = gamesys.GetActID();
+		Debug.Log("dataID:"+dataID);
 		//会話IDを取得
         FileInfo fi = new FileInfo(Application.dataPath+"/GameData/act.txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
@@ -111,12 +114,13 @@ public class TextBoxScript : MonoBehaviour {
 			data.Add(split[4]);				//Text1
 			data.Add(split[5]);				//Text1
 			data.Add(split[6]);				//Text1
-			//data.Add(split[7]);				//InfoWindowFlg
-			//data.Add(split[8]);				//InfoWindowContain			
+			data.Add(int.Parse(split[7]));				//InfoWindowFlg
+			data.Add(int.Parse(split[8]));				//InfoWindowContain	
+			data.Add(int.Parse(split[9]));				//OutFlag
         }
        	srData.Close();
 		//会話データ格納
-		numStatement = (int)(data.Count/7);//セリフ数
+		numStatement = (int)(data.Count/10);//セリフ数
 		//Debug.Log("talk_num:"+numStatement);
 		actionArray		= new int[numStatement];
 		emotionArray	= new int[numStatement];
@@ -125,15 +129,29 @@ public class TextBoxScript : MonoBehaviour {
 		strArray 		= new string[numStatement];
 		strArray2		= new string[numStatement];
 		strArray3		= new string[numStatement];
+		InfoWinFlg		= new int[numStatement];
+		InfoContain		= new int[numStatement];
+		outflag			= new bool[numStatement];
+		
 		for(int i=0; i<numStatement; i++)
 		{
-			emotionArray[i]	= (int)data[i*7+0];
-			actionArray[i]	= (int)data[i*7+1];
-			balloonArray[i]	= (int)data[i*7+2];
-			balloonSize[i]	= (int)data[i*7+3];
-			strArray[i] 	= data[i*7+4].ToString();
-			strArray2[i]	= data[i*7+5].ToString();
-			strArray3[i]	= data[i*7+6].ToString();
+			emotionArray[i]	= (int)data[i*10+0];
+			actionArray[i]	= (int)data[i*10+1];
+			balloonArray[i]	= (int)data[i*10+2];
+			balloonSize[i]	= (int)data[i*10+3];
+			strArray[i] 	= data[i*10+4].ToString();
+			strArray2[i]	= data[i*10+5].ToString();
+			strArray3[i]	= data[i*10+6].ToString();
+			InfoWinFlg[i]	= (int)data[i*10+7];
+			InfoContain[i]	= (int)data[i*10+8];
+			if((int)data[i*10+9]==0){
+				outflag[i] = false;
+			}
+			else{
+				outflag[i] = true;
+			}
+			//Debug.Log("OutFlag["+i+"]:"+outflag[i]);
+
 		}
 		renderBase = strArray[0];//.ToString();
 		renderBase2 = strArray2[0];//.ToString();
@@ -145,6 +163,26 @@ public class TextBoxScript : MonoBehaviour {
 	void Update () {
 		if(initialized)
 		{
+			switch(balloonSize[strIdx]){
+			case 0:
+				TextBox1.SetPos(60,280);
+				TextBox2.SetPos(60,260);
+				TextBox3.SetPos(60,240);
+				break;
+			case 1:
+				TextBox1.SetPos(60,270);
+				TextBox2.SetPos(60,230);
+				TextBox3.SetPos(60,190);
+				break;
+			case 2:
+				TextBox1.SetPos(60,250);
+				TextBox2.SetPos(60,210);
+				TextBox3.SetPos(60,170);
+				break;
+			default:
+				Debug.Log("Fukidashi No is Nothing!");
+				break;
+			}
 			if(textinsert == true)
 			{
 				if(strIdx < numStatement)
@@ -156,6 +194,9 @@ public class TextBoxScript : MonoBehaviour {
 							renderString = "";
 							renderString2 = "";
 							renderString3 = "";
+							renderBase = "";
+							renderBase2 = "";
+							renderBase3 = "";
 							strIdx++;
 							textinsert = false;
 							if(strIdx < numStatement){
@@ -163,7 +204,9 @@ public class TextBoxScript : MonoBehaviour {
 								renderBase2 = strArray2[strIdx].ToString();
 								renderBase3 = strArray3[strIdx].ToString();
 							}else{
+								strIdx = 0;
 								valid = false;
+								initialized = false;
 							}
 							charIdx = 0;
 							charIdx2 = 0;
@@ -179,11 +222,13 @@ public class TextBoxScript : MonoBehaviour {
 							if(string.Compare(renderString,renderBase)!=0){
 								renderString += renderBase.Substring(charIdx, 1);
 								charIdx=charIdx+1;
-							}else if(string.Compare(renderString,renderBase)==0 &&
+							}
+							else if(string.Compare(renderString,renderBase)==0 &&
 								string.Compare(renderString2,renderBase2)!=0){
 								renderString2 += renderBase2.Substring(charIdx2, 1);
 								charIdx2=charIdx2+1;
-							}else if(string.Compare(renderString,renderBase)==0 &&
+							}
+							else if(string.Compare(renderString,renderBase)==0 &&
 								string.Compare(renderString2,renderBase2)==0 &&
 								string.Compare(renderString3,renderBase3)!=0){
 								renderString3 += renderBase3.Substring(charIdx3, 1);
@@ -191,6 +236,10 @@ public class TextBoxScript : MonoBehaviour {
 							}
 							readCnt = READCNT;
 						}
+						//Debug.Log("CharIDX:"+charIdx);
+						//Debug.Log("CharIDX2:"+charIdx2);
+						//Debug.Log("CharIDX3:"+charIdx3);
+						//Debug.Log (renderString2);
 					}
 				
 					//textset
@@ -249,5 +298,10 @@ public class TextBoxScript : MonoBehaviour {
 	public bool GetTextInsertFlg(){
 		return textinsert;
 	}
+	
+	public bool[] GetOutFlag(){
+		return outflag;
+	}
 }
+
 

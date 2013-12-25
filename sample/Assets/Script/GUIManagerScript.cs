@@ -12,6 +12,8 @@ public class GUIManagerScript : MonoBehaviour {
 	MasterActScript 	MasterManager;
 	TextBoxScript		TextBox;
 	TextWindowScript 	TextWin;
+	FileOperationScript	FileOpe;
+	InfoWindowManager	InfoWin;
 	ActorAct 			Act;
 	bool SceneStartFlg 	= false;
 	bool ActFlg 		= false;
@@ -37,12 +39,15 @@ public class GUIManagerScript : MonoBehaviour {
 		MasterManager 	= ((GameObject)GameObject.Find("GUIManager")).GetComponent<MasterActScript>();
 		TextWin 		= ((GameObject)GameObject.Find("GUIManager")).GetComponent<TextWindowScript>();
 		TextBox 		= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();	
+		FileOpe			= ((GameObject)GameObject.Find("FileManager")).GetComponent<FileOperationScript>();
+		InfoWin			= ((GameObject)GameObject.Find("InfoWindowManager")).GetComponent<InfoWindowManager>();
+		
 	}
 	
 	//Use This for Reflesh
 	void Refresh(){
 		//Refreshing
-		
+		Debug.Log (FileOpe.GetADVStateNum());
 	}
 	
 	// Update is called once per frame
@@ -92,12 +97,6 @@ public class GUIManagerScript : MonoBehaviour {
 				//Debug.Log("NumStateMent:"+NumStatement);
 				if(ActIndexCnt!=NumStatement){
 					if(MasterManager.GetIdleFlg()==true){
-						//Set Information
-						//Debug.Log("ActIndex:"+ActIndexCnt);
-						//Debug.Log("ActionTypeArray["+ActIndexCnt+"]:"+ActionTypeArray[ActIndexCnt]);
-						//Debug.Log("EmotionTypeArray["+ActIndexCnt+"]:"+EmotionTypeArray[ActIndexCnt]);
-						//Debug.Log("TextWindowArray["+ActIndexCnt+"]:"+TextWindowArray[ActIndexCnt]);
-						//Debug.Log("TextWindowSizeArray["+ActIndexCnt+"]:"+TextWindowSizeArray[ActIndexCnt]);
 						//master
 						MasterManager.SetAction(ActionTypeArray[ActIndexCnt]);
 						MasterManager.SetEmotion(EmotionTypeArray[ActIndexCnt]);
@@ -107,6 +106,8 @@ public class GUIManagerScript : MonoBehaviour {
 						TextWin.SetWindowType(TextWindowArray[ActIndexCnt]);
 						TextWin.SetWindowSize(TextWindowSizeArray[ActIndexCnt]);
 						TextWin.SetWindowState(1);
+						//InfoWindow
+						InfoWin.SetWindowState(1);
 					}
 				}
 					break;
@@ -114,11 +115,11 @@ public class GUIManagerScript : MonoBehaviour {
 					TextBox.SetTextInsertFlg(true);
 					break;
 				case 2:
-					
 					if(TextBox.GetTextInsertFlg()==false){
 						MasterManager.SetLoopFlg(false);
 						MasterManager.SetIdleFlg(true);
 						TextWin.SetWindowState(3);
+						InfoWin.SetWindowState(3);
 						ActIndexCnt++;
 					}
 					break;
