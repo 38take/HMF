@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour {
 	public  float			UPHeight;
 	private int				upCnt;
 	private int				holdHorizontal;
+	public  int				HoldTime = 120;
 	private	bool			InitFlag = false;
 	private	int				timer_comp;
 	
@@ -279,6 +280,12 @@ public class PlayerScript : MonoBehaviour {
 	//停止・移動
 	public void Stop()	{	stop = true;	}
 	public void Move()	{	stop = false;	}
+	//赤いとこ切ってる通知
+	public void CutDeadLine()
+	{
+		if(height < 0.5f)
+			holdHorizontal = HoldTime;
+	}
 	
 	private void OnCollisionEnter(Collision collision)
 	{
@@ -286,9 +293,6 @@ public class PlayerScript : MonoBehaviour {
 		{
 			Destroy(collision.gameObject);
 		}
-		if(collision.gameObject.name == "DeadLine(Clone)")
-		{
-			holdHorizontal = 120;
-		}
 	}
+	
 }

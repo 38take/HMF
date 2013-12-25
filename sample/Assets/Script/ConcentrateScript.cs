@@ -11,15 +11,12 @@ public class ConcentrateScript : MonoBehaviour {
 	private int				concentrationMoveCnt;
 	private int				CONCENTRATION_MOVECNT;
 	
-	public int MaxWidth;
-	public int MaxHeight;
+	public int MaxWidth = 50;
+	public int MaxHeight = 468;
 	
 	public  GameObject		obj_CMonitor;
 	// Use this for initialization
 	void Start () {
-		
-		MaxWidth = 50;
-		MaxHeight = 468;
 		
 		concentration = 0.0f;
 		concentrationGauge = 0.0f;
@@ -29,8 +26,9 @@ public class ConcentrateScript : MonoBehaviour {
 		
 		obj_CMonitor    = (GameObject)GameObject.Find("ConcentrateMonitor");
 		SGaugeTexture = ((GameObject)GameObject.Find("GaugeTexture")).GetComponent<Tex2DGUITextureScript>();
-		SGaugeTexture.SetPos(900.0f, 768.0f - 518.0f);
+		SGaugeTexture.SetPos(SGaugeTexture.GetPos());
 		SGaugeTexture.SetSize((float)MaxWidth, (float)MaxHeight);
+		SGaugeTexture.SetRenderFlag(true);
 	}
 	
 	// Update is called once per frame

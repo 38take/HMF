@@ -48,7 +48,7 @@ public class LineManagerScript : MonoBehaviour {
 	Vector3[] 	lineDir;
 	TARGET_ARRAY[] targetArray;
 	int[]		stopLineArray;
-	int 		lineIndex;
+	int 		stopLineIndex;
 	//各種パラメータ
 	int numPoint; 
 	int numTarget;
@@ -96,7 +96,12 @@ public class LineManagerScript : MonoBehaviour {
 		//中央線内の位置計算
 		Vector3 basePos = lineData[lineID] + (lineData[lineID+1]-lineData[lineID])*offset.x;
 		//基準位置での線の方向算出
-		Vector3 dir = lineDir[lineID]*(1.0f - offset.x) + lineDir[lineID+1]*offset.x;
+		Vector3 headDir = lineDir[lineID];
+		if(lineID > 0)
+			headDir = Vector3.Normalize(lineDir[lineID-1] + lineDir[lineID]);
+		Vector3 footDir = Vector3.Normalize(lineDir[lineID+1] + lineDir[lineID]);
+		Vector3 dir = headDir*(1.0f-offset.x)+footDir*offset.x;
+		//Vector3 dir = lineDir[lineID]*(1.0f - offset.x) + lineDir[lineID+1]*offset.x;
 		dir = Vector3.Normalize(dir);
 		//算出した方向から左向きのベクトルへ変換
 		float tmp = dir.z;
@@ -135,7 +140,7 @@ public class LineManagerScript : MonoBehaviour {
 		wherePlayer = 0;
 		wherePlayerOld = 0;
 		lineID = tNum = tCnt = -1;
-		lineIndex = 0;
+		stopLineIndex = 0;
 		//lineWidth = 3.0f;
 		lastPoint = false;
 		playerOldOffset = new Vector3(0.0f, 0.0f, 0.0f);
@@ -180,7 +185,7 @@ public class LineManagerScript : MonoBehaviour {
 					numPoint = (int)(data.Count / 4);
 					lineData = new Vector3[numPoint];
 					lineKind = new int[numPoint];
-					lineDir  = new Vector3[numPoint];
+					lineDir  = new Vector3[numPoint];//点→点
 					for(int i=0; i<numPoint; i++)
 					{
 						lineData[i].x = (float)data[(i*4)+0] * stageHorizontal;
@@ -319,12 +324,10 @@ public class LineManagerScript : MonoBehaviour {
 		exist = true;
 	}
 	
-	
 	// Update is called once per frame
 	void Update () {
-		if(stopLineArray != null && lineIndex < stopLineArray.Length && wherePlayer > stopLineArray[lineIndex])
-			lineIndex++;
-			
+		if(stopLineArray != null && stopLineIndex < stopLineArray.Length && wherePlayer > stopLineArray[stopLineIndex])
+			stopLineIndex++;
 	}
 	//ライン上の位置における横向きベクトル算出
 	public Vector3 CalcHorizontalDir(int timer)
@@ -377,7 +380,11 @@ public class LineManagerScript : MonoBehaviour {
 		//基準点算出
 		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;
 		//方向算出
-		Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
+		Vector3 headDir = lineDir[lineIdx];
+		if(lineIdx > 0)
+			headDir = Vector3.Normalize(lineDir[lineIdx-1] + lineDir[lineIdx]);
+		Vector3 footDir = Vector3.Normalize(lineDir[lineIdx+1] + lineDir[lineIdx]);
+		Vector3 dir = headDir*(1.0f-length)+footDir*length;
 		dir = Vector3.Normalize(dir);
 		float tmp = dir.x;
 		dir.x = dir.z;
@@ -412,7 +419,12 @@ public class LineManagerScript : MonoBehaviour {
 		//基準点算出
 		Vector3 basePos = lineData[lineIdx] + (lineData[lineIdx+1]-lineData[lineIdx])*length;
 		//方向算出
-		Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
+		Vector3 headDir = lineDir[lineIdx];
+		if(lineIdx > 0)
+			headDir = Vector3.Normalize(lineDir[lineIdx-1] + lineDir[lineIdx]);
+		Vector3 footDir = Vector3.Normalize(lineDir[lineIdx+1] + lineDir[lineIdx]);
+		Vector3 dir = headDir*(1.0f-length)+footDir*length;
+		//Vector3 dir = lineDir[lineIdx]*(1.0f-length)+lineDir[lineIdx+1]*length;
 		dir = Vector3.Normalize(dir);
 		float tmp = dir.x;
 		dir.x = dir.z;
@@ -422,13 +434,17 @@ public class LineManagerScript : MonoBehaviour {
 		
 		//停止属性のラインまで来たらプレイヤーを停止(チュートリアル用)
 		wherePlayer = lineIdx;
-		if(stopLineArray != null && lineIndex < stopLineArray.Length && wherePlayer == stopLineArray[lineIndex])
+		if(stopLineArray != null && stopLineIndex < stopLineArray.Length && wherePlayer == stopLineArray[stopLineIndex])
 		{
 			SPlayer.Stop();
 			//会話スタート
 			
-			lineIndex++;
+			stopLineIndex++;
 		}
+		//赤線上にいたら通知
+		if(lineKind[wherePlayer] == 1)
+			SPlayer.CutDeadLine();
+		
 		playerOffset = new Vector3(length, offset, 0.0f);
 		HitCheckPlayerWithTarget();
 		

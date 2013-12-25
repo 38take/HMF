@@ -75,14 +75,14 @@ public class BombActorScript : MonoBehaviour {
 		else
 		{ 
 			objSR = (GameObject)Instantiate(obj_Stamp, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-			stampCntRight = Random.Range(10, 20);
+			stampCntRight = Random.Range(100, 150);
 		}
 		if(stampCntLeft > 0)
 			stampCntLeft--;
 		else
 		{ 
 			objSL = (GameObject)Instantiate(obj_Stamp, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
-			stampCntLeft = Random.Range(10, 20);
+			stampCntLeft = Random.Range(100, 150);
 		}
 		//エフェクトを生成する
 		GameObject objER;
