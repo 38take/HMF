@@ -12,7 +12,7 @@ public class GUIManagerScript : MonoBehaviour {
 	MasterActScript 	MasterManager;
 	TextBoxScript		TextBox;
 	TextWindowScript 	TextWin;
-	FileOperationScript	FileOpe;
+//	FileOperationScript	FileOpe;
 	InfoWindowManager	InfoWin;
 	ActorAct 			Act;
 	bool SceneStartFlg 	= false;
@@ -39,7 +39,7 @@ public class GUIManagerScript : MonoBehaviour {
 		MasterManager 	= ((GameObject)GameObject.Find("GUIManager")).GetComponent<MasterActScript>();
 		TextWin 		= ((GameObject)GameObject.Find("GUIManager")).GetComponent<TextWindowScript>();
 		TextBox 		= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();	
-		FileOpe			= ((GameObject)GameObject.Find("FileManager")).GetComponent<FileOperationScript>();
+//		FileOpe			= ((GameObject)GameObject.Find("FileManager")).GetComponent<FileOperationScript>();
 		InfoWin			= ((GameObject)GameObject.Find("InfoWindowManager")).GetComponent<InfoWindowManager>();
 		
 	}
@@ -47,7 +47,7 @@ public class GUIManagerScript : MonoBehaviour {
 	//Use This for Reflesh
 	void Refresh(){
 		//Refreshing
-		Debug.Log (FileOpe.GetADVStateNum());
+//		Debug.Log (FileOpe.GetADVStateNum());
 	}
 	
 	// Update is called once per frame

@@ -2,6 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
+using UnityEngine;
+using System.Collections;
+
 public enum WINDOW_STATE{
 	IDLE,
 	ON,
