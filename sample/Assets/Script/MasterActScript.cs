@@ -19,7 +19,7 @@ public enum Emotion{
 
 public class MasterActScript : MonoBehaviour {
 	
-	ActorAct		CharaAct;
+	ActorAct		CharaAct = ActorAct.OutStage;
 	ActorAct		CharaAct_Sub;
 	Emotion			CharaEmo;
 	Emotion			CharaEmo_Sub = Emotion.Normal;
@@ -109,7 +109,8 @@ public class MasterActScript : MonoBehaviour {
 			}
 				break;
 		case ActorAct.OutStage:
-			if(Position.x >= DefaultScreen.Width)
+			Position.x += ((float)DefaultScreen.Width - Position.x)* 0.2f;
+			if(Position.x >= ((float)DefaultScreen.Width*0.99999f))
 				CountResetAndLoopCheck();
 			break;
 		case ActorAct.Laugh:
@@ -196,6 +197,31 @@ public class MasterActScript : MonoBehaviour {
 			break;
 		}
 	}
+	//行動を強制切り替え 
+	public void ChangeAction(int sAct)
+	{
+		switch(sAct)
+		{
+		case 0:
+			CharaAct = ActorAct.OnStage;
+			break;
+		case 1:
+			CharaAct = ActorAct.OutStage;
+			break;
+		case 2:
+			CharaAct = ActorAct.Laugh;
+			break;
+		case 3:
+			CharaAct = ActorAct.Angry;
+			break;
+		case 4:
+			CharaAct = ActorAct.Panic;
+			break;
+		default:
+			break;
+		}
+	}
+	
 	//Getter of Action
 	public ActorAct GetAction(){
 		return CharaAct;

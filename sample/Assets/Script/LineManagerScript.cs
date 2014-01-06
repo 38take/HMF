@@ -40,7 +40,8 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject effect_HitNormal;
 	public GameObject effect_HitCritical;
 	public GameObject effect_Miss;
-	PlayerScript SPlayer;	
+	PlayerScript 	SPlayer;	
+	TextBoxScript	SText;
 	//ステージの構成データ
 	int stageID;
 	Vector3[] 	lineData;
@@ -134,6 +135,7 @@ public class LineManagerScript : MonoBehaviour {
 		
 		hitRenderer = (GameObject)GameObject.Find("HitTextBox");
 		SPlayer = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
+		SText 	= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		//パラメータ初期化
 		numPoint 	= 0;
 		numTarget 	= 0;
@@ -152,11 +154,11 @@ public class LineManagerScript : MonoBehaviour {
 		stageID = 1;
 		switch(gamesys.GetActID())
 		{
-		case 1:			stageID = 0; 	break;	//チュートリアル
-		case 2:			stageID = 1;	break;	//ステージ１
-		case 7:			stageID = 2;	break;	//ステージ２
-		case 12:		stageID = 3;	break;	//ステージ３
-		default:		stageID = 1;	break;
+		case 1:			stageID = 0; 		break;	//チュートリアル
+		case 2:			stageID = 1;	SText.Invalidate();	break;	//ステージ１
+		case 7:			stageID = 2;	SText.Invalidate();	break;	//ステージ２
+		case 12:		stageID = 3;	SText.Invalidate();	break;	//ステージ３
+		default:		stageID = 1;	SText.Invalidate();	break;
 		}
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/stage/stage"+stageID+".txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
@@ -438,7 +440,7 @@ public class LineManagerScript : MonoBehaviour {
 		{
 			SPlayer.Stop();
 			//会話スタート
-			
+			SText.Validate();
 			stopLineIndex++;
 		}
 		//赤線上にいたら通知

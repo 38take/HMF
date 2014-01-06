@@ -46,6 +46,7 @@ public class TextBoxScript : MonoBehaviour {
 	TextStyleBaseScript TextBox1;
 	TextStyleBaseScript TextBox2;
 	TextStyleBaseScript TextBox3;
+	GUIManagerScript	SGUI;
 	
 	// Use this for initialization
 	void Start () {
@@ -55,6 +56,7 @@ public class TextBoxScript : MonoBehaviour {
 		TextBox2.SetPos(60.0f,200.0f);
 		TextBox3 = GameObject.Find("Text3").GetComponent<TextStyleBaseScript>();
 		TextBox3.SetPos(60.0f,120.0f);
+		SGUI 	 = GameObject.Find("GUIManager").GetComponent<GUIManagerScript>();
 		//---------------------------//
 		//パラメータの初期化
 		numStatement 	= 0;
@@ -65,9 +67,9 @@ public class TextBoxScript : MonoBehaviour {
 		readCnt 		= 0;
 		READCNT 		= 2;
 		initialized = false;
-		valid = true;
+		valid = false;
 		
-		initialized = Initialize();
+		//initialized = Initialize();
 	}
 	bool Initialize()
 	{
@@ -161,98 +163,100 @@ public class TextBoxScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(initialized)
+		if(valid)
 		{
-			switch(balloonSize[strIdx]){
-			case 0:
-				TextBox1.SetPos(60,280);
-				TextBox2.SetPos(60,260);
-				TextBox3.SetPos(60,240);
-				break;
-			case 1:
-				TextBox1.SetPos(60,270);
-				TextBox2.SetPos(60,230);
-				TextBox3.SetPos(60,190);
-				break;
-			case 2:
-				TextBox1.SetPos(60,250);
-				TextBox2.SetPos(60,210);
-				TextBox3.SetPos(60,170);
-				break;
-			default:
-				Debug.Log("Fukidashi No is Nothing!");
-				break;
-			}
-			if(textinsert == true)
+			if(initialized)
 			{
-				if(strIdx < numStatement)
+				switch(balloonSize[strIdx]){
+				case 0:
+					TextBox1.SetPos(60,280);
+					TextBox2.SetPos(60,260);
+					TextBox3.SetPos(60,240);
+					break;
+				case 1:
+					TextBox1.SetPos(60,270);
+					TextBox2.SetPos(60,230);
+					TextBox3.SetPos(60,190);
+					break;
+				case 2:
+					TextBox1.SetPos(60,250);
+					TextBox2.SetPos(60,210);
+					TextBox3.SetPos(60,170);
+					break;
+				default:
+					Debug.Log("Fukidashi No is Nothing!");
+					break;
+				}
+				if(textinsert == true)
 				{
-					if(string.Compare(renderString3, renderBase3) == 0)
+					if(strIdx < numStatement)
 					{
-						if(Input.GetMouseButtonDown(0))
+						if(string.Compare(renderString3, renderBase3) == 0)
 						{
-							renderString = "";
-							renderString2 = "";
-							renderString3 = "";
-							renderBase = "";
-							renderBase2 = "";
-							renderBase3 = "";
-							strIdx++;
-							textinsert = false;
-							if(strIdx < numStatement){
-								renderBase 	= strArray[strIdx].ToString();
-								renderBase2 = strArray2[strIdx].ToString();
-								renderBase3 = strArray3[strIdx].ToString();
-							}else{
-								strIdx = 0;
-								valid = false;
-								initialized = false;
+							if(Input.GetMouseButtonDown(0))
+							{
+								//掃ける処理
+								if(outflag[strIdx])
+									Invalidate();
+								renderString = "";
+								renderString2 = "";
+								renderString3 = "";
+								renderBase = "";
+								renderBase2 = "";
+								renderBase3 = "";
+								strIdx++;
+								textinsert = false;
+								if(strIdx < numStatement){
+									renderBase 	= strArray[strIdx].ToString();
+									renderBase2 = strArray2[strIdx].ToString();
+									renderBase3 = strArray3[strIdx].ToString();
+								}else{
+									strIdx = 0;
+									valid = false;
+									initialized = false;
+								}
+								charIdx = 0;
+								charIdx2 = 0;
+								charIdx3 = 0;
 							}
-							charIdx = 0;
-							charIdx2 = 0;
-							charIdx3 = 0;
 						}
-					}
-					else
-					{
-						if(readCnt>0)
-							readCnt--;
 						else
 						{
-							if(string.Compare(renderString,renderBase)!=0){
-								renderString += renderBase.Substring(charIdx, 1);
-								charIdx=charIdx+1;
+							if(readCnt>0)
+								readCnt--;
+							else
+							{
+								if(string.Compare(renderString,renderBase)!=0){
+									renderString += renderBase.Substring(charIdx, 1);
+									charIdx=charIdx+1;
+								}
+								else if(string.Compare(renderString,renderBase)==0 &&
+									string.Compare(renderString2,renderBase2)!=0){
+									renderString2 += renderBase2.Substring(charIdx2, 1);
+									charIdx2=charIdx2+1;
+								}
+								else if(string.Compare(renderString,renderBase)==0 &&
+									string.Compare(renderString2,renderBase2)==0 &&
+									string.Compare(renderString3,renderBase3)!=0){
+									renderString3 += renderBase3.Substring(charIdx3, 1);
+									charIdx3=charIdx3+1;
+								}
+								readCnt = READCNT;
 							}
-							else if(string.Compare(renderString,renderBase)==0 &&
-								string.Compare(renderString2,renderBase2)!=0){
-								renderString2 += renderBase2.Substring(charIdx2, 1);
-								charIdx2=charIdx2+1;
-							}
-							else if(string.Compare(renderString,renderBase)==0 &&
-								string.Compare(renderString2,renderBase2)==0 &&
-								string.Compare(renderString3,renderBase3)!=0){
-								renderString3 += renderBase3.Substring(charIdx3, 1);
-								charIdx3=charIdx3+1;
-							}
-							readCnt = READCNT;
 						}
-						//Debug.Log("CharIDX:"+charIdx);
-						//Debug.Log("CharIDX2:"+charIdx2);
-						//Debug.Log("CharIDX3:"+charIdx3);
-						//Debug.Log (renderString2);
+					
+						//textset
+						TextBox1.SetText(renderString);
+						TextBox2.SetText(renderString2);
+						TextBox3.SetText(renderString3);
+						//Debug.Log("renderString:"+renderString);
 					}
-				
-					//textset
-					TextBox1.SetText(renderString);
-					TextBox2.SetText(renderString2);
-					TextBox3.SetText(renderString3);
-					//Debug.Log("renderString:"+renderString);
 				}
 			}
-		}
-		else
-		{
-			initialized = Initialize();
+			else
+			{
+				initialized = Initialize();
+			}
 		}
 	}
 	
@@ -299,8 +303,20 @@ public class TextBoxScript : MonoBehaviour {
 		return textinsert;
 	}
 	
-	public bool[] GetOutFlag(){
-		return outflag;
+	public bool GetOutFlag(int id){
+		if(id < outflag.Length)
+			return outflag[id];
+		return false;
+	}
+	public void Validate()
+	{
+		valid = true;
+		SGUI.Resume();
+	}
+	public void Invalidate()
+	{
+		valid = false;//自身を無効化
+		SGUI.Stop();
 	}
 }
 

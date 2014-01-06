@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour {
 	CameraScript			SCamera;
 	ConcentrateScript		ConcentrateGauge;
 	CutEdgeManagerScript    SCutEdge;
+	TextBoxScript			SText;
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
@@ -77,6 +78,7 @@ public class PlayerScript : MonoBehaviour {
 		SCamera			= (CameraScript)GameObject.Find("CameraMain").GetComponent("CameraScript");
 		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
 		SCutEdge		= ((GameObject)GameObject.Find("CutEdgeManager")).GetComponent<CutEdgeManagerScript>();
+		SText			= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -127,7 +129,7 @@ public class PlayerScript : MonoBehaviour {
 			//
 			if(stop)
 			{
-				if(Input.GetMouseButtonUp(0))
+				if(!SText.isValid())
 					stop = false;
 			}
 			else

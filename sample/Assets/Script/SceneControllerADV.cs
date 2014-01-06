@@ -15,11 +15,11 @@ public class SceneControllerADV : MonoBehaviour {
 	float masterPos;
 	int   dummyLoadCnt;//演出用
 	
-	
-	
+
 	// Use this for initialization
 	void Start () {
 		StextBox = ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
+		StextBox.Validate();
 		
 		press = false;
 		dummyLoadCnt = 0;
