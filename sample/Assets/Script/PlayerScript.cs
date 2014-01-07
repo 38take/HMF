@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour {
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
+	public float			MouseSensitivity = 0.001f;
 	private int				upCnt;
 	private int				holdHorizontal;
 	public  int				HoldTime = 120;
@@ -156,7 +157,7 @@ public class PlayerScript : MonoBehaviour {
 				
 				//------------------------------------//
 				//移動
-				float	transX = (Input.mousePosition.x - oldMouseX) * 0.01f;
+				float	transX = (Input.mousePosition.x - oldMouseX) * MouseSensitivity;
 				//ペナルティ食らってなければ移動
 				if(holdHorizontal <= 0)
 				{

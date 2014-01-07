@@ -264,7 +264,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PreRender: 0
-  m_Textures: []
+  m_Textures:
+  - {fileID: 2800000, guid: 4a5e5fb9c388d2548b1c9f068f34d352, type: 3}
+  - {fileID: 2800000, guid: 26e9cc175b38d39448be00121eb95f31, type: 3}
+  - {fileID: 2800000, guid: 5fb021b7e9f1f8a41ba4125927bf6741, type: 3}
   StaticTexture: 0
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 0
@@ -429,6 +432,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: m_Textures.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -461,6 +468,18 @@ Prefab:
       propertyPath: m_Name
       value: InfoTexture
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: m_Textures.Array.data[0]
+      value: 
+      objectReference: {fileID: 2800000, guid: 4a5e5fb9c388d2548b1c9f068f34d352, type: 3}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: m_Textures.Array.data[1]
+      value: 
+      objectReference: {fileID: 2800000, guid: 26e9cc175b38d39448be00121eb95f31, type: 3}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: m_Textures.Array.data[2]
+      value: 
+      objectReference: {fileID: 2800000, guid: 5fb021b7e9f1f8a41ba4125927bf6741, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
   m_RootGameObject: {fileID: 164171486}
