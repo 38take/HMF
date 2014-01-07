@@ -77,8 +77,6 @@ public class InfoWindowManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		//Debug.Log ("IdleFlg"+IdleFlg);
 				
 		//INFO_STATE
 		MoveWindow(Info_State);
@@ -104,11 +102,6 @@ public class InfoWindowManager : MonoBehaviour {
 			}
 			break;
 		case INFO_STATE.ON:
-		/*	Debug.Log("InfoState equal ON");
-			Position.x -= (0.0f + Position.x)* 0.2f;
-			if(Position.x > 0.0f){
-				CountResetAndLoopCheck();
-			}*/
 			if(MaxFrame != FrameCount){	
 				Position.x = -WinSize.x +((WinSize.x/MaxFrame)*FrameCount);
 				InfoWin.SetPos(Position.x,Position.y);

@@ -287,6 +287,14 @@ public class TextBoxScript : MonoBehaviour {
 		return balloonSize;
 	}
 	
+	public int[] GetInfoWinInsertFlg(){
+		return InfoWinFlg;
+	}
+	
+	public int[] GetInfoWinContainFlg(){
+		return InfoContain;
+	}
+	
 	public string[] GetStrArray(){
 		return strArray;
 	}

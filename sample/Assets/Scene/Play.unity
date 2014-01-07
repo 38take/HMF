@@ -1549,6 +1549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58f1b6435418ee458906cd5fb94e9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: 
   FrameCount: 0
   Position: {x: 0, y: 0}
   Offset: {x: 0, y: 0}

@@ -13,7 +13,6 @@ public class GUIManagerScript : MonoBehaviour {
 	MasterActScript 	MasterManager;
 	TextBoxScript		TextBox;
 	TextWindowScript 	TextWin;
-//	FileOperationScript	FileOpe;
 	InfoWindowManager	InfoWin;
 	ActorAct 			Act;
 	bool SceneStartFlg 	= false;
@@ -27,6 +26,8 @@ public class GUIManagerScript : MonoBehaviour {
 	int[]		TextWindowSizeArray;
 	int[] 		ActionTypeArray;
 	int[]		EmotionTypeArray;
+	int[]		InfoWindowFlg;
+	int[]		InfoWindowContain;
 	//Counter for WAIT
 	int 		SceneCounter = 0;
 	//State of ADV
@@ -41,7 +42,6 @@ public class GUIManagerScript : MonoBehaviour {
 		MasterManager 	= ((GameObject)GameObject.Find("GUIManager")).GetComponent<MasterActScript>();
 		TextWin 		= ((GameObject)GameObject.Find("GUIManager")).GetComponent<TextWindowScript>();
 		TextBox 		= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();	
-//		FileOpe			= ((GameObject)GameObject.Find("FileManager")).GetComponent<FileOperationScript>();
 		InfoWin			= ((GameObject)GameObject.Find("InfoWindowManager")).GetComponent<InfoWindowManager>();
 		
 	}
@@ -55,6 +55,8 @@ public class GUIManagerScript : MonoBehaviour {
 		TextWindowSizeArray = TextBox.GetBalloonSizeArray();
 		ActionTypeArray		= TextBox.GetActionArray();
 		EmotionTypeArray	= TextBox.GetEmotionArray();
+		InfoWindowFlg		= TextBox.GetInfoWinInsertFlg();
+		InfoWindowContain	= TextBox.GetInfoWinContainFlg();
 		
 		///////////////////
 		ActIndexCnt = 0;
@@ -101,8 +103,6 @@ public class GUIManagerScript : MonoBehaviour {
 			//if(TextWin.GetWindowState()==0){
 			switch(TextWin.GetWindowState()){
 			case 0:
-			//Debug.Log ("aaaaa");
-			//Debug.Log("NumStateMent:"+NumStatement);
 			if(ActIndexCnt!=NumStatement){
 				if(MasterManager.GetIdleFlg()==true){
 					//master
@@ -115,7 +115,10 @@ public class GUIManagerScript : MonoBehaviour {
 					TextWin.SetWindowSize(TextWindowSizeArray[ActIndexCnt]);
 					TextWin.SetWindowState(1);
 					//InfoWindow
-					InfoWin.SetWindowState(1);
+					
+					if(InfoWindowFlg[ActIndexCnt] != 0){
+						InfoWin.SetWindowState(1);
+					}
 				}
 			}
 				break;
