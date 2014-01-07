@@ -1550,19 +1550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EditorClassIdentifier: 
-  FrameCount: 0
-  Position: {x: 0, y: 0}
-  Offset: {x: 0, y: 0}
-  WinSize: {x: 0, y: 0}
-  ConSize: {x: 0, y: 0}
-  WinUVPos: {x: 0, y: 0}
-  WinUVSize: {x: 0, y: 0}
-  ConUVPos: {x: 0, y: 0}
-  ConUVSize: {x: 0, y: 0}
-  INFO_STATEData: 0
-  IdleFlg: 1
-  LoopFlg: 0
-  count: 0
+  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: 
 --- !u!4 &156403227
 Transform:
   m_ObjectHideFlags: 0
