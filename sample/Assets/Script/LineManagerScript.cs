@@ -42,6 +42,7 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject effect_Miss;
 	PlayerScript 	SPlayer;	
 	TextBoxScript	SText;
+	AudioSEScript	SAudio;
 	//ステージの構成データ
 	int stageID;
 	Vector3[] 	lineData;
@@ -136,6 +137,7 @@ public class LineManagerScript : MonoBehaviour {
 		hitRenderer = (GameObject)GameObject.Find("HitTextBox");
 		SPlayer = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
 		SText 	= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
+		SAudio  = ((GameObject)GameObject.Find("AudioSE")).GetComponent<AudioSEScript>();
 		//パラメータ初期化
 		numPoint 	= 0;
 		numTarget 	= 0;
@@ -505,6 +507,8 @@ public class LineManagerScript : MonoBehaviour {
 							hitRenderer.guiText.text = "クリティカル！！";
 							numJudge[(int)JUDGE.GOOD]++;
 							criticalCombo++;
+							//サウンド再生
+							SAudio.PlaySE(1);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -525,6 +529,8 @@ public class LineManagerScript : MonoBehaviour {
 							hitRenderer.guiText.text = "ノーマル";
 							numJudge[(int)JUDGE.NORMAL]++;
 							criticalCombo = 0;
+							//サウンド再生
+							SAudio.PlaySE(1);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -545,6 +551,8 @@ public class LineManagerScript : MonoBehaviour {
 							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
 							numJudge[(int)JUDGE.SAFE]++;
 							criticalCombo = 0;
+							//サウンド再生
+							SAudio.PlaySE(1);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -563,6 +571,8 @@ public class LineManagerScript : MonoBehaviour {
 							hitRenderer.guiText.text = "ミス・・・";
 							numJudge[(int)JUDGE.MISS]++;
 							criticalCombo = 0;
+							//サウンド再生
+							SAudio.PlaySE(1);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
