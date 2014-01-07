@@ -24,7 +24,11 @@ public class PlayerScript : MonoBehaviour {
 	public  float 			TIMERADD_MAX;
 	public  float 			TIMERADD_MIN;
 	
-	public	GameObject		obj_ClearObject;
+	public	GameObject		obj_ClearObject_0;
+	public	GameObject		obj_ClearObject_1;
+	public	GameObject		obj_ClearObject_2;
+	public	GameObject		obj_ClearObject_3;
+	
 	public	GameObject		obj_Bomb;
 	public	GameObject		effect_Clear;
 	public GameObject		obj_Edge;
@@ -230,7 +234,7 @@ public class PlayerScript : MonoBehaviour {
 		{
 			// 完成型オブジェクトを生成
 			if( timer_comp == 0 )
-			{
+			{	
 				GameObject ins_obj =
 					(GameObject)Instantiate(effect_Clear,
 											GameObject.Find("Floor").transform.position,
@@ -239,7 +243,18 @@ public class PlayerScript : MonoBehaviour {
 			}
 			if( timer_comp == 60 )
 			{
-				Instantiate(obj_ClearObject);
+				int stageID;
+				GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+
+				stageID = 1;
+				switch(gamesys.GetActID())
+				{
+				case 1:			stageID = 0; 	Instantiate(obj_ClearObject_0);	break;	//チュートリアル
+				case 2:			stageID = 1;	Instantiate(obj_ClearObject_1); SText.Invalidate();	break;	//ステージ１
+				case 7:			stageID = 2;	Instantiate(obj_ClearObject_2); SText.Invalidate();	break;	//ステージ２
+				case 12:		stageID = 3;	Instantiate(obj_ClearObject_3); SText.Invalidate();	break;	//ステージ３
+				default:		stageID = 1;	SText.Invalidate();	break;
+				}
 			}
 			if(timer_comp == 90)
 			{
