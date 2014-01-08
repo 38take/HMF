@@ -169,24 +169,25 @@ public class TextBoxScript : MonoBehaviour {
 			{
 				switch(balloonSize[strIdx]){
 				case 0:
-					TextBox1.SetPos(60,280);
-					TextBox2.SetPos(60,260);
-					TextBox3.SetPos(60,240);
+					TextBox1.SetPos(70,((DefaultScreen.Height/10)*2)+20);
+					TextBox2.SetPos(70,260);
+					TextBox3.SetPos(70,240);
 					break;
 				case 1:
-					TextBox1.SetPos(60,270);
-					TextBox2.SetPos(60,230);
-					TextBox3.SetPos(60,190);
+					TextBox1.SetPos(70,((DefaultScreen.Height/10)*2)+40);
+					TextBox2.SetPos(70,((DefaultScreen.Height/10)*2)-10);
+					TextBox3.SetPos(70,190);
 					break;
 				case 2:
-					TextBox1.SetPos(60,250);
-					TextBox2.SetPos(60,210);
-					TextBox3.SetPos(60,170);
+					TextBox1.SetPos(70,((DefaultScreen.Height/10)*2)+70);
+					TextBox2.SetPos(70,((DefaultScreen.Height/10)*2)+20);
+					TextBox3.SetPos(70,((DefaultScreen.Height/10)*2)-30);
 					break;
 				default:
 					Debug.Log("Fukidashi No is Nothing!");
 					break;
 				}
+				
 				if(textinsert == true)
 				{
 					if(strIdx < numStatement)

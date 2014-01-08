@@ -10,11 +10,11 @@ public enum ADVState{
 
 public class GUIManagerScript : MonoBehaviour {
 	
-	MasterActScript 	MasterManager;
-	TextBoxScript		TextBox;
-	TextWindowScript 	TextWin;
-	InfoWindowManager	InfoWin;
-	ActorAct 			Act;
+	MasterActScript 		MasterManager;
+	TextBoxScript			TextBox;
+	TextWindowScript 		TextWin;
+	InfoWindowManager		InfoWin;
+	ActorAct 				Act;
 	bool SceneStartFlg 	= false;
 	bool ActFlg 		= false;
 	bool IdleFlg 		= false;
@@ -43,7 +43,6 @@ public class GUIManagerScript : MonoBehaviour {
 		TextWin 		= ((GameObject)GameObject.Find("GUIManager")).GetComponent<TextWindowScript>();
 		TextBox 		= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();	
 		InfoWin			= ((GameObject)GameObject.Find("InfoWindowManager")).GetComponent<InfoWindowManager>();
-		
 	}
 	
 	//初期化関数(チュートリアル用に処理を分けてます) 
@@ -115,8 +114,8 @@ public class GUIManagerScript : MonoBehaviour {
 					TextWin.SetWindowSize(TextWindowSizeArray[ActIndexCnt]);
 					TextWin.SetWindowState(1);
 					//InfoWindow
-					
 					if(InfoWindowFlg[ActIndexCnt] != 0){
+						InfoWin.SetWindowContent(InfoWindowContain[ActIndexCnt]);
 						InfoWin.SetWindowState(1);
 					}
 				}

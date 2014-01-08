@@ -2,9 +2,6 @@
 using UnityEngine;
 using System.Collections;
 
-using UnityEngine;
-using System.Collections;
-
 public enum WINDOW_STATE{
 	IDLE,
 	ON,
@@ -42,7 +39,8 @@ public class TextWindowScript : MonoBehaviour {
 		//Find GameObject
 		tex2d = ((GameObject)GameObject.Find("TextWindow")).GetComponent<Tex2DBaseScript>();
 		//Set Pos & Size & UV
-		Position.x = 0.0f;Position.y = (DefaultScreen.Height/2.0f)+50.0f;
+		Position.x = (DefaultScreen.Width/2)/*0.0f*/;
+		Position.y = (DefaultScreen.Height/10)*8;
 		SetWindowState(0);
 		SetWindowSize(0);
 		SetWindowType(0);
@@ -69,7 +67,8 @@ public class TextWindowScript : MonoBehaviour {
 			if(MaxFrame != FrameCount){	
 				Size.x = (MaxSize.x/MaxFrame)*FrameCount;
 				Size.y = (MaxSize.y/MaxFrame)*FrameCount;
-				tex2d.SetSize(Size.x,Size.y);
+				//tex2d.SetSize(Size.x,Size.y);
+				tex2d.SetSizeCenter(new Vector2 (Size.x,Size.y));
 			}else{
 				FrameCount=0;
 				WinState = WINDOW_STATE.RUN;
@@ -84,7 +83,8 @@ public class TextWindowScript : MonoBehaviour {
 			if(Size.x >= 0.0f){	
 				Size.x = MaxSize.x - ((MaxSize.x/MaxFrame)*FrameCount);
 				Size.y = MaxSize.y - ((MaxSize.y/MaxFrame)*FrameCount); 
-				tex2d.SetSize(Size.x,Size.y);
+				//tex2d.SetSize(Size.x,Size.y);
+				tex2d.SetSizeCenter(new Vector2(Size.x,Size.y));
 				FrameCount++;
 			}else{
 				Size.x = 0.0f;Size.y = 0.0f;
@@ -151,32 +151,21 @@ public class TextWindowScript : MonoBehaviour {
 		case 0:
 			MaxSize.x = DefaultScreen.Width+100.0f;
 			MaxSize.y = 150.0f;
-			Position.y = DefaultScreen.Height - MaxSize.y;
-			Position.y = DefaultScreen.Height - MaxSize.y;
-			tex2d.SetPos(Position.x,Position.y);
 	//		Debug.Log ("SetWindowSize: Small");
 			break;
 		case 1:
 			MaxSize.x = DefaultScreen.Width+100.0f;
 			MaxSize.y = 250.0f;
-			Position.y = MaxSize.y;
-			Position.y = DefaultScreen.Height - MaxSize.y;
-			tex2d.SetPos(Position.x,Position.y);
 	//		Debug.Log ("SetWindowSize: Middle");
 			break;
 		case 2:
 			MaxSize.x = DefaultScreen.Width+100.0f;
 			MaxSize.y = 350.0f;
-			Position.y = MaxSize.y;
-			Position.y = DefaultScreen.Height - MaxSize.y;
-			tex2d.SetPos(Position.x,Position.y);
 	//		Debug.Log ("SetWindowSize: Big");
 			break;
 		default:
 			break;
 		}
-	//	Debug.Log ("MaxSize.y:"+MaxSize.y);
-		
 	}
 	
 	public void SetWindowType(int wType){	

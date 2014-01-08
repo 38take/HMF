@@ -9,19 +9,12 @@ public enum INFO_STATE{
 	OFF
 };
 
-public enum CONTENTS_STATE{
-	LAMP,
-	SHIP,
-	OHTER
-};
-
-
 public class InfoWindowManager : MonoBehaviour {
 
 	INFO_STATE		Info_State;
 	INFO_STATE		Info_State_sub;
-	CONTENTS_STATE	Cont_State;
-	CONTENTS_STATE	Cont_State_Sub = CONTENTS_STATE.LAMP;
+	int				Cont_State=0;
+	
 	
 	public int		FrameCount = 0;
 	int				MaxFrame = 20;
@@ -29,7 +22,8 @@ public class InfoWindowManager : MonoBehaviour {
 	
 	Tex2DBaseScript	InfoWin;
 	Tex2DBaseScript InfoCon;
-	
+	Tex2DGUITextureScript InfoContain;
+
 	public Vector2	Position;
 	public Vector2	Offset;
 	public Vector2	WinSize;
@@ -46,11 +40,10 @@ public class InfoWindowManager : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		//
-		Cont_State = CONTENTS_STATE.LAMP;
 		//GameObject setting ActorTexture is Find.
 		InfoWin = ((GameObject)GameObject.Find("InfoWindow")).GetComponent<Tex2DBaseScript>();
-		InfoCon = ((GameObject)GameObject.Find ("InfoContent")).GetComponent<Tex2DBaseScript>();
+		InfoContain	= ((GameObject)GameObject.Find("InfoTexture")).GetComponent<Tex2DGUITextureScript>();
+
 		//Refreshing
 		Reflesh();
 		MaxFrame = MaxFrame_Sub = 10;
@@ -59,8 +52,8 @@ public class InfoWindowManager : MonoBehaviour {
 	//Refresh Func
 	void Reflesh(){
 		//Setting Value
-		WinSize.x = 800.0f;WinSize.y = 600.0f;
-		Position.x = -WinSize.x;Position.y = 00.0f;
+		WinSize.x = 760.0f;WinSize.y = 510.0f;
+		Position.x = -WinSize.x;Position.y = 0.0f;
 		Offset.x = 95.0f;Offset.y = 95.0f;
 		ConSize.x = 600.0f;ConSize.y = 400.0f;
 		
@@ -69,9 +62,10 @@ public class InfoWindowManager : MonoBehaviour {
 		InfoWin.SetUV(new Vector2(0.0f,0.0f),1.0f,1.0f);
 		InfoWin.SetDepth(4);
 		
-		InfoCon.SetSize(WinSize.x,WinSize.y);
-		InfoCon.SetPos(Position.x+Offset.x,Position.y+Offset.y);
-		InfoCon.SetDepth(3);
+		InfoContain.SetPos(Position.x + Offset.x,Position.y + Offset.y);
+		InfoContain.SetSize(580.0f,360.0f);
+		InfoContain.SwitchTexture(0);
+		InfoContain.SetRenderFlag(true);
 		
 	}
 	
@@ -84,8 +78,6 @@ public class InfoWindowManager : MonoBehaviour {
 		//set Size of Actor
 		InfoWin.SetSize(WinSize.x,WinSize.y);
 		InfoWin.SetPos(Position.x,Position.y);
-		InfoCon.SetSize(ConSize.x,ConSize.y);
-		InfoCon.SetPos(Position.x+Offset.x,Position.y+Offset.y);
 		
 		count++;		
 	}
@@ -98,6 +90,7 @@ public class InfoWindowManager : MonoBehaviour {
 				Info_State = Info_State_sub;
 				//ChangeContents();
 				FrameCount = 0;
+				InfoContain.SwitchTexture(Cont_State);
 				//MaxFrame = 10;
 			}
 			break;
@@ -105,11 +98,11 @@ public class InfoWindowManager : MonoBehaviour {
 			if(MaxFrame != FrameCount){	
 				Position.x = -WinSize.x +((WinSize.x/MaxFrame)*FrameCount);
 				InfoWin.SetPos(Position.x,Position.y);
-				InfoCon.SetPos(Position.x+Offset.x,Position.y+Offset.y);
+				InfoContain.SetPos(Position.x + Offset.x,Position.y + Offset.y);
 			}else{
 				Position.x = 0.0f;
 				InfoWin.SetPos(Position.x,Position.y);
-				InfoCon.SetPos(Position.x+Offset.x,Position.y+Offset.y);
+				InfoContain.SetPos(Position.x + Offset.x,Position.y + Offset.y);
 				FrameCount=0;
 				Info_State = INFO_STATE.RUN;
 			}
@@ -121,7 +114,7 @@ public class InfoWindowManager : MonoBehaviour {
 			if(-WinSize.x < Position.x){	
 				Position.x =  -((WinSize.x/MaxFrame)*FrameCount); 
 				InfoWin.SetPos(Position.x,Position.y);
-				InfoCon.SetPos(Position.x+Offset.x,Position.y+Offset.y);
+				InfoContain.SetPos(Position.x + Offset.x,Position.y + Offset.y);
 				FrameCount++;
 			}else{
 				FrameCount = 0;
@@ -178,56 +171,13 @@ public class InfoWindowManager : MonoBehaviour {
 		}
 	}
 	
+	public void SetWindowContent(int Cont){
+		Cont_State = Cont;
+	}
+	
 	public void OffWindowState(){
 		Info_State = INFO_STATE.OFF;
 	}
-	
-/*public void SetWindowSize(int wSize){
-		switch(wSize){
-		case 0:
-			MaxSize.x = DefaultScreen.Width+100.0f;
-			MaxSize.y = 150.0f;
-	//		Debug.Log ("SetWindowSize: Small");
-			break;
-		case 1:
-			MaxSize.x = DefaultScreen.Width+100.0f;
-			MaxSize.y = 250.0f;
-	//		Debug.Log ("SetWindowSize: Middle");
-			break;
-		case 2:
-			MaxSize.x = DefaultScreen.Width+100.0f;
-			MaxSize.y = 350.0f;
-	//		Debug.Log ("SetWindowSize: Big");
-			break;
-		default:
-			break;
-		}
-	//	Debug.Log ("MaxSize.y:"+MaxSize.y);
-		
-	}*/
-	
-	/*public void SetWindowType(int wType){	
-		switch(wType){
-		case 0:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.66666f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			WinType = INFO_TYPE.NORMAL;
-			break;
-		case 1:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.00000f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			WinType = INFO_TYPE.SCREAM;
-			break;
-		case 2:
-			UVPosition.x = 0.00000f;UVPosition.y = 0.33333f;
-			UVSize.x = 1.00000f;UVSize.y = 0.33333f;
-			WinType = INFO_TYPE.HEARTED;
-			break;
-		default:
-			break;
-		}
-		tex2d.SetUV(UVPosition,UVSize.x,UVSize.y);
-	}*/
 	
 	public Vector2 GetWindowPos(){
 		return Position;
