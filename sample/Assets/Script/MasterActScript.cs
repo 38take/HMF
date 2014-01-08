@@ -70,7 +70,7 @@ public class MasterActScript : MonoBehaviour {
 		
 		ActorHead.SetSize(BodySize.x,BodySize.y);
 		ActorHead.SetPos(Position.x+Offset.x,Position.y+Offset.y);
-		ActorHead.SetDepth(5);
+		ActorHead.SetDepth(4);
 		
 		ChangeEmotionUV();
 		
