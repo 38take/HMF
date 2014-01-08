@@ -8,6 +8,10 @@ public class SceneControllerADV : MonoBehaviour {
 	
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
+	SyuCyuSenController SyutyuSen;
+	int timer;
+	int id;
+	
 	float screenWidth;
 	float screenHeight;
 	float shutterFlg;
@@ -20,6 +24,8 @@ public class SceneControllerADV : MonoBehaviour {
 	void Start () {
 		StextBox = ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		StextBox.Validate();
+	
+		SyutyuSen = ((GameObject)GameObject.Find("SyuChooSen")).GetComponent<SyuCyuSenController>();
 		
 		press = false;
 		dummyLoadCnt = 0;
@@ -87,5 +93,17 @@ public class SceneControllerADV : MonoBehaviour {
 		if(	!StextBox.isValid() ||
 			Input.GetMouseButtonDown(1))
 			press = true;
+		
+		if (Input.GetKey(KeyCode.A))
+    	{
+    	    SyutyuSen.SyuCyuSenSwitch(true);
+		}
+		if (Input.GetKey(KeyCode.S))
+    	{
+    	    SyutyuSen.SyuCyuSenSwitch(false);
+    	}
+
 	}
+	
+	
 }
