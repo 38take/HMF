@@ -13726,9 +13726,9 @@ MonoBehaviour:
   TIMERADD_MAX: 3
   TIMERADD_MIN: 1
   obj_ClearObject_0: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
-  obj_ClearObject_1: {fileID: 100000, guid: eaff585ed8323724cb5c9f8aceefa3d0, type: 2}
+  obj_ClearObject_1: {fileID: 100002, guid: cfb13bbc91b29584689feb03a3926bfe, type: 2}
   obj_ClearObject_2: {fileID: 100000, guid: 55cec865dcb7c4d40bb05c9b53ce84da, type: 2}
-  obj_ClearObject_3: {fileID: 100002, guid: cfb13bbc91b29584689feb03a3926bfe, type: 2}
+  obj_ClearObject_3: {fileID: 100000, guid: eaff585ed8323724cb5c9f8aceefa3d0, type: 2}
   obj_Bomb: {fileID: 100000, guid: 4b72b75cacf2e2943998a4c2e055c40e, type: 2}
   effect_Clear: {fileID: 100002, guid: eebd2e841a7e6854baecf10806c60034, type: 2}
   obj_Edge: {fileID: 100000, guid: c21448a4f99eb5d429ed514eab799fd0, type: 2}
