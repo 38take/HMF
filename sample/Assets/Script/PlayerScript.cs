@@ -55,6 +55,9 @@ public class PlayerScript : MonoBehaviour {
 	private float			speed;
 	private float			speedValue;
 	
+	private int				ClearCameraFlag;
+	public float			c_angle = 0.0f;		// クリア後カメラ動作用_ラジアン値
+
 	
 	//リザルト用パラメータ
 	int numBomb;
@@ -108,6 +111,8 @@ public class PlayerScript : MonoBehaviour {
 		holdHorizontal = 0;
 		
 		numBomb = 0;
+		
+		ClearCameraFlag = 0;
 	}
 	
 	// Update is called once per frame
@@ -234,7 +239,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 		else if( m_GameState == GAME_STATE.GAME_COMPLETION )
 		{
-			// 完成型オブジェクトを生成
+			// 光のエフェクト発生
 			if( timer_comp == 0 )
 			{	
 				GameObject ins_obj =
@@ -243,6 +248,7 @@ public class PlayerScript : MonoBehaviour {
 											GameObject.Find("Floor").transform.rotation	);
 				Destroy(ins_obj, 2.0f);
 			}
+			// 完成型オブジェクトを生成
 			if( timer_comp == 60 )
 			{
 				int stageID;
@@ -261,7 +267,21 @@ public class PlayerScript : MonoBehaviour {
 			if(timer_comp == 90)
 			{
 				ResultRendererScript SResult = ((GameObject)GameObject.Find("ResultRenderer")).GetComponent<ResultRendererScript>();
-				SResult.Validate();
+				SResult.Validate();				
+			}
+			if(timer_comp > 60)
+			{
+				Vector3 pos =  GameObject.Find("Floor").transform.position;
+
+				// オブジェクトの周りをカメラが円運動する
+				GameObject.Find("CameraMain").transform.position =
+					new Vector3( pos.x + Mathf.Cos(c_angle) * 200,
+								 pos.y + 200,
+								 pos.z + Mathf.Sin(c_angle) * 200 );
+				
+				GameObject.Find("CameraMain").transform.LookAt(GameObject.Find("Floor").transform.position);
+				
+				c_angle += 0.01f;
 			}
 			timer_comp++;
 		}
