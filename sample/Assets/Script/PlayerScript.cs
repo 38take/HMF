@@ -142,6 +142,8 @@ public class PlayerScript : MonoBehaviour {
 				//------------------------------------//
 				//集中モード処理
 				float addValue;
+				if(Input.GetKey(KeyCode.C))
+					CalcConcentration(1);
 				if(	Input.GetMouseButton(1) &&
 					ConcentrateGauge.isExist())
 				{

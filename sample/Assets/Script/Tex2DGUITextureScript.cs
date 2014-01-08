@@ -78,6 +78,11 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 		return (float)m_Textures[m_TexID].width / (float)m_Textures[m_TexID].height;
 	}
 	
+	public virtual Color GetColor()
+	{
+		return color;
+	}
+	
 	//--------------------------------------------------------------------//
 	//セッター
 	public virtual void SetPos	( float setX, float setY ){
@@ -148,5 +153,11 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 		}
 		else
 			guiTexture.texture = null;
+	}
+	
+	public void SetColor(Color col)
+	{
+		color = col;
+		guiTexture.color = color;
 	}
 }

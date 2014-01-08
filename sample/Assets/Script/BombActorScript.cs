@@ -15,6 +15,9 @@ public class BombActorScript : MonoBehaviour {
 	GameObject objR;
 	GameObject objL;
 	
+	//カットイン 
+	Tex2DGUITextureScript SCutIn;
+	
 	
 	//切り抜きスタンプ
 	public	GameObject	obj_Stamp;
@@ -37,6 +40,8 @@ public class BombActorScript : MonoBehaviour {
 	//	objL = (GameObject)Instantiate(obj_LeftEffect, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 	//	SRightEffect = objR.GetComponent<BillboardScript>();
 	//	SLeftEffect = objL.GetComponent<BillboardScript>();
+		SCutIn = ((GameObject)GameObject.Find("BombCutIn")).GetComponent<Tex2DGUITextureScript>();
+		SCutIn.SetColor(new Color(128.0f, 128.0f, 128.0f, 255.0f));
 		//パラメータ初期化
 		timer 			= 0;
 		timerAdd 	 	= 1.0f;
@@ -66,6 +71,16 @@ public class BombActorScript : MonoBehaviour {
 		//パーティクルセット
 	//	SRightEffect.SetPosition(bombPos+(bombDir*lineWidth));
 	//	SLeftEffect.SetPosition(bombPos-(bombDir*lineWidth));
+		
+		//カットイン
+		Vector2 cutin = SCutIn.GetPos();
+		Color	cutinCol = SCutIn.GetColor();
+		SCutIn.SetPos(cutin.x + (0.0f - cutin.x)*0.2f, 232.0f);
+		if(cutin.x < 15.0f)
+		{
+			cutinCol.a += (0.0f - cutinCol.a)*0.1f;
+			SCutIn.SetColor(cutinCol);
+		}
 		
 		//スタンプを張り付ける
 		GameObject objSR;
@@ -107,6 +122,7 @@ public class BombActorScript : MonoBehaviour {
 		//タイマーが規定値を超えるとDestroy
 		if(timer > 200)
 		{
+			SCutIn.SetPos(1024.0f, SCutIn.GetPos().y);
 			DestroyObject(objR);
 			DestroyObject(objL);
 			DestroyObject(gameObject);
