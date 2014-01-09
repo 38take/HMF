@@ -88,6 +88,7 @@ public class TextWindowScript : MonoBehaviour {
 				FrameCount++;
 			}else{
 				Size.x = 0.0f;Size.y = 0.0f;
+				tex2d.SetSizeCenter(new Vector2(Size.x,Size.y));
 				FrameCount = 0;
 				WinState = WINDOW_STATE.IDLE;
 			}
