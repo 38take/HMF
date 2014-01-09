@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour {
 	public  float 			TIMERADD_MIN;
 	
 	private	GameObject		Effect_Frame;
+	private	GameObject		Effect_CutDust;
 	public	GameObject		obj_ClearObject_0;
 	public	GameObject		obj_ClearObject_1;
 	public	GameObject		obj_ClearObject_2;
@@ -114,6 +115,8 @@ public class PlayerScript : MonoBehaviour {
 
 		Effect_Frame = GameObject.Find("EffectScreanFrame");
 		Effect_Frame.SetActiveRecursively(false);
+		Effect_CutDust = GameObject.Find("ナイフ5/EffectCutDust");
+		Effect_CutDust.SetActiveRecursively(true);
 	}
 	
 	// Update is called once per frame
@@ -198,6 +201,12 @@ public class PlayerScript : MonoBehaviour {
 					height += (UPHeight-height)*0.1f;
 				else
 					height += (0.0f-height)*0.1f;
+				
+				if( height <= 0.5f )
+					Effect_CutDust.SetActiveRecursively(true);
+				else
+					Effect_CutDust.SetActiveRecursively(false);
+				
 				basePos = new Vector3(basePos.x, basePos.y+height, basePos.z);
 				transform.position = basePos;
 				oldMouseX = Input.mousePosition.x;
