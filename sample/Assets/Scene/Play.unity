@@ -13848,7 +13848,7 @@ MonoBehaviour:
   UPHeight: 4
   MouseSensitivity: .00100000005
   HoldTime: 45
-  TIMERADD_MAX: 300
+  TIMERADD_MAX: 3
   TIMERADD_MIN: 1
   obj_ClearObject_0: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
   obj_ClearObject_1: {fileID: 100002, guid: cfb13bbc91b29584689feb03a3926bfe, type: 2}

@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour {
 	public  float 			TIMERADD_MAX;
 	public  float 			TIMERADD_MIN;
 	
+	private	GameObject		Effect_Frame;
 	public	GameObject		obj_ClearObject_0;
 	public	GameObject		obj_ClearObject_1;
 	public	GameObject		obj_ClearObject_2;
@@ -55,7 +56,6 @@ public class PlayerScript : MonoBehaviour {
 	private float			speed;
 	private float			speedValue;
 	
-	private int				ClearCameraFlag;
 	public float			c_angle = 0.0f;		// クリア後カメラ動作用_ラジアン値
 
 	
@@ -111,8 +111,9 @@ public class PlayerScript : MonoBehaviour {
 		holdHorizontal = 0;
 		
 		numBomb = 0;
-		
-		ClearCameraFlag = 0;
+
+		Effect_Frame = GameObject.Find("EffectScreanFrame");
+		Effect_Frame.SetActiveRecursively(false);
 	}
 	
 	// Update is called once per frame
@@ -152,11 +153,15 @@ public class PlayerScript : MonoBehaviour {
 				if(	Input.GetMouseButton(1) &&
 					ConcentrateGauge.isExist())
 				{
+					Effect_Frame.SetActiveRecursively(true);
 					timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
 					ConcentrateGauge.AddConcentrate(-1.0f);
 				}
 				else
+				{
 					timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
+					Effect_Frame.SetActiveRecursively(false);
+				}
 				addValue = timerAdd;
 				if(ExistSpeed)
 				{
