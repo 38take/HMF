@@ -159,7 +159,7 @@ public class PlayerScript : MonoBehaviour {
 				{
 					Effect_Frame.SetActiveRecursively(true);
 					timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
-					ConcentrateGauge.AddConcentrate(-1.0f);
+					ConcentrateGauge.AddConcentrate(-0.1f);
 				}
 				else
 				{

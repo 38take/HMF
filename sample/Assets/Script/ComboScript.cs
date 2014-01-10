@@ -13,7 +13,6 @@ public class ComboScript : MonoBehaviour {
 	int maxCombo;
 	int validCnt;
 	int VALID_CNT;
-	GameObject comboText;
 	
 	//外部オブジェクト
 	GameObject obj_Player;
@@ -22,14 +21,12 @@ public class ComboScript : MonoBehaviour {
 	void Start () {
 		numCombo = 0;
 		maxCombo = 0;
-		comboText = (GameObject)GameObject.Find("ComboTextBox");
 		SCombeRenderer = null;
 		obj_Player = ((GameObject)GameObject.Find("ナイフ5"));
 	}
 	
 	// Update is called once per frame
 	void Update (){
-		comboText.guiText.text = "Combo : " + numCombo.ToString();
 	}
 	
 	//きれたかどうかでコンボ数変更
