@@ -79,8 +79,8 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 0
   Position: {x: 0, y: 0}
-  Width: 800
-  Height: 40
+  Width: 850
+  Height: 45
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
   UVHeight: 0

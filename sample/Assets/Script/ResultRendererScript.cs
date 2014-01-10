@@ -31,6 +31,9 @@ public class ResultRendererScript : MonoBehaviour {
 	Tex2DGUITextureScript SScoreLogo;
 	Tex2DGUITextureScript SComboLogo;
 	Tex2DGUITextureScript SRank;
+	Tex2DGUITextureScript SGaugeUI;
+	Tex2DGUITextureScript SGauge;
+	ScoreScript			  SScore;
 	public GameObject obj_Achievement;
 	ArrayList AchievementArray;
 	
@@ -67,6 +70,9 @@ public class ResultRendererScript : MonoBehaviour {
 		SScoreLogo 	= ((GameObject)GameObject.Find("ResultScore")).GetComponent<Tex2DGUITextureScript>();
 		SComboLogo 	= ((GameObject)GameObject.Find("ResultCombo")).GetComponent<Tex2DGUITextureScript>();
 		SRank 		= ((GameObject)GameObject.Find("ResultRank")).GetComponent<Tex2DGUITextureScript>();
+		SGauge		= ((GameObject)GameObject.Find("GaugeTexture")).GetComponent<Tex2DGUITextureScript>();
+		SGaugeUI	= ((GameObject)GameObject.Find("UI")).GetComponent<Tex2DGUITextureScript>();
+		SScore		= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
 		//アチーブメントの表示
 		AchievementArray = new ArrayList();
 	}
@@ -95,6 +101,10 @@ public class ResultRendererScript : MonoBehaviour {
 				}
 				col.a = 0.5f - (0.5f*(float)((float)panelCnt/(float)PanelCount));
 				SPanel.SetColor(col);
+				float alpha = (float)((float)panelCnt/(float)PanelCount);
+				SGauge.SetColor(new Color(0.5f, 0.5f, 0.5f, alpha));
+				SGaugeUI.SetColor(new Color(0.5f, 0.5f, 0.5f, alpha));
+				SScore.SetColor(new Color(0.5f, 0.5f, 0.5f, alpha));
 				break;
 			case (char)RESULT_SEEQ.LOGO:
 				if(!ActLogo())
@@ -310,7 +320,7 @@ public class ResultRendererScript : MonoBehaviour {
 		int idx = AchievementArray.Count;
 		GameObject obj = (GameObject)Instantiate(obj_Achievement, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		AchievementArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
-		((Tex2DGUITextureScript)AchievementArray[idx]).SetPos(posAchievement.x + 300, posAchievement.y+(70*idx), true);
+		((Tex2DGUITextureScript)AchievementArray[idx]).SetPos(posAchievement.x + 300, posAchievement.y+(65*idx), true);
 		((Tex2DGUITextureScript)AchievementArray[idx]).SwitchTexture(id);
 		((Tex2DGUITextureScript)AchievementArray[idx]).SetRenderFlag(false);
 	}

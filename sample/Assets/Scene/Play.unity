@@ -6415,7 +6415,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Width
-      value: 300
+      value: 330
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Height
@@ -6431,7 +6431,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Position.y
-      value: 150
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: presetRect
@@ -7733,7 +7733,7 @@ Prefab:
       objectReference: {fileID: 2800000, guid: 2250e917aa362c14297ffa3cbb303165, type: 3}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Width
-      value: 400
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Height
@@ -7745,7 +7745,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Position.y
-      value: 250
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 13100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: m_Color.a
@@ -7854,6 +7854,18 @@ Prefab:
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Position.x
       value: 890
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.r
+      value: .501960814
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.g
+      value: .501960814
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.b
+      value: .501960814
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
@@ -8512,7 +8524,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 1
   Position: {x: 750, y: 494}
-  Width: 200
+  Width: 270
   Height: 200
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
@@ -11187,7 +11199,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Width
-      value: 200
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Height
@@ -11269,7 +11281,7 @@ MonoBehaviour:
   obj_ScoreRenderer: {fileID: 100000, guid: a6c8d165f80677e4b9a27bbbde06c194, type: 2}
   waitCnt: 60
   PanelCount: 30
-  posAchievement: {x: 262, y: 500}
+  posAchievement: {x: 100, y: 480}
 --- !u!1 &862917530
 GameObject:
   m_ObjectHideFlags: 0
@@ -11543,8 +11555,8 @@ MonoBehaviour:
   StaticTexture: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 1
-  Position: {x: 100, y: 150}
-  Width: 300
+  Position: {x: 100, y: 180}
+  Width: 330
   Height: 100
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
@@ -13622,8 +13634,8 @@ MonoBehaviour:
   StaticTexture: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 1
-  Position: {x: 100, y: 250}
-  Width: 400
+  Position: {x: 100, y: 280}
+  Width: 450
   Height: 100
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
@@ -13693,7 +13705,7 @@ MonoBehaviour:
   m_Textures:
   - {fileID: 2800000, guid: aa3d29ad411f0074e931123f0713d553, type: 3}
   StaticTexture: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: .501960814, g: .501960814, b: .501960814, a: 1}
   PresetRect: 0
   Position: {x: 890, y: 610}
   Width: 0
@@ -13967,7 +13979,7 @@ MonoBehaviour:
   UPHeight: 4
   MouseSensitivity: .00100000005
   HoldTime: 45
-  TIMERADD_MAX: 3
+  TIMERADD_MAX: 300
   TIMERADD_MIN: 1
   obj_ClearObject_0: {fileID: 100000, guid: 6d238b8625d50734f98a5177ee589b85, type: 2}
   obj_ClearObject_1: {fileID: 100002, guid: cfb13bbc91b29584689feb03a3926bfe, type: 2}
@@ -18070,56 +18082,6 @@ Prefab:
   m_RootGameObject: {fileID: 2124957269}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &1781828885
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1781828886}
-  - 132: {fileID: 1781828887}
-  m_Layer: 0
-  m_Name: HitTextBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1781828886
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1781828885}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .899999976, y: .913887978, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
---- !u!132 &1781828887
-GUIText:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1781828885}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Text: Gui Text
-  m_Anchor: 0
-  m_Alignment: 0
-  m_PixelOffset: {x: 0, y: 0}
-  m_LineSpacing: 1
-  m_TabSize: 4
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Material: {fileID: 0}
-  m_FontSize: 0
-  m_FontStyle: 0
-  m_Color:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_PixelCorrect: 1
-  m_RichText: 1
 --- !u!1001 &1785349374
 Prefab:
   m_ObjectHideFlags: 0
@@ -21283,7 +21245,6 @@ MonoBehaviour:
   target: {fileID: 100022, guid: 174d68581da19a8489b54138e8ae9393, type: 2}
   line: {fileID: 100000, guid: 89288b2987693e8499ca9d945b905d64, type: 2}
   lineDead: {fileID: 100000, guid: 76522a1f200a0fc48aa468efbf55f2e3, type: 2}
-  hitRenderer: {fileID: 0}
   effect_TargetHit: {fileID: 100002, guid: ac53d0be90ac4a647b8991f3870a09b2, type: 2}
   effect_HitSafe: {fileID: 100002, guid: fff9cd99cb283a140957b1f2273663fb, type: 2}
   effect_HitNormal: {fileID: 100006, guid: 21a9af130c37c724f83a4043e8a83a4d, type: 2}

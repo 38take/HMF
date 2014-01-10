@@ -35,7 +35,6 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject target;	
 	public GameObject line;
 	public GameObject lineDead;
-	public GameObject hitRenderer;
 
 	public GameObject effect_TargetHit;
 	public GameObject effect_HitSafe;
@@ -148,7 +147,6 @@ public class LineManagerScript : MonoBehaviour {
 		float stageHorizontal = floor.transform.localScale.x * 5.0f;
 		float stageVertical = floor.transform.localScale.z * 5.0f;
 		
-		hitRenderer = (GameObject)GameObject.Find("HitTextBox");
 		SPlayer = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
 		SText 	= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		SAudio  = ((GameObject)GameObject.Find("AudioSE")).GetComponent<AudioSEScript>();
@@ -541,7 +539,6 @@ public class LineManagerScript : MonoBehaviour {
 							H > -TargetHitChecker.x * targetWidthInLine &&
 							SPlayer.isCutting())
 						{
-							hitRenderer.guiText.text = "クリティカル！！";
 							numJudge[(int)JUDGE.GOOD]++;
 							criticalCombo++;
 							//サウンド再生
@@ -576,7 +573,6 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.y * targetWidthInLine &&
 								SPlayer.isCutting())
 						{
-							hitRenderer.guiText.text = "ノーマル";
 							numJudge[(int)JUDGE.NORMAL]++;
 							criticalCombo = 0;
 							//サウンド再生
@@ -611,7 +607,6 @@ public class LineManagerScript : MonoBehaviour {
 								 H > -TargetHitChecker.z * targetWidthInLine &&
 								SPlayer.isCutting())
 						{
-							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
 							numJudge[(int)JUDGE.SAFE]++;
 							criticalCombo = 0;
 							//サウンド再生
@@ -643,7 +638,6 @@ public class LineManagerScript : MonoBehaviour {
 						//ミス
 						else
 						{
-							hitRenderer.guiText.text = "ミス・・・";
 							numJudge[(int)JUDGE.MISS]++;
 							criticalCombo = 0;
 							//サウンド再生

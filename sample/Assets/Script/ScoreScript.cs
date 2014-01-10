@@ -83,4 +83,12 @@ public class ScoreScript : MonoBehaviour {
 		((Tex2DGUITextureScript)numArray[digit]).SetRenderFlag(true);
 		digit++;
 	}
+	
+	public void SetColor(Color col)
+	{
+		for(int i=0; i<numArray.Count; i++)
+		{
+			((Tex2DGUITextureScript)numArray[i]).SetColor(col);
+		}
+	}
 }

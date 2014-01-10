@@ -105,6 +105,14 @@ public class ScoreRendererScript : MonoBehaviour {
 		Height = height;
 	}
 	
+	public void SetColor(Color col)
+	{
+		for(int i=0; i<numArray.Count; i++)
+		{
+			((Tex2DGUITextureScript)numArray[i]).SetColor(col);
+		}
+	}
+	
 	public bool isValid() {	return valid;	}
 	public void SkipAct() {	skip = true;	}
 }
