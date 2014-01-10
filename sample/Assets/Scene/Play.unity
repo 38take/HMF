@@ -8477,7 +8477,7 @@ Transform:
   m_PrefabInternal: {fileID: 848953642}
   m_GameObject: {fileID: 616606852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 858826342}
@@ -8523,9 +8523,9 @@ MonoBehaviour:
   StaticTexture: 0
   color: {r: 1, g: 1, b: 1, a: 1}
   PresetRect: 1
-  Position: {x: 750, y: 494}
-  Width: 270
-  Height: 200
+  Position: {x: 700, y: 445}
+  Width: 326
+  Height: 298
   UVPosition: {x: 0, y: 0}
   UVWidth: 0
   UVHeight: 0
@@ -11143,7 +11143,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: m_LocalRotation.x
@@ -11199,11 +11199,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Width
-      value: 270
+      value: 326
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Height
-      value: 200
+      value: 298
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: m_Layer
@@ -11223,11 +11223,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Position.x
-      value: 750
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
       propertyPath: Position.y
-      value: 494
+      value: 445
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}

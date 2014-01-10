@@ -24,6 +24,7 @@ public class ResultRendererScript : MonoBehaviour {
 	int numJudgeKind;
 	int[] numJudge;
 	bool deadLine;
+	int  numTarget;
 	
 	//各種画像へのアクセス用
 	Tex2DGUITextureScript SPanel;
@@ -222,7 +223,18 @@ public class ResultRendererScript : MonoBehaviour {
 	//ランク表示
 	bool ActRank()
 	{
-		SRank.SwitchTexture(1);
+		float per = (float)((float)score / (float)(numTarget*100));
+		if(per > 0.95f)
+			SRank.SwitchTexture(4);
+		else if(per > 0.85f)
+			SRank.SwitchTexture(3);
+		else if(per > 0.7f)
+			SRank.SwitchTexture(2);
+		else if(per > 0.5f)
+			SRank.SwitchTexture(1);
+		else
+			SRank.SwitchTexture(0);
+			
 		SRank.RestoreTextureRect();
 		SRank.SetRenderFlag(true);
 		
@@ -241,6 +253,8 @@ public class ResultRendererScript : MonoBehaviour {
 		
 		//最大コンボ数
 		combo = SCombo.GetMaxCombo();
+		//最大ターゲット数
+		numTarget = SLineManager.GetNumTarget();
 		//スコア
 		score = (int)SScore.GetScore();
 		//ボム使用回数
