@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour {
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
+	private bool			cutting;
 	public float			MouseSensitivity = 0.001f;
 	private int				upCnt;
 	private int				holdHorizontal;
@@ -87,7 +88,6 @@ public class PlayerScript : MonoBehaviour {
 		SLineManager	= (LineManagerScript)GameObject.Find("LineManager").GetComponent("LineManagerScript");
 		SCamera			= (CameraScript)GameObject.Find("CameraMain").GetComponent("CameraScript");
 		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
-		SCutEdge		= ((GameObject)GameObject.Find("CutEdgeManager")).GetComponent<CutEdgeManagerScript>();
 		SText			= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		SReady			= ((GameObject)GameObject.Find("ReadyActor")).GetComponent<ReadyActorScript>();
 		// FPSを60に設定
@@ -204,17 +204,24 @@ public class PlayerScript : MonoBehaviour {
 				else
 					height += (0.0f-height)*0.1f;
 				
-				if( height <= 0.5f )
-					Effect_CutDust.SetActiveRecursively(true);
-				else
-					Effect_CutDust.SetActiveRecursively(false);
+				//刃が上がってるか判定
+				bool tmpCutting = ( height <= 0.5f );
+				if(cutting && !tmpCutting && SCutEdge!=null)
+				{
+					SCutEdge.StopEdgeOpen();
+					SCutEdge = null;
+				}
+				if(!cutting && tmpCutting)
+					SCutEdge = ((GameObject)Instantiate(obj_Edge)).GetComponent<CutEdgeManagerScript>();
+				cutting = tmpCutting;
+				Effect_CutDust.SetActiveRecursively(cutting);//エフェクト
 				
 				basePos = new Vector3(basePos.x, basePos.y+height, basePos.z);
 				transform.position = basePos;
 				oldMouseX = Input.mousePosition.x;
 				//------------------------------------//
 				//切り口生成
-				if( CreateCutEdge && ((int)(m_Timer - m_TimerPrev)) > CreateEdgeSpan)
+				if( CreateCutEdge && cutting &&((int)(m_Timer - m_TimerPrev)) > CreateEdgeSpan)
 				{
 					SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
 					m_TimerPrev = m_Timer;
@@ -349,5 +356,10 @@ public class PlayerScript : MonoBehaviour {
 		{
 			Destroy(collision.gameObject);
 		}
+	}
+	
+	public bool isCutting()
+	{
+		return cutting;
 	}
 }

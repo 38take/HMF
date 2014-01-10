@@ -59,7 +59,9 @@ public class CutEdgeManagerScript : MonoBehaviour {
 		mesh.Clear();
 		//制御点の準備
 		edgePointArray = new ArrayList();
-		AddPoint(SLineManager.GetLineStartPoint(0));
+		PlayerScript SPlayer = ((GameObject)GameObject.Find("ナイフ5")).GetComponent<PlayerScript>();
+		Vector3 pos = SLineManager.CalcPos( (int)SPlayer.m_Timer, SPlayer.m_Offset);
+		AddPoint(pos);
 		initiarized = true;
 	}
 	
@@ -125,37 +127,40 @@ public class CutEdgeManagerScript : MonoBehaviour {
 	public void AddPoint(Vector3 point)
 	{
 		Vector3 prevPoint;
-		int pointNo = edgePointArray.Count;
-		
-		//新しい点を作成
-		EDGEPOINT tmp = new EDGEPOINT();
-		
-		tmp.vertexID = new int[2];
-		tmp.vertexID[0] = (pointNo*2);
-		tmp.vertexID[1] = (pointNo*2)+1;
-		tmp.width = 0.0f;
-		tmp.opened = false;
-		tmp.basePos = point;
-		if(edgePointArray.Count > 0)
+		if(edgePointArray != null)
 		{
-			prevPoint = ((EDGEPOINT)edgePointArray[pointNo-1]).basePos;
-			tmp.dir = Vector3.Normalize(tmp.basePos - prevPoint);
-			float x = tmp.dir.x;
-			tmp.dir.x = tmp.dir.z;
-			tmp.dir.z = -x;
-			tmp.dir.y = 0.0f;
+			int pointNo = edgePointArray.Count;
+			
+			//新しい点を作成
+			EDGEPOINT tmp = new EDGEPOINT();
+			
+			tmp.vertexID = new int[2];
+			tmp.vertexID[0] = (pointNo*2);
+			tmp.vertexID[1] = (pointNo*2)+1;
+			tmp.width = 0.0f;
+			tmp.opened = false;
+			tmp.basePos = point;
+			if(edgePointArray.Count > 0)
+			{
+				prevPoint = ((EDGEPOINT)edgePointArray[pointNo-1]).basePos;
+				tmp.dir = Vector3.Normalize(tmp.basePos - prevPoint);
+				float x = tmp.dir.x;
+				tmp.dir.x = tmp.dir.z;
+				tmp.dir.z = -x;
+				tmp.dir.y = 0.0f;
+			}
+			else
+				tmp.dir = SLineManager.GetLineDirection(SLineManager.GetPlyaerLineID());
+			
+			edgePointArray.Add(tmp);
+			//ひとつ前の点の方向を再計算
+			RecalcDirection(pointNo-1);
+			
+			//メッシュへの頂点の追加
+			AddMeshData(point, (pointNo*2), uv);
+			if(uv == 0.0f) 	uv = 1.0f;
+			else			uv = 0.0f;
 		}
-		else
-			tmp.dir = SLineManager.GetLineDirection(0);
-		
-		edgePointArray.Add(tmp);
-		//ひとつ前の点の方向を再計算
-		RecalcDirection(pointNo-1);
-		
-		//メッシュへの頂点の追加
-		AddMeshData(point, (pointNo*2), uv);
-		if(uv == 0.0f) 	uv = 1.0f;
-		else			uv = 0.0f;
 	}
 	private void AddMeshData(Vector3 v, int idx, float texUV)
 	{
