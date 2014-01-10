@@ -256,6 +256,8 @@ public class PlayerScript : MonoBehaviour {
 			// 光のエフェクト発生
 			if( timer_comp == 0 )
 			{	
+				GameObject.Find("EffectGauge").SetActiveRecursively(false);
+				
 				GameObject ins_obj =
 					(GameObject)Instantiate(effect_Clear,
 											GameObject.Find("Floor").transform.position,
