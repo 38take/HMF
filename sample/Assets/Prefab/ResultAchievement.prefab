@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   - 131: {fileID: 13100000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ResultAchievement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd6bc878f3d3b34c9ea195dc0a24e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PreRender: 0
   m_Textures:
   - {fileID: 2800000, guid: 30af846b4ae9103429e79b41ca7f56bf, type: 3}
   - {fileID: 2800000, guid: 41adec4e73a1e574095b9ede9c2bf973, type: 3}

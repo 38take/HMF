@@ -48,6 +48,8 @@ public class TextBoxScript : MonoBehaviour {
 	TextStyleBaseScript TextBox3;
 	GUIManagerScript	SGUI;
 	
+	GameSystemScript gamesys;
+	
 	// Use this for initialization
 	void Start () {
 		TextBox1 = GameObject.Find("Text1").GetComponent<TextStyleBaseScript>();
@@ -57,6 +59,7 @@ public class TextBoxScript : MonoBehaviour {
 		TextBox3 = GameObject.Find("Text3").GetComponent<TextStyleBaseScript>();
 		TextBox3.SetPos(60.0f,120.0f);
 		SGUI 	 = GameObject.Find("GUIManager").GetComponent<GUIManagerScript>();
+		gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 		//---------------------------//
 		//パラメータの初期化
 		numStatement 	= 0;
@@ -75,7 +78,6 @@ public class TextBoxScript : MonoBehaviour {
 		string tmp;
 		
 		//データIDを取得
-		GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 		int dataID = gamesys.GetActID();
 		Debug.Log("dataID:"+dataID);
 		//会話IDを取得
@@ -98,10 +100,14 @@ public class TextBoxScript : MonoBehaviour {
        	sr.Close();
 		//会話データを取得
 		char[] tmpCharArray;
-        FileInfo fiData = new FileInfo(Application.dataPath+"/GameData/actData/"+actID+".txt");
-        StreamReader srData = new StreamReader(fiData.OpenRead(), Encoding.GetEncoding("Shift_JIS"));
+		
+		//GUIText testText2 = ((GameObject)GameObject.Find("test")).GetComponent<GUIText>();
+		string path = Application.dataPath+"/GameData/actData/"+actID+".txt";
+        //FileInfo fiData = new FileInfo(Application.dataPath+"/GameData/actData/"+actID+".txt");
+        StreamReader srData = new StreamReader(path, Encoding.GetEncoding(0));//.GetEncoding("Shift_JIS"));
         while( srData.Peek() != -1 ){
 			tmp = srData.ReadLine();
+			//testText2.text = tmp;
 			strBase = tmp.Split(';');
 			split = strBase[0].Split(',');
 			
@@ -131,6 +137,7 @@ public class TextBoxScript : MonoBehaviour {
 		InfoContain		= new int[numStatement];
 		outflag			= new bool[numStatement];
 		
+		
 		for(int i=0; i<numStatement; i++)
 		{
 			emotionArray[i]	= (int)data[i*10+0];
@@ -149,7 +156,6 @@ public class TextBoxScript : MonoBehaviour {
 				outflag[i] = true;
 			}
 			//Debug.Log("OutFlag["+i+"]:"+outflag[i]);
-
 		}
 		renderBase = strArray[0];//.ToString();
 		renderBase2 = strArray2[0];//.ToString();
@@ -159,9 +165,14 @@ public class TextBoxScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(valid)
+		if(!initialized)
 		{
-			if(initialized)
+			if(gamesys.isValid())
+				initialized = Initialize();
+		}
+		else
+		{
+			if(valid)
 			{
 				switch(balloonSize[strIdx]){
 				case 0:
@@ -249,10 +260,6 @@ public class TextBoxScript : MonoBehaviour {
 						//Debug.Log("renderString:"+renderString);
 					}
 				}
-			}
-			else
-			{
-				initialized = Initialize();
 			}
 		}
 	}

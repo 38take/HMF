@@ -5,7 +5,7 @@ using System.IO;
 
 public class GameSystemScript : MonoBehaviour {
 	
-	private bool valid;
+	private bool valid = false;
 	private int actID = 0;
 	private int lastAct;
 	private int[] score;

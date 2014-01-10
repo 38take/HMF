@@ -5,6 +5,8 @@ public class ResultRendererScript : MonoBehaviour {
 	
 	public enum RESULT_SEEQ
 	{
+		WAIT,
+		PANEL,
 		LOGO,
 		SCORE,
 		COMBO,
@@ -24,6 +26,7 @@ public class ResultRendererScript : MonoBehaviour {
 	bool deadLine;
 	
 	//各種画像へのアクセス用
+	Tex2DGUITextureScript SPanel;
 	Tex2DGUITextureScript SResultLogo;
 	Tex2DGUITextureScript SScoreLogo;
 	Tex2DGUITextureScript SComboLogo;
@@ -37,6 +40,9 @@ public class ResultRendererScript : MonoBehaviour {
 	
 	private bool valid;
 	private bool end;
+	public int  waitCnt = 60;
+	public int  PanelCount = 30;
+	private int  panelCnt;
 	private bool dispScore = false;
 	private bool dispCombo = false;
 	private int  achievementIdx;
@@ -48,13 +54,15 @@ public class ResultRendererScript : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		state = (char)RESULT_SEEQ.LOGO;
+		state = (char)RESULT_SEEQ.WAIT;
 		valid = false;
 		end = false;
+		panelCnt = PanelCount;
 		//変数初期化
 		numJudgeKind = (int)LineManagerScript.JUDGE.NUM_JUDGE;
 		numJudge = new int[numJudgeKind];
 		//各画像へのアクセス準備
+		SPanel		= ((GameObject)GameObject.Find("panel")).GetComponent<Tex2DGUITextureScript>();
 		SResultLogo = ((GameObject)GameObject.Find("ResultLogo")).GetComponent<Tex2DGUITextureScript>();
 		SScoreLogo 	= ((GameObject)GameObject.Find("ResultScore")).GetComponent<Tex2DGUITextureScript>();
 		SComboLogo 	= ((GameObject)GameObject.Find("ResultCombo")).GetComponent<Tex2DGUITextureScript>();
@@ -68,6 +76,26 @@ public class ResultRendererScript : MonoBehaviour {
 		{
 			switch(state)
 			{
+			case (char)RESULT_SEEQ.WAIT:
+				if(waitCnt > 0)
+					waitCnt--;
+				else
+				{
+					SPanel.SetRenderFlag(true);
+					SPanel.SetColor(new Color(0.5f, 0.5f, 0.5f, 0.0f));
+					state = (char)RESULT_SEEQ.PANEL;
+				}
+				break;
+			case (char)RESULT_SEEQ.PANEL:
+				Color col = SPanel.GetColor();
+				if(panelCnt >0)
+					panelCnt--;
+				else{
+					state = (char)RESULT_SEEQ.LOGO;
+				}
+				col.a = 0.5f - (0.5f*(float)((float)panelCnt/(float)PanelCount));
+				SPanel.SetColor(col);
+				break;
 			case (char)RESULT_SEEQ.LOGO:
 				if(!ActLogo())
 					state = (char)RESULT_SEEQ.SCORE;

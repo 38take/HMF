@@ -6,6 +6,8 @@ public class SceneControllerADV : MonoBehaviour {
 	TextBoxScript StextBox;
 	bool press;
 	
+	bool initialized = false;
+	
 	Tex2DBaseScript shutterLeft;
 	Tex2DBaseScript shutterRight;
 	SyuCyuSenController SyutyuSen;
@@ -23,7 +25,6 @@ public class SceneControllerADV : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		StextBox = ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
-		StextBox.Validate();
 	
 		SyutyuSen = ((GameObject)GameObject.Find("SyuChooSen")).GetComponent<SyuCyuSenController>();
 		
@@ -47,9 +48,16 @@ public class SceneControllerADV : MonoBehaviour {
 	
 	}
 	
+	void Initialize()
+	{
+		StextBox.Validate();
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		
+		if(!initialized)
+			Initialize();
 		//遷移
 		if(dummyLoadCnt > 0)
 			dummyLoadCnt++;
