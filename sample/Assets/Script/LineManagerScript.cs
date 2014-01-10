@@ -36,7 +36,8 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject line;
 	public GameObject lineDead;
 	public GameObject hitRenderer;
-	
+
+	public GameObject effect_TargetHit;
 	public GameObject effect_HitSafe;
 	public GameObject effect_HitNormal;
 	public GameObject effect_HitCritical;
@@ -513,7 +514,7 @@ public class LineManagerScript : MonoBehaviour {
 	}
 	private int HitCheckTarget(int lineID, Vector3 offset, Vector3 oldOffset)
 	{
-		Vector3 targetPos, p_pos;
+		Vector3 targetPos, p_pos, delete_pos;
 		int retValue = 0;
 		
 		if(targetArray[lineID].targetPosArray != null &&
@@ -552,6 +553,15 @@ public class LineManagerScript : MonoBehaviour {
 														p_pos,
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
+														
+							// 花びらエフェクト発生
+							delete_pos = ((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).
+											gameObject.transform.position;
+							GameObject ins_obj2 =
+								(GameObject)Instantiate(effect_TargetHit,
+														delete_pos,
+														new Quaternion(0,0,0,0)	);
+							Destroy(ins_obj2, 1.0f);
 							
 							//当たったやつを消す
 							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
@@ -578,6 +588,15 @@ public class LineManagerScript : MonoBehaviour {
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
 							
+							// 花びらエフェクト発生
+							delete_pos = ((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).
+											gameObject.transform.position;
+							GameObject ins_obj2 =
+								(GameObject)Instantiate(effect_TargetHit,
+														delete_pos,
+														new Quaternion(0,0,0,0)	);
+							Destroy(ins_obj2, 1.0f);
+							
 							//当たったやつを消す
 							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
 							
@@ -602,6 +621,15 @@ public class LineManagerScript : MonoBehaviour {
 														p_pos,
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
+								
+							// 花びらエフェクト発生
+							delete_pos = ((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).
+											gameObject.transform.position;
+							GameObject ins_obj2 =
+								(GameObject)Instantiate(effect_TargetHit,
+														delete_pos,
+														new Quaternion(0,0,0,0)	);
+							Destroy(ins_obj2, 1.0f);
 							
 							//当たったやつを消す
 							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);

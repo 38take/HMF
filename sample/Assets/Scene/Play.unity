@@ -9739,11 +9739,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6bd37c5c001d70a48bc6155a49da6f78, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -54.4595032
+      value: -54.4595184
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6bd37c5c001d70a48bc6155a49da6f78, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.28881836e-05
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6bd37c5c001d70a48bc6155a49da6f78, type: 2}
       propertyPath: m_LocalRotation.x
@@ -18127,7 +18127,7 @@ Transform:
   m_PrefabInternal: {fileID: 637975213}
   m_GameObject: {fileID: 1770216037}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 125, y: -54.4595032, z: 0}
+  m_LocalPosition: {x: 125, y: -54.4595184, z: -2.28881836e-05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -21283,6 +21283,7 @@ MonoBehaviour:
   line: {fileID: 100000, guid: 89288b2987693e8499ca9d945b905d64, type: 2}
   lineDead: {fileID: 100000, guid: 76522a1f200a0fc48aa468efbf55f2e3, type: 2}
   hitRenderer: {fileID: 0}
+  effect_TargetHit: {fileID: 100002, guid: ac53d0be90ac4a647b8991f3870a09b2, type: 2}
   effect_HitSafe: {fileID: 100002, guid: fff9cd99cb283a140957b1f2273663fb, type: 2}
   effect_HitNormal: {fileID: 100006, guid: 21a9af130c37c724f83a4043e8a83a4d, type: 2}
   effect_HitCritical: {fileID: 100006, guid: 55c119d5641d2d54a96f8d91ae67fc7c, type: 2}
