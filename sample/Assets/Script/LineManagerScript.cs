@@ -538,7 +538,8 @@ public class LineManagerScript : MonoBehaviour {
 						H = H - targetPos.y;
 						//クリティカル
 						if( H < TargetHitChecker.x * targetWidthInLine &&
-							H > -TargetHitChecker.x * targetWidthInLine)
+							H > -TargetHitChecker.x * targetWidthInLine &&
+							SPlayer.isCutting())
 						{
 							hitRenderer.guiText.text = "クリティカル！！";
 							numJudge[(int)JUDGE.GOOD]++;
@@ -572,7 +573,8 @@ public class LineManagerScript : MonoBehaviour {
 						}
 						//ノーマル
 						else if( H < TargetHitChecker.y * targetWidthInLine &&
-								 H > -TargetHitChecker.y * targetWidthInLine)
+								 H > -TargetHitChecker.y * targetWidthInLine &&
+								SPlayer.isCutting())
 						{
 							hitRenderer.guiText.text = "ノーマル";
 							numJudge[(int)JUDGE.NORMAL]++;
@@ -606,7 +608,8 @@ public class LineManagerScript : MonoBehaviour {
 						}
 						//セーフ
 						else if( H < TargetHitChecker.z * targetWidthInLine &&
-								 H > -TargetHitChecker.z * targetWidthInLine)
+								 H > -TargetHitChecker.z * targetWidthInLine &&
+								SPlayer.isCutting())
 						{
 							hitRenderer.guiText.text = "セーフ(´・ω・｀)";
 							numJudge[(int)JUDGE.SAFE]++;
