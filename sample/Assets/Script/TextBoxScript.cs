@@ -103,11 +103,11 @@ public class TextBoxScript : MonoBehaviour {
 		
 		//GUIText testText2 = ((GameObject)GameObject.Find("test")).GetComponent<GUIText>();
 		string path = Application.dataPath+"/GameData/actData/"+actID+".txt";
-        //FileInfo fiData = new FileInfo(Application.dataPath+"/GameData/actData/"+actID+".txt");
-        StreamReader srData = new StreamReader(path, Encoding.GetEncoding(0));//.GetEncoding("Shift_JIS"));
+        FileInfo fiData = new FileInfo(Application.dataPath+"/GameData/actData/"+actID+".txt");
+        StreamReader srData = new StreamReader(/*path, */fiData.OpenRead(), Encoding.Default);
         while( srData.Peek() != -1 ){
 			tmp = srData.ReadLine();
-			//testText2.text = tmp;
+		//	testText2.text = tmp;
 			strBase = tmp.Split(';');
 			split = strBase[0].Split(',');
 			
@@ -165,14 +165,9 @@ public class TextBoxScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!initialized)
+		if(valid)
 		{
-			if(gamesys.isValid())
-				initialized = Initialize();
-		}
-		else
-		{
-			if(valid)
+			if(initialized)
 			{
 				switch(balloonSize[strIdx]){
 				case 0:
@@ -252,7 +247,6 @@ public class TextBoxScript : MonoBehaviour {
 								readCnt = READCNT;
 							}
 						}
-					
 						//textset
 						TextBox1.SetText(renderString);
 						TextBox2.SetText(renderString2);
@@ -260,6 +254,10 @@ public class TextBoxScript : MonoBehaviour {
 						//Debug.Log("renderString:"+renderString);
 					}
 				}
+			}
+			else{
+				if(gamesys.isValid())
+					initialized = Initialize();
 			}
 		}
 	}

@@ -51,6 +51,7 @@ public class SceneControllerADV : MonoBehaviour {
 	void Initialize()
 	{
 		StextBox.Validate();
+		initialized = true;
 	}
 	
 	// Update is called once per frame
