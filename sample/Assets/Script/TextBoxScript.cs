@@ -39,8 +39,8 @@ public class TextBoxScript : MonoBehaviour {
 	//outflg
 	bool[] outflag;
 	
-	bool initialized;
-	bool valid;
+	bool initialized = false;
+	bool valid = false;
 	bool textinsert=false;
 	
 	TextStyleBaseScript TextBox1;
@@ -66,10 +66,6 @@ public class TextBoxScript : MonoBehaviour {
 		charIdx3		= 0;
 		readCnt 		= 0;
 		READCNT 		= 2;
-		initialized = false;
-		valid = false;
-		
-		//initialized = Initialize();
 	}
 	bool Initialize()
 	{

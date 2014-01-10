@@ -8299,6 +8299,7 @@ Transform:
   m_LocalPosition: {x: -.103599772, y: 13.3121891, z: -4.3420682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 969781195}
   - {fileID: 1141314933}
   - {fileID: 1089283100}
   - {fileID: 1633592193}
@@ -11810,7 +11811,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 542674056}
 --- !u!82 &969781196
 AudioSource:
   m_ObjectHideFlags: 0

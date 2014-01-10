@@ -6,7 +6,7 @@ using System.IO;
 public class GameSystemScript : MonoBehaviour {
 	
 	private bool valid;
-	private int actID;
+	private int actID = 0;
 	private int lastAct;
 	private int[] score;
 	private String nextScene;

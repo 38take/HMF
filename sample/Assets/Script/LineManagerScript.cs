@@ -26,6 +26,7 @@ public class LineManagerScript : MonoBehaviour {
 	private struct TARGET_ARRAY
 	{
 		public Vector3[] 	targetPosArray; //ターゲット位置（X:中心ラインのオフセット Y:左右のオフセット）
+		public int[]		targetID;		//通し番号
 		public bool[]		pastArray;		//通過したかのフラグ
 		public int seek;
 	};
@@ -40,6 +41,8 @@ public class LineManagerScript : MonoBehaviour {
 	public GameObject effect_HitNormal;
 	public GameObject effect_HitCritical;
 	public GameObject effect_Miss;
+	ArrayList	obj_LineArray;
+	ArrayList 	obj_targetArray;
 	PlayerScript 	SPlayer;	
 	TextBoxScript	SText;
 	AudioSEScript	SAudio;
@@ -74,27 +77,33 @@ public class LineManagerScript : MonoBehaviour {
 	int   criticalComboMax;
 	
 	//線の生成
-	private void CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
+	private GameObject CreateLine(Vector3 prev, Vector3 point1, Vector3 point2, Vector3 next, int kind)
 	{
 		LineScript obj;
+		GameObject tmp;
+		
 		switch(kind)
 		{
 		case 0:
-			obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();	
+			tmp = (GameObject)Instantiate(line);
 			break;
 		case 1:
-			obj = ((GameObject)Instantiate(lineDead)).GetComponent<LineScript>();	
+			tmp = (GameObject)Instantiate(lineDead);
 			break;
 		default:
-			obj = ((GameObject)Instantiate(line)).GetComponent<LineScript>();
+			tmp = (GameObject)Instantiate(line);
 			break;
-			
 		}
+		obj = tmp.GetComponent<LineScript>();	
 		obj.SetData(prev, point1, point2, next, lineWidth);
+		
+		return tmp;
 	}
 	//ターゲットの生成
-	private void CreateTarget(int lineID, Vector2 offset)
+	private GameObject CreateTarget(int lineID, Vector2 offset)
 	{
+		GameObject ret;
+		
 		//中央線内の位置計算
 		Vector3 basePos = lineData[lineID] + (lineData[lineID+1]-lineData[lineID])*offset.x;
 		//基準位置での線の方向算出
@@ -113,8 +122,9 @@ public class LineManagerScript : MonoBehaviour {
 		Vector3 pos = basePos + dir * (-offset.y) * lineWidth;//1,ofは線の太さ
 		pos = new Vector3(pos.x, 0.1f, pos.z);
 		//ターゲット生成
-		Instantiate(target, pos, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		ret = (GameObject)Instantiate(target, pos, new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		
+		return ret;
 	}
 	
 	// Use this for initialization
@@ -127,9 +137,12 @@ public class LineManagerScript : MonoBehaviour {
 		ArrayList data = new ArrayList();
 		Vector3 dummy = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 		
+		int targetNo = 0;
 		int lineID = new int();
 		int tNum = new int();
 		int tCnt = new int();
+		obj_LineArray = new ArrayList();
+		obj_targetArray = new ArrayList();
 		GameObject floor = GameObject.Find("Floor");
 		float stageHorizontal = floor.transform.localScale.x * 5.0f;
 		float stageVertical = floor.transform.localScale.z * 5.0f;
@@ -150,13 +163,14 @@ public class LineManagerScript : MonoBehaviour {
 		playerOldOffset = new Vector3(0.0f, 0.0f, 0.0f);
 		TargetHitChecker = new Vector3(0.1f, 0.3f, 1.0f);
 		targetWidthInLine = 5.0f / (lineWidth*2);
+		ReadyActorScript SReady = ((GameObject)GameObject.Find("ReadyActor")).GetComponent<ReadyActorScript>();
 		//==================================================
 		//ステージファイルの読み込み
 		GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 		stageID = 1;
 		switch(gamesys.GetActID())
 		{
-		case 1:			stageID = 0; 		break;	//チュートリアル
+		case 1:			stageID = 0; 	SReady.InValidate();	break;	//チュートリアル
 		case 2:			stageID = 1;	SText.Invalidate();	break;	//ステージ１
 		case 7:			stageID = 2;	SText.Invalidate();	break;	//ステージ２
 		case 12:		stageID = 3;	SText.Invalidate();	break;	//ステージ３
@@ -215,7 +229,7 @@ public class LineManagerScript : MonoBehaviour {
 						else
 							inValue[3] = lineData[i+2];					
 						//生成関数
-						CreateLine(inValue[0], inValue[1], inValue[2], inValue[3], lineKind[i]);
+						obj_LineArray.Add(CreateLine(inValue[0], inValue[1], inValue[2], inValue[3], lineKind[i]));
 						//線の方向を算出
 						if(i>0)
 							tmp = lineDir[i-1];
@@ -259,7 +273,8 @@ public class LineManagerScript : MonoBehaviour {
 				if(tNum < 0){
 					tNum = int.Parse(split[0]);
 					tCnt = tNum;
-					targetArray[lineID].targetPosArray = new Vector3[tCnt];
+					targetArray[lineID].targetPosArray 	= new Vector3[tCnt];
+					targetArray[lineID].targetID 		= new int[tCnt];
 					targetArray[lineID].pastArray = new bool[tCnt];
 					break;
 				}
@@ -275,12 +290,14 @@ public class LineManagerScript : MonoBehaviour {
 					for(int i=0; i<tNum; i++){
 						offset.x = (float)data[i*2];
 						offset.y = (float)data[i*2+1];
-						CreateTarget(lineID, offset);
+						obj_targetArray.Add( CreateTarget(lineID, offset));
 						
 						targetArray[lineID].targetPosArray[i].x = offset.x;
 						targetArray[lineID].targetPosArray[i].y = offset.y;
 						targetArray[lineID].targetPosArray[i].z = 0.0f;
+						targetArray[lineID].targetID[i] 		= targetNo;
 						targetArray[lineID].pastArray[i]		= false;
+						targetNo++;
 					}
 					targetArray[lineID].seek = 0;
 					
@@ -333,6 +350,23 @@ public class LineManagerScript : MonoBehaviour {
 		if(stopLineArray != null && stopLineIndex < stopLineArray.Length && wherePlayer > stopLineArray[stopLineIndex])
 			stopLineIndex++;
 	}
+	
+	
+	
+	//線のデータを削除 
+	public void DestroyLine()
+	{
+		for(int i=obj_LineArray.Count-1; i>-1; i--)
+			Destroy(((GameObject)obj_LineArray[i]).gameObject);
+	}
+	
+	public void DestroyTarget()
+	{
+		for(int i=obj_targetArray.Count-1; i>-1; i--)
+			Destroy(((GameObject)obj_targetArray[i]).gameObject);
+	}
+	
+	
 	//ライン上の位置における横向きベクトル算出
 	public Vector3 CalcHorizontalDir(int timer)
 	{
@@ -498,6 +532,7 @@ public class LineManagerScript : MonoBehaviour {
 						transrate = target / transrate;
 						float H = oldOffset.y + (offset.y-oldOffset.y)*transrate;
 						
+						
 						//判定
 						H = H - targetPos.y;
 						//クリティカル
@@ -517,6 +552,9 @@ public class LineManagerScript : MonoBehaviour {
 														p_pos,
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
+							
+							//当たったやつを消す
+							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
 							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(ScoreCritical);
@@ -540,6 +578,9 @@ public class LineManagerScript : MonoBehaviour {
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
 							
+							//当たったやつを消す
+							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
+							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(ScoreNormal);
 							SPlayer.CalcConcentration(2);
@@ -561,6 +602,9 @@ public class LineManagerScript : MonoBehaviour {
 														p_pos,
 														SPlayer.transform.rotation	);
 							Destroy(ins_obj, 1.0f);
+							
+							//当たったやつを消す
+							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
 							
 							SPlayer.CalcCombo(false);
 							SPlayer.CalcScore(ScoreSafe);

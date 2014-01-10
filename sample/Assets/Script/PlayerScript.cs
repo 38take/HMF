@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	ConcentrateScript		ConcentrateGauge;
 	CutEdgeManagerScript    SCutEdge;
 	TextBoxScript			SText;
+	ReadyActorScript		SReady;
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
@@ -88,6 +89,7 @@ public class PlayerScript : MonoBehaviour {
 		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
 		SCutEdge		= ((GameObject)GameObject.Find("CutEdgeManager")).GetComponent<CutEdgeManagerScript>();
 		SText			= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
+		SReady			= ((GameObject)GameObject.Find("ReadyActor")).GetComponent<ReadyActorScript>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -122,7 +124,7 @@ public class PlayerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if( m_GameState == GAME_STATE.GAME_PLAY || !InitFlag )
+		if( m_GameState == GAME_STATE.GAME_PLAY || !InitFlag)
 		{
 			if( !InitFlag )
 			{
@@ -140,7 +142,6 @@ public class PlayerScript : MonoBehaviour {
 				SCamera.SetLastCameraPos( lastPos );
 				m_GameState = GAME_STATE.GAME_END;
 			}
-			//
 			if(stop)
 			{
 				if(!SText.isValid())
@@ -171,8 +172,9 @@ public class PlayerScript : MonoBehaviour {
 					speed += (speedValue - speed) * 0.1f;
 					addValue *= speed;
 				}
-				
-				m_Timer += addValue;
+				//カウントが終わっていればタイマーを加算 
+				if(!SReady.isValid())
+					m_Timer += addValue;
 				
 				//------------------------------------//
 				//移動
@@ -189,7 +191,7 @@ public class PlayerScript : MonoBehaviour {
 					else
 						m_Offset += transX;
 				}
-				else
+				else if(holdHorizontal > 0)
 				{
 					holdHorizontal--;
 					Debug.Log(holdHorizontal);
@@ -197,7 +199,7 @@ public class PlayerScript : MonoBehaviour {
 				if(m_Offset > 1.0f) m_Offset = 1.0f;
 				if(m_Offset < -1.0f) m_Offset = -1.0f;
 				Vector3 basePos = SLineManager.CalcPosWithHitCheck((int)m_Timer, m_Offset);
-				if(Input.GetMouseButton(0))
+				if(!Input.GetMouseButton(0))
 					height += (UPHeight-height)*0.1f;
 				else
 					height += (0.0f-height)*0.1f;
@@ -259,9 +261,7 @@ public class PlayerScript : MonoBehaviour {
 				GameObject.Find("EffectGauge").SetActiveRecursively(false);
 				
 				GameObject ins_obj =
-					(GameObject)Instantiate(effect_Clear,
-											GameObject.Find("Floor").transform.position,
-											GameObject.Find("Floor").transform.rotation	);
+					(GameObject)Instantiate(effect_Clear);
 				Destroy(ins_obj, 2.0f);
 			}
 			// 完成型オブジェクトを生成
@@ -287,7 +287,7 @@ public class PlayerScript : MonoBehaviour {
 			}
 			if(timer_comp > 60)
 			{
-				Vector3 pos =  GameObject.Find("Floor").transform.position;
+				Vector3 pos =  new Vector3(0.0f, 0.0f, 0.0f);
 
 				// オブジェクトの周りをカメラが円運動する
 				GameObject.Find("CameraMain").transform.position =
@@ -295,7 +295,7 @@ public class PlayerScript : MonoBehaviour {
 								 pos.y + 200,
 								 pos.z + Mathf.Sin(c_angle) * 200 );
 				
-				GameObject.Find("CameraMain").transform.LookAt(GameObject.Find("Floor").transform.position);
+				GameObject.Find("CameraMain").transform.LookAt(pos);
 				
 				c_angle += 0.01f;
 			}
@@ -350,5 +350,4 @@ public class PlayerScript : MonoBehaviour {
 			Destroy(collision.gameObject);
 		}
 	}
-	
 }

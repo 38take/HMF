@@ -117,7 +117,9 @@ public class CameraScript : MonoBehaviour {
 //				Destroy( GameObject.Find("DeadLine(Clone)") );
 //				Destroy( GameObject.Find("Line(Clone)") );
 //				Destroy( GameObject.Find("target(Clone)") );
-//				Destroy( GameObject.Find("Floor") );
+				Destroy( GameObject.Find("Floor") );
+				SLineManager.DestroyLine();
+				SLineManager.DestroyTarget();
 				
 				SPlayerScript.m_GameState = PlayerScript.GAME_STATE.GAME_COMPLETION;
 				
