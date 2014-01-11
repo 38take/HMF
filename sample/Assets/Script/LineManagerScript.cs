@@ -333,6 +333,8 @@ public class LineManagerScript : MonoBehaviour {
 			}
        	}
        	sr.Close();
+		if(stageID > 0)
+			gamesys.SetScoreMax(stageID-1, numTarget * ScoreCritical);
 		//Instantiate(obj, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		
 		//判定用パラメータ初期化

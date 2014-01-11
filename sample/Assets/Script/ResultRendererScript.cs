@@ -52,6 +52,7 @@ public class ResultRendererScript : MonoBehaviour {
 	private int  achievementIdx;
 	private int  achievementDispSpan;
 	private int  ACHIEVEMENT_DISP_SPAN = 10;
+	int				nextActor = 0;
 	
 	//各項目の表示位置（インスペクタで編集できるように）
 	public Vector2 posAchievement;
@@ -225,15 +226,30 @@ public class ResultRendererScript : MonoBehaviour {
 	{
 		float per = (float)((float)score / (float)(numTarget*100));
 		if(per > 0.95f)
+		{
 			SRank.SwitchTexture(4);
+			nextActor = 2;
+		}
 		else if(per > 0.85f)
+		{
 			SRank.SwitchTexture(3);
+			nextActor = 2;
+		}
 		else if(per > 0.7f)
+		{
 			SRank.SwitchTexture(2);
+			nextActor = 1;
+		}
 		else if(per > 0.5f)
+		{
 			SRank.SwitchTexture(1);
+			nextActor = 1;
+		}
 		else
+		{
 			SRank.SwitchTexture(0);
+			nextActor = 2;
+		}
 			
 		SRank.RestoreTextureRect();
 		SRank.SetRenderFlag(true);
@@ -345,4 +361,9 @@ public class ResultRendererScript : MonoBehaviour {
 		GatherParameters();
 	}
 	public bool isEnd()	{	return end;	}
+	
+	public int GetNextAct()
+	{
+		return nextActor;
+	}
 }

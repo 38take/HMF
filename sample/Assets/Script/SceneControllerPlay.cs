@@ -55,13 +55,7 @@ public class SceneControllerPlay : MonoBehaviour {
 			int maxScore = targetNum * 100;//今はこれで
 			int score = (int)SScore.GetScore();
 			//とりあえず3分割してどこに分類されるかで
-			int nextAct;
-			if(score < (maxScore/3))
-				nextAct = 1;
-			else if(score < ((maxScore/3)*2))
-				nextAct = 2;
-			else 
-				nextAct = 3;
+			int nextAct = 1 + SResultRenderer.GetNextAct();
 			
 			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
 			gamesys.SetScore(SLineManager.GetStageID()-1, score);

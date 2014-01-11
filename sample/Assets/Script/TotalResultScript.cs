@@ -30,6 +30,7 @@ public class TotalResultScript : MonoBehaviour {
 	ScoreRendererScript SScoreRenderer;
 	//各種パラメータ
 	private int[] score;
+	float 			per;	//達成率
 	
 	//
 	private bool initiarized = false;
@@ -70,7 +71,35 @@ public class TotalResultScript : MonoBehaviour {
 		//パラメータ初期化
 		dispScore = new bool[3];
 		dispScore[0] = dispScore[1] = dispScore[2] = false;
-				
+		
+		//背景切り替え
+		Tex2DGUITextureScript SBG = ((GameObject)GameObject.Find("ResultBG")).GetComponent<Tex2DGUITextureScript>();
+		int[] scoreMax = new int[3];
+		scoreMax[0] = gamesys.GetScoreMax(0);
+		scoreMax[1] = gamesys.GetScoreMax(1);
+		scoreMax[2] = gamesys.GetScoreMax(2);
+		
+		per = 0.0f;
+		per += (float)((float)score[0] / (float)scoreMax[0]);
+		per += (float)((float)score[1] / (float)scoreMax[1]);
+		per += (float)((float)score[2] / (float)scoreMax[2]); 
+		per /= 3.0f;
+		if(per > 0.8f)		SBG.SwitchTexture(2);
+		else if(per > 0.5f)	SBG.SwitchTexture(1);
+		else 				SBG.SwitchTexture(0);
+		
+		//Title切り替え
+		if(per > 0.99f)			STitle.SwitchTexture(0);
+		else if(per > 0.95f)	STitle.SwitchTexture(1);
+		else if(per > 0.9f)		STitle.SwitchTexture(2);
+		else if(per > 0.8f)		STitle.SwitchTexture(3);
+		else if(per > 0.7f)		STitle.SwitchTexture(4);
+		else if(per > 0.6f)		STitle.SwitchTexture(5);
+		else if(per > 0.45f)	STitle.SwitchTexture(6);
+		else if(per > 0.3f)		STitle.SwitchTexture(7);
+		else if(per > 0.15f)	STitle.SwitchTexture(8);
+		else   					STitle.SwitchTexture(9);
+		
 		initiarized = true;
 	}
 	

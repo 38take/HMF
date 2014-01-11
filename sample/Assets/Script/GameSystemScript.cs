@@ -9,11 +9,13 @@ public class GameSystemScript : MonoBehaviour {
 	private int actID = 0;
 	private int lastAct;
 	private int[] score;
+	private int[] scoreMax;
 	private String nextScene;
 	
 	// Use this for initialization
 	void Start () {
 		score = new int[3];
+		scoreMax = new int[3];
 		
 		FileInfo fi = new FileInfo(Application.dataPath+"/GameData/system.txt");
         StreamReader sr = new StreamReader(fi.OpenRead());
@@ -23,6 +25,9 @@ public class GameSystemScript : MonoBehaviour {
 			score[0] = int.Parse(sr.ReadLine());
 			score[1] = int.Parse(sr.ReadLine());
 			score[2] = int.Parse(sr.ReadLine());
+			scoreMax[0] = int.Parse(sr.ReadLine());
+			scoreMax[1] = int.Parse(sr.ReadLine());
+			scoreMax[2] = int.Parse(sr.ReadLine());
             }
        	sr.Close();
 		//次のシーンIDを確認
@@ -69,9 +74,16 @@ public class GameSystemScript : MonoBehaviour {
 	   	sw.WriteLine(score[0]);    // 改行
 	   	sw.WriteLine(score[1]);    // 改行
 	   	sw.WriteLine(score[2]);    // 改行
+	   	sw.WriteLine(scoreMax[0]);    // 改行
+	   	sw.WriteLine(scoreMax[1]);    // 改行
+	   	sw.WriteLine(scoreMax[2]);    // 改行
 		
 	   	sw.Flush();
 	   	sw.Close(); 
+	}
+	public void SetScoreMax(int id, int max)
+	{
+		scoreMax[id] = max;
 	}
 	
 	public int GetActID()
@@ -81,6 +93,10 @@ public class GameSystemScript : MonoBehaviour {
 	public int GetScore(int id)
 	{
 		return score[id];
+	}
+	public int GetScoreMax(int id)
+	{
+		return scoreMax[id];
 	}
 	public void SetScore(int id, int value)
 	{
