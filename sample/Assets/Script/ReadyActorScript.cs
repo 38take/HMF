@@ -4,7 +4,7 @@ using System.Collections;
 public class ReadyActorScript : MonoBehaviour {
 	
 	private bool valid = true;
-	
+	private bool alpha = true;
 	private bool initialized = false;
 	
 	int timer = 30;
@@ -17,6 +17,9 @@ public class ReadyActorScript : MonoBehaviour {
 	Tex2DGUITextureScript SStart;
 	Tex2DGUITextureScript SRequestNo;
 	Tex2DGUITextureScript SRequest;
+	Tex2DGUITextureScript SGaugeUI;
+	Tex2DGUITextureScript SGauge;
+	
 	
 
 	// Use this for initialization
@@ -25,6 +28,8 @@ public class ReadyActorScript : MonoBehaviour {
 		SStart = ((GameObject)GameObject.Find("Start")).GetComponent<Tex2DGUITextureScript>();
 		SRequestNo = ((GameObject)GameObject.Find("RequestNo")).GetComponent<Tex2DGUITextureScript>();
 		SRequest = ((GameObject)GameObject.Find("Request")).GetComponent<Tex2DGUITextureScript>();
+		SGauge 	= ((GameObject)GameObject.Find("GaugeTexture")).GetComponent<Tex2DGUITextureScript>();
+		SGaugeUI = ((GameObject)GameObject.Find("UI")).GetComponent<Tex2DGUITextureScript>();
 		
 		SCount.SetRenderFlag(false);
 		SStart.SetRenderFlag(false);
@@ -56,7 +61,7 @@ public class ReadyActorScript : MonoBehaviour {
 	void Update () {
 		
 		Color col1, col2;
-		if(valid)
+		if(alpha)
 		{
 			if(!initialized)
 				Initialize();
@@ -75,12 +80,12 @@ public class ReadyActorScript : MonoBehaviour {
 						{
 							SCount.SetRenderFlag(false);
 							SStart.SetRenderFlag(true);
+							InValidate();
 						}
 						else
 						{
 							SStart.SetRenderFlag(false);
-							InValidate();
-						}
+							alpha = false;						}
 						//60フレーム分カウント
 						timer = 60;
 					}
@@ -99,9 +104,11 @@ public class ReadyActorScript : MonoBehaviour {
 							else
 							{
 								col1.a -= 0.01f;
-								col2.a -= 0.01f;
+								col2.a = 1.0f - col1.a;
 								SRequest.SetColor(col1);
-								SRequestNo.SetColor(col2);
+								SRequestNo.SetColor(col1);
+								SGauge.SetColor(col2);
+								SGaugeUI.SetColor(col2);
 							}
 						}
 						else

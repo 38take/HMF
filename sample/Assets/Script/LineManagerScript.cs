@@ -544,7 +544,7 @@ public class LineManagerScript : MonoBehaviour {
 							numJudge[(int)JUDGE.GOOD]++;
 							criticalCombo++;
 							//サウンド再生
-							SAudio.PlaySE(1);
+							SAudio.PlaySE(2);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -568,7 +568,7 @@ public class LineManagerScript : MonoBehaviour {
 							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(ScoreCritical);
-							SPlayer.CalcConcentration(5);
+							SPlayer.CalcConcentration(3);
 						}
 						//ノーマル
 						else if( H < TargetHitChecker.y * targetWidthInLine &&
@@ -578,7 +578,7 @@ public class LineManagerScript : MonoBehaviour {
 							numJudge[(int)JUDGE.NORMAL]++;
 							criticalCombo = 0;
 							//サウンド再生
-							SAudio.PlaySE(1);
+							SAudio.PlaySE(0);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
@@ -602,7 +602,7 @@ public class LineManagerScript : MonoBehaviour {
 							
 							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(ScoreNormal);
-							SPlayer.CalcConcentration(2);
+							SPlayer.CalcConcentration(1);
 						}
 						//セーフ
 						else if( H < TargetHitChecker.z * targetWidthInLine &&
@@ -643,7 +643,7 @@ public class LineManagerScript : MonoBehaviour {
 							numJudge[(int)JUDGE.MISS]++;
 							criticalCombo = 0;
 							//サウンド再生
-							SAudio.PlaySE(1);
+							//SAudio.PlaySE(1);
 							// エフェクト発生
 							p_pos = SPlayer.transform.position;
 							p_pos.y += 1.0f;
