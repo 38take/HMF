@@ -125,7 +125,7 @@ public class TextBoxScript : MonoBehaviour {
        	srData.Close();
 		//会話データ格納
 		numStatement = (int)(data.Count/10);//セリフ数
-		//Debug.Log("talk_num:"+numStatement);
+		Debug.Log("talk_num:"+numStatement);
 		actionArray		= new int[numStatement];
 		emotionArray	= new int[numStatement];
 		balloonArray 	= new int[numStatement];
@@ -199,8 +199,10 @@ public class TextBoxScript : MonoBehaviour {
 							if(Input.GetMouseButtonDown(0))
 							{
 								//掃ける処理
-								if(outflag[strIdx])
+								if(outflag[strIdx]){
+									Debug.Log ("outflag["+strIdx+"]:"+outflag[strIdx]);
 									Invalidate();
+								}
 								renderString = "";
 								renderString2 = "";
 								renderString3 = "";

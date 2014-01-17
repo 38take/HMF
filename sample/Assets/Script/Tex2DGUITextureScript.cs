@@ -5,7 +5,7 @@ public class Tex2DGUITextureScript : MonoBehaviour {
 	
 	public bool 			PreRender = false;
 	public Texture[]		m_Textures;
-	private int				m_TexID;
+	private int				m_TexID = 0;
 	public bool				StaticTexture;
 	
 	public Color	color = new Color( 1.0f, 1.0f, 1.0f, 1.0f );

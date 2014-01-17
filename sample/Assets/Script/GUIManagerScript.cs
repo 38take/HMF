@@ -57,6 +57,10 @@ public class GUIManagerScript : MonoBehaviour {
 		InfoWindowFlg		= TextBox.GetInfoWinInsertFlg();
 		InfoWindowContain	= TextBox.GetInfoWinContainFlg();
 		
+		for(int i=0;i<NumStatement;i++){
+			Debug.Log ("TextWindowSize["+i+"]:"+TextWindowSizeArray[i]);
+		}
+		
 		///////////////////
 		ActIndexCnt = 0;
 		
@@ -134,15 +138,36 @@ public class GUIManagerScript : MonoBehaviour {
 				}
 				break;
 			case 3:
-					TextWin.SetWindowState(3);
-					InfoWin.SetWindowState(3);
+				TextWin.SetWindowState(3);
+				InfoWin.SetWindowState(3);
 				break;
 			default:
 				break;
 			}
 			break;
 		case ADVState.STOP:
-			
+			Debug.Log ("WindowState"+TextWin.GetWindowState());
+			switch(TextWin.GetWindowState()){
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				if(TextBox.GetTextInsertFlg()==false){
+					MasterManager.SetLoopFlg(false);
+					MasterManager.SetIdleFlg(true);
+					TextWin.SetWindowState(3);
+					InfoWin.SetWindowState(3);
+					ActIndexCnt++;
+				}
+				break;
+			case 3:
+				TextWin.SetWindowState(3);
+				InfoWin.SetWindowState(3);
+				break;
+			default:
+				break;
+			}
 			break;
 			
 		case ADVState.END:
@@ -153,12 +178,19 @@ public class GUIManagerScript : MonoBehaviour {
 	
 	public void Stop()
 	{
+		//bool sts = false;
 		advstate = ADVState.STOP;
-		MasterManager.SetIdleFlg(true);
 		MasterManager.SetLoopFlg(false);
+		MasterManager.SetIdleFlg(true);
+		//sts = TextBox.GetOutFlag(ActIndexCnt);
+		//Debug.Log("sts["+ActIndexCnt+"]="+sts);
+			Debug.Log ("Through the ChangeAction!!");
+		//if(sts == true){
 		MasterManager.ChangeAction(1);//シショーを画面外に
-		TextWin.SetWindowState(3);
-		InfoWin.SetWindowState(3);
+		TextBox.SetTextInsertFlg(false);
+			//TextWin.SetWindowState(3);
+			//InfoWin.SetWindowState(3);
+		//}
 	}
 	public void Resume()
 	{
