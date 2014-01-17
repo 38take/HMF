@@ -53,6 +53,9 @@ public class ReadyActorScript : MonoBehaviour {
 		LineManagerScript SLine = ((GameObject)GameObject.Find("LineManager")).GetComponent<LineManagerScript>();
 		SRequest.SwitchTexture(SLine.GetStageID()-1);
 		SRequestNo.SwitchTexture(SLine.GetStageID()-1);
+		
+		SGauge.SetColor(new Color(0.5f, 0.5f, 0.5f, 0.0f));
+		SGaugeUI.SetColor(new Color(0.5f, 0.5f, 0.5f, 0.0f));
 		//SStart.SetRenderFlag(false);
 		initialized = true;
 	}
@@ -80,7 +83,7 @@ public class ReadyActorScript : MonoBehaviour {
 						{
 							SCount.SetRenderFlag(false);
 							SStart.SetRenderFlag(true);
-							InValidate();
+							valid = false;
 						}
 						else
 						{
@@ -140,6 +143,7 @@ public class ReadyActorScript : MonoBehaviour {
 	//無効化 
 	public void InValidate()
 	{
+		alpha = false;
 		valid = false;
 	}
 }

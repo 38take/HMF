@@ -3938,6 +3938,18 @@ Prefab:
       propertyPath: m_Name
       value: "\u30CA\u30A4\u30D55"
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 63a307ab69c56ce4496d13c9a9f2289b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 63a307ab69c56ce4496d13c9a9f2289b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 63a307ab69c56ce4496d13c9a9f2289b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63a307ab69c56ce4496d13c9a9f2289b, type: 3}
   m_RootGameObject: {fileID: 1461017806}
@@ -4057,7 +4069,7 @@ MonoBehaviour:
   m_Textures:
   - {fileID: 2800000, guid: 7000661e83b2d024d84c389b2a52d4ff, type: 3}
   StaticTexture: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: .501960814, g: .501960814, b: .501960814, a: 1}
   PresetRect: 1
   Position: {x: 797, y: 82}
   Width: 207
@@ -5255,7 +5267,7 @@ GameObject:
   - 4: {fileID: 369833798}
   - 198: {fileID: 369833800}
   - 199: {fileID: 369833799}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EffectPlayerAuraSub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7867,6 +7879,10 @@ Prefab:
       propertyPath: color.b
       value: .501960814
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
   m_RootGameObject: {fileID: 1369711747}
@@ -8134,6 +8150,14 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .707106829
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: b90d83ea9a111b34fae0574ffb75db9a, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: b90d83ea9a111b34fae0574ffb75db9a, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b90d83ea9a111b34fae0574ffb75db9a, type: 2}
   m_RootGameObject: {fileID: 1690743625}
@@ -8245,7 +8269,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 542674051}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: afe5507295882a34cbb2d144517719e7, type: 3}
   m_PlayOnAwake: 1
@@ -9775,7 +9799,7 @@ GameObject:
   - 4: {fileID: 643573880}
   - 33: {fileID: 643573882}
   - 23: {fileID: 643573881}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: pCylinder1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14201,7 +14225,7 @@ GameObject:
   - 95: {fileID: 1461017808}
   - 23: {fileID: 1461017809}
   - 114: {fileID: 1461017810}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: "\u30CA\u30A4\u30D55"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14690,6 +14714,14 @@ Prefab:
       propertyPath: InitialModule.startSpeed.maxCurve.m_Curve.Array.data[0].value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: d2550b1fd54c53d4f8dc518624e6a499, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: d2550b1fd54c53d4f8dc518624e6a499, type: 2}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d2550b1fd54c53d4f8dc518624e6a499, type: 2}
   m_RootGameObject: {fileID: 1827947429}
@@ -14899,7 +14931,7 @@ GameObject:
   - 4: {fileID: 1690743626}
   - 198: {fileID: 1690743628}
   - 199: {fileID: 1690743627}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EffectPlayerAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18639,6 +18671,22 @@ Prefab:
       propertyPath: Position.x
       value: 797
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.r
+      value: .501960814
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.g
+      value: .501960814
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
+      propertyPath: color.b
+      value: .501960814
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c9d963f2cd964494797b011f9af156c6, type: 2}
   m_RootGameObject: {fileID: 283134160}
@@ -18654,7 +18702,7 @@ GameObject:
   - 4: {fileID: 1827947430}
   - 198: {fileID: 1827947432}
   - 199: {fileID: 1827947431}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EffectCutDust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19882,7 +19930,7 @@ GameObject:
   - 4: {fileID: 1877407910}
   - 198: {fileID: 1877407912}
   - 199: {fileID: 1877407911}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EffectCutDustSub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21021,7 +21069,7 @@ GameObject:
   - 4: {fileID: 1948847129}
   - 33: {fileID: 1948847128}
   - 23: {fileID: 1948847127}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

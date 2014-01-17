@@ -53,6 +53,7 @@ public class ResultRendererScript : MonoBehaviour {
 	private int  achievementDispSpan;
 	private int  ACHIEVEMENT_DISP_SPAN = 10;
 	int				nextActor = 0;
+	int				timer;
 	
 	//各項目の表示位置（インスペクタで編集できるように）
 	public Vector2 posAchievement;
@@ -77,6 +78,8 @@ public class ResultRendererScript : MonoBehaviour {
 		SScore		= (ScoreScript)GameObject.Find("ScoreTextBox").GetComponent("ScoreScript");
 		//アチーブメントの表示
 		AchievementArray = new ArrayList();
+		
+		timer = 10;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -150,7 +153,9 @@ public class ResultRendererScript : MonoBehaviour {
 		SResultLogo.RestoreTextureRect();
 		SResultLogo.SetRenderFlag(true);
 		
-		if(Input.GetMouseButtonDown(0))
+		if(timer > 0)
+			timer--;
+		else
 			return false;
 		return true;
 	}
@@ -217,7 +222,8 @@ public class ResultRendererScript : MonoBehaviour {
 			((Tex2DGUITextureScript)AchievementArray[i]).SetPos(work.x+((posAchievement.x - work.x)*0.1f), 
 																work.y, false);
 		}
-		if(Input.GetMouseButtonDown(0))
+		
+		if(((Tex2DGUITextureScript)AchievementArray[AchievementArray.Count-1]).GetPos().x < posAchievement.x+3.0f)
 			return false;
 		return true;
 	}
@@ -361,6 +367,7 @@ public class ResultRendererScript : MonoBehaviour {
 		GatherParameters();
 	}
 	public bool isEnd()	{	return end;	}
+	public void End() { end = true; valid = false;}
 	
 	public int GetNextAct()
 	{
