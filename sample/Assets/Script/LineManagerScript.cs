@@ -366,7 +366,7 @@ public class LineManagerScript : MonoBehaviour {
 		for(int i=obj_targetArray.Count-1; i>-1; i--)
 			Destroy(((GameObject)obj_targetArray[i]).gameObject);
 	}
-	
+	//lineDataの中がどうなっているか
 	
 	//ライン上の位置における横向きベクトル算出
 	public Vector3 CalcHorizontalDir(int timer)
@@ -440,15 +440,16 @@ public class LineManagerScript : MonoBehaviour {
 		float length = (float)timer * 0.1f;
 		float lineLength = new float();
 		//今いるラインを算出(速度0.1として)
-		int lineIdx = new int();
-		for(lineIdx=0; lineIdx<numPoint-2; lineIdx++)
+		int lineIdx = 0;
+		lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
+		for(; lineIdx<numPoint-2; lineIdx++)
 		{
 			lineLength = Vector3.Distance(lineData[lineIdx],lineData[lineIdx+1]);
 			if((length - lineLength) < 0.0f)
 				break;
 			length -= lineLength;
 		}
-		if(length > lineLength)
+		if(lineIdx >= numPoint-2)
 		{
 			length = lineLength;
 			lastPoint = true;

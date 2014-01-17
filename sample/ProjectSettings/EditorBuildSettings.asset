@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/Title.unity
+    path: Assets/Script/Scene/Title.unity
   - enabled: 1
-    path: Assets/Scene/Adventure.unity
+    path: Assets/Script/Scene/Adventure.unity
   - enabled: 1
-    path: Assets/Scene/Play.unity
+    path: Assets/Script/Scene/Play.unity
   - enabled: 1
-    path: Assets/Scene/Result.unity
+    path: Assets/Script/Scene/Result.unity
   - enabled: 0
     path: Assets/Scene/Tutorial.unity

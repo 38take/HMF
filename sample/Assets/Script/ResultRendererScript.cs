@@ -231,22 +231,22 @@ public class ResultRendererScript : MonoBehaviour {
 	bool ActRank()
 	{
 		float per = (float)((float)score / (float)(numTarget*100));
-		if(per > 0.95f)
+		if(per > 0.90f)
 		{
 			SRank.SwitchTexture(4);
 			nextActor = 2;
 		}
-		else if(per > 0.85f)
+		else if(per > 0.80f)
 		{
 			SRank.SwitchTexture(3);
 			nextActor = 2;
 		}
-		else if(per > 0.7f)
+		else if(per > 0.60f)
 		{
 			SRank.SwitchTexture(2);
 			nextActor = 1;
 		}
-		else if(per > 0.5f)
+		else if(per > 0.40f)
 		{
 			SRank.SwitchTexture(1);
 			nextActor = 1;
@@ -254,7 +254,7 @@ public class ResultRendererScript : MonoBehaviour {
 		else
 		{
 			SRank.SwitchTexture(0);
-			nextActor = 2;
+			nextActor = 0;
 		}
 			
 		SRank.RestoreTextureRect();
