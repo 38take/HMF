@@ -637,7 +637,7 @@ public class LineManagerScript : MonoBehaviour {
 							//当たったやつを消す
 							Destroy(((GameObject)obj_targetArray[targetArray[lineID].targetID[i]]).gameObject);
 							
-							SPlayer.CalcCombo(false);
+							SPlayer.CalcCombo(true);
 							SPlayer.CalcScore(ScoreSafe);
 						}
 						//ミス
