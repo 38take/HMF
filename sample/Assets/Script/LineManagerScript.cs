@@ -526,7 +526,7 @@ public class LineManagerScript : MonoBehaviour {
 				targetPos = targetArray[lineID].targetPosArray[i];
 				if( offset.x >= targetPos.x )
 				{
-					if(oldOffset.x < targetPos.x)
+					if(oldOffset.x <= targetPos.x)
 					{
 						//ターゲットの位置におけるプレイヤーの横方向オフセット算出
 						float transrate = offset.x - oldOffset.x;
