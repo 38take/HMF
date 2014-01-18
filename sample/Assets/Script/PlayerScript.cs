@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour {
 	CutEdgeManagerScript    SCutEdge;
 	TextBoxScript			SText;
 	ReadyActorScript		SReady;
+	SyuCyuSenController		SyuCyuSen;
 	private float			oldMouseX;
 	private float			height;
 	public  float			UPHeight;
@@ -90,6 +91,7 @@ public class PlayerScript : MonoBehaviour {
 		ConcentrateGauge= ((GameObject)GameObject.Find("Gauge")).GetComponent<ConcentrateScript>();
 		SText			= ((GameObject)GameObject.Find("TextBox")).GetComponent<TextBoxScript>();
 		SReady			= ((GameObject)GameObject.Find("ReadyActor")).GetComponent<ReadyActorScript>();
+		SyuCyuSen		= ((GameObject)GameObject.Find("SyuCyuSen")).GetComponent<SyuCyuSenController>();
 		// FPSを60に設定
 		Application.targetFrameRate = 60;
 		// 初期位置格納
@@ -160,11 +162,13 @@ public class PlayerScript : MonoBehaviour {
 					Effect_Frame.SetActiveRecursively(true);
 					timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
 					ConcentrateGauge.AddConcentrate(-0.1f);
+					SyuCyuSen.SyuCyuSenSwitch(true);
 				}
 				else
 				{
 					timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
 					Effect_Frame.SetActiveRecursively(false);
+					SyuCyuSen.SyuCyuSenSwitch(false);
 				}
 				addValue = timerAdd;
 				if(ExistSpeed)
