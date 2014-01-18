@@ -63,7 +63,7 @@ public class ScoreScript : MonoBehaviour {
 	public void AddScore( float scr )
 	{
 		Score += scr;
-		if(Score < 0) Score = 0;
+		if(Score < 0.0f) Score = 0.0f;
 	}
 	public void Test()
 	{

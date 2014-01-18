@@ -159,7 +159,7 @@ public class PlayerScript : MonoBehaviour {
 				if(	Input.GetMouseButton(1) &&
 					ConcentrateGauge.isExist())
 				{
-					Effect_Frame.SetActiveRecursively(true);
+					//Effect_Frame.SetActiveRecursively(true);
 					timerAdd += (TIMERADD_MIN - timerAdd) * 0.1f;
 					ConcentrateGauge.AddConcentrate(-0.1f);
 					SyuCyuSen.SyuCyuSenSwitch(true);
@@ -167,7 +167,7 @@ public class PlayerScript : MonoBehaviour {
 				else
 				{
 					timerAdd += (TIMERADD_MAX - timerAdd) * 0.1f;
-					Effect_Frame.SetActiveRecursively(false);
+					//Effect_Frame.SetActiveRecursively(false);
 					SyuCyuSen.SyuCyuSenSwitch(false);
 				}
 				addValue = timerAdd;
@@ -178,7 +178,9 @@ public class PlayerScript : MonoBehaviour {
 				}
 				//カウントが終わっていればタイマーを加算 
 				if(!SReady.isValid())
+				{
 					m_Timer += addValue;
+				}
 				
 				//------------------------------------//
 				//移動
@@ -230,13 +232,12 @@ public class PlayerScript : MonoBehaviour {
 					SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
 					m_TimerPrev = m_Timer;
 				}
-				//切っている間のスコア加減算
-				if(cutting)
+				//タイマー加算時に切っている間はスコア加減算
+				if(cutting && !SReady.isValid())
 				{
-					if(SLineManager.isDeadLine()) 	CalcScore(-5);
-					else 							CalcScore(1);
+					if(SLineManager.isDeadLine())	SScore.AddScore(0.0f);
+					else 							SScore.AddScore(0.1f);
 				}
-				
 			}
 			//------------------------------------//
 			//回転処理
@@ -335,7 +336,7 @@ public class PlayerScript : MonoBehaviour {
 	//スコア計算
 	public void CalcScore(int score)
 	{
-		SScore.AddScore(score);
+		SScore.AddScore((float)score);
 	}
 	//集中力計算
 	public void CalcConcentration(int Value)

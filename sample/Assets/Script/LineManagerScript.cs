@@ -697,5 +697,13 @@ public class LineManagerScript : MonoBehaviour {
 	public int GetNumCriticalCombo()	{	return criticalComboMax;}
 	public int GetStageID()				{	return stageID;	}
 	public bool isExist()				{	return exist;	}
-	public bool isDeadLine()			{	return lineKind[wherePlayer] == 1; }
+	public bool isDeadLine()		
+	{
+		switch(lineKind[wherePlayer])
+		{
+		case 0: return false; break;
+		case 1: return true;	break;
+		default: return false;	break;
+		}
+	}
 }

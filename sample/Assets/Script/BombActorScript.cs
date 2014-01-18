@@ -24,7 +24,7 @@ public class BombActorScript : MonoBehaviour {
 	int stampCntLeft;
 	int	stampCntRight;
 	//エフェクト
-	public	GameObject	effect_Cut;
+	//public	GameObject	effect_Cut;
 	int effectCntLeft;
 	int effectCntRight;
 	
@@ -106,17 +106,17 @@ public class BombActorScript : MonoBehaviour {
 			effectCntRight--;
 		else
 		{ 
-			objER = (GameObject)Instantiate(effect_Cut, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+			//objER = (GameObject)Instantiate(effect_Cut, bombPos+(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			effectCntRight = Random.Range(10, 20);
-			Destroy(objER, 1.0f);
+		//	Destroy(objER, 1.0f);
 		}
 		if(effectCntLeft > 0)
 			effectCntLeft--;
 		else
 		{ 
-			objEL = (GameObject)Instantiate(effect_Cut, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
+		//	objEL = (GameObject)Instantiate(effect_Cut, bombPos-(bombDir*lineWidth), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			effectCntLeft = Random.Range(10, 20);
-			Destroy(objEL, 1.0f);
+		//	Destroy(objEL, 1.0f);
 		}
 		
 		//タイマーが規定値を超えるとDestroy

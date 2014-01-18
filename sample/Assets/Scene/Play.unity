@@ -717,7 +717,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 25
@@ -1880,7 +1880,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 5
@@ -3098,7 +3098,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 20
@@ -4133,7 +4133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &307321653
 Renderer:
   m_ObjectHideFlags: 0
@@ -4491,7 +4491,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 5
@@ -9064,7 +9064,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 15
@@ -9896,6 +9896,10 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: 6bd37c5c001d70a48bc6155a49da6f78, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bd37c5c001d70a48bc6155a49da6f78, type: 2}
   m_RootGameObject: {fileID: 1770216037}
@@ -10437,7 +10441,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 5
@@ -11598,7 +11602,7 @@ MonoBehaviour:
   obj_ScoreRenderer: {fileID: 100000, guid: a6c8d165f80677e4b9a27bbbde06c194, type: 2}
   waitCnt: 60
   PanelCount: 30
-  posAchievement: {x: 100, y: 480}
+  posAchievement: {x: 100, y: 450}
 --- !u!1 &862917530
 GameObject:
   m_ObjectHideFlags: 0
@@ -12645,7 +12649,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 5
@@ -16611,7 +16615,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 15
@@ -17755,7 +17759,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     randomDirection: 0
   EmissionModule:
-    enabled: 1
+    enabled: 0
     m_Type: 0
     rate:
       scalar: 15
@@ -21392,6 +21396,38 @@ Prefab:
     - target: {fileID: 100008, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
       propertyPath: m_Name
       value: EffectLeftUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800008, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800010, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800006, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800014, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800012, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800004, guid: efc05aa111f0b614c9131f19f538b667, type: 2}
+      propertyPath: EmissionModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efc05aa111f0b614c9131f19f538b667, type: 2}

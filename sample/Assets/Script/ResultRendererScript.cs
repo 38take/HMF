@@ -356,7 +356,7 @@ public class ResultRendererScript : MonoBehaviour {
 		int idx = AchievementArray.Count;
 		GameObject obj = (GameObject)Instantiate(obj_Achievement, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		AchievementArray.Add(obj.GetComponent<Tex2DGUITextureScript>());
-		((Tex2DGUITextureScript)AchievementArray[idx]).SetPos(posAchievement.x + 300, posAchievement.y+(65*idx), true);
+		((Tex2DGUITextureScript)AchievementArray[idx]).SetPos(posAchievement.x + 300, posAchievement.y+(50*idx), true);
 		((Tex2DGUITextureScript)AchievementArray[idx]).SwitchTexture(id);
 		((Tex2DGUITextureScript)AchievementArray[idx]).SetRenderFlag(false);
 	}
