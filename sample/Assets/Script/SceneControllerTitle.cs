@@ -12,7 +12,10 @@ public class SceneControllerTitle : MonoBehaviour {
 	float screenHeight;
 	float shutterPos;
 	Vector2 BGPos;
+	float alpha = 0.0f;
+	float trans = 0.03f;
 	int   dummyLoadCnt;//演出用
+	bool toTitle = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -43,6 +46,7 @@ public class SceneControllerTitle : MonoBehaviour {
 		//スタートボタンの設定
 		SButtonStart = ((GameObject)GameObject.Find("StartButton")).GetComponent<Tex2DBaseScript>();
 		SButtonStart.DrawEnable = true;
+		SButtonStart.SetColor(new Color(0.5f, 0.5f, 0.5f, alpha));
 		
 		//背景の設定
 		//SBG_Atelier = ((GameObject)GameObject.Find("BG_Atelier")).GetComponent<Tex2DBaseScript>();
@@ -59,14 +63,22 @@ public class SceneControllerTitle : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			//各ステージのスコアクリア
-			gamesys.SetScore(0, 0);
-			gamesys.SetScore(1, 0);
-			gamesys.SetScore(2, 0);
-			Application.LoadLevel("Adventure");
-			gamesys.SystemOutPut(-gamesys.GetActID());
+			if(toTitle)
+				Application.LoadLevel("Title");
+			else{
+				GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+				//各ステージのスコアクリア
+				gamesys.SetScore(0, 0);
+				gamesys.SetScore(1, 0);
+				gamesys.SetScore(2, 0);
+				Application.LoadLevel("Adventure");
+				gamesys.SystemOutPut(-gamesys.GetActID());
+			}
 		}
+		//スタートボタン点滅
+		alpha += trans;
+		if(alpha < 0.0f && trans < 0.0f || alpha > 1.0f && trans > 0.0f)	trans *= -1.0f;
+		SButtonStart.SetColor(new Color(0.7f, 0.7f, 0.7f, alpha));
 		//背景のスクロール
 		//BGPos.x -= 3.0f;
 		//if(BGPos.x <= -256.0f)	BGPos.x = 0.0f;
@@ -92,5 +104,10 @@ public class SceneControllerTitle : MonoBehaviour {
 		//マウスクリック判定
 		if(!press && Input.GetMouseButton(0))
 			press = true;
+		if(!press && Input.GetKey(KeyCode.R))
+		{
+			press = true;
+			toTitle = true;
+		}
 	}
 }

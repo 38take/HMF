@@ -196,7 +196,7 @@ public class TextBoxScript : MonoBehaviour {
 					{
 						if(string.Compare(renderString3, renderBase3) == 0)
 						{
-							if(Input.GetMouseButtonDown(0))
+							if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
 							{
 								//掃ける処理
 								if(outflag[strIdx]){

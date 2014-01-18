@@ -13,6 +13,7 @@ public class SceneControllerPlay : MonoBehaviour {
 	float screenHeight;
 	float shutterPos;
 	int   dummyLoadCnt;//演出用
+	bool toTitle = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -52,20 +53,20 @@ public class SceneControllerPlay : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			//スコアから分岐先を算出
-			//ターゲット数取得
-			int targetNum = SLineManager.GetNumTarget();
-			int maxScore = targetNum * 100;//今はこれで
-			int score = (int)SScore.GetScore();
-			//とりあえず3分割してどこに分類されるかで
-			int nextAct = 1 + SResultRenderer.GetNextAct();
-			
-			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			gamesys.SetScore(SLineManager.GetStageID()-1, score);
-			if(gamesys.GetActID() == 1)
-				nextAct = 1;
-			Application.LoadLevel(gamesys.GetNextScene());
-			gamesys.SystemOutPut(nextAct);
+			if(toTitle)
+				Application.LoadLevel("Title");
+			else{
+				int score = (int)SScore.GetScore();
+				//とりあえず3分割してどこに分類されるかで
+				int nextAct = 1 + SResultRenderer.GetNextAct();
+				
+				GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+				gamesys.SetScore(SLineManager.GetStageID()-1, score);
+				if(gamesys.GetActID() == 1)
+					nextAct = 1;
+				Application.LoadLevel(gamesys.GetNextScene());
+				gamesys.SystemOutPut(nextAct);
+			}
 		}
 		//シャッターの移動
 		if(press)
@@ -87,6 +88,11 @@ public class SceneControllerPlay : MonoBehaviour {
 			SResultRenderer.isEnd() && Input.GetMouseButtonDown(0))
 		{
 			press = true;
+		}
+		if(!press && Input.GetKey(KeyCode.R))
+		{
+			press = true;
+			toTitle = true;
 		}
 	}
 }

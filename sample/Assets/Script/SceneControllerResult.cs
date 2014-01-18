@@ -72,7 +72,7 @@ public class SceneControllerResult : MonoBehaviour {
 		shutterLeft.SetPos((-(screenWidth/2.0f)+shutterPos), 0.0f);
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		//マウスクリック判定
-		if(STotalResult.isEnd() && !press && Input.GetMouseButton(0))
+		if(STotalResult.isEnd() && !press && Input.GetMouseButton(0) || Input.GetKey(KeyCode.R))
 			press = true;
 	}
 }

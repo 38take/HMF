@@ -20,6 +20,7 @@ public class SceneControllerADV : MonoBehaviour {
 	float shutterPos;
 	float masterPos;
 	int   dummyLoadCnt;//演出用
+	bool toTitle = false;
 	
 
 	// Use this for initialization
@@ -67,19 +68,13 @@ public class SceneControllerADV : MonoBehaviour {
 			dummyLoadCnt++;
 		if(dummyLoadCnt > 10)
 		{
-			GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
-			Application.LoadLevel(gamesys.GetNextScene());
-			gamesys.SystemOutPut(StextBox.GetNextAct());
-			//if(gamesys.isLastAct())
-			//{
-			//	Application.LoadLevel("Result");
-			//	gamesys.SystemOutPut(StextBox.GetNextAct());
-			//}
-			//else
-			//{
-			//	Application.LoadLevel("Play");
-			//	gamesys.SystemOutPut(StextBox.GetNextAct());
-			//}
+			if(toTitle)
+				Application.LoadLevel("Title");
+			else{
+				GameSystemScript gamesys = ((GameObject)GameObject.Find("GameSystem")).GetComponent<GameSystemScript>();
+				Application.LoadLevel(gamesys.GetNextScene());
+				gamesys.SystemOutPut(StextBox.GetNextAct());
+			}
 		}
 		//シャッターの移動
 		if(press)
@@ -103,7 +98,7 @@ public class SceneControllerADV : MonoBehaviour {
 		shutterRight.SetPos((screenWidth)-shutterPos, 0.0f);
 		
 		if(	!StextBox.isValid() ||
-			Input.GetMouseButtonDown(1))
+			Input.GetKey(KeyCode.N))//Input.GetMouseButtonDown(1))
 			press = true;
 		
 		if (Input.GetKey(KeyCode.A))
@@ -114,6 +109,11 @@ public class SceneControllerADV : MonoBehaviour {
     	{
     	    SyutyuSen.SyuCyuSenSwitch(false);
     	}
+		if(!press && Input.GetKey(KeyCode.R))
+		{
+			press = true;
+			toTitle = true;
+		}
 
 	}
 	

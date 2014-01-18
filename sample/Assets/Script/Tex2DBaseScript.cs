@@ -63,6 +63,11 @@ public class Tex2DBaseScript : MonoBehaviour {
 		return Position;
 	}
 	
+	public virtual Color GetColor()
+	{
+		return color;
+	}
+	
 	public virtual Vector2 GetScreenParPos (){
 		return new Vector2( Position.x*DefaultScreen.Par.x, Position.y*DefaultScreen.Par.y );
 	}
@@ -107,6 +112,11 @@ public class Tex2DBaseScript : MonoBehaviour {
 		Position -= Offset / 2.0f;
 		Width = Size.x;
 		Height = Size.y;
+	}
+	
+	public virtual void SetColor(Color col)
+	{
+		color = col;
 	}
 	
 	//Change Texture Size. You can appoint center pos(0.0f~1.0f)
