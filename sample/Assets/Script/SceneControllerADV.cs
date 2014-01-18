@@ -30,6 +30,9 @@ public class SceneControllerADV : MonoBehaviour {
 		
 		press = false;
 		dummyLoadCnt = 0;
+		//マウスカーソル
+		//Screen.lockCursor = true;
+		Screen.showCursor = false;
 		
 		//画面サイズ取得
 		screenWidth  = 1024.0f;//Screen.width;

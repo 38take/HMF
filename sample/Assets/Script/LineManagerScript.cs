@@ -333,8 +333,10 @@ public class LineManagerScript : MonoBehaviour {
 			}
        	}
        	sr.Close();
+		int scoreMax = numTarget * ScoreCritical;
+		scoreMax += ((numTarget * 3) / 100) * 2000;
 		if(stageID > 0)
-			gamesys.SetScoreMax(stageID-1, numTarget * ScoreCritical);
+			gamesys.SetScoreMax(stageID-1, scoreMax);
 		//Instantiate(obj, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 		
 		//判定用パラメータ初期化
@@ -695,4 +697,5 @@ public class LineManagerScript : MonoBehaviour {
 	public int GetNumCriticalCombo()	{	return criticalComboMax;}
 	public int GetStageID()				{	return stageID;	}
 	public bool isExist()				{	return exist;	}
+	public bool isDeadLine()			{	return lineKind[wherePlayer] == 1; }
 }

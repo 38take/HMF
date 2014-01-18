@@ -10,6 +10,7 @@ public class TotalResultScript : MonoBehaviour {
 		SCORE1,
 		SCORE2,
 		SCORE3,
+		WAIT,
 		GAUGE,
 		TITLE,
 		NUM_SEEQ,
@@ -31,6 +32,7 @@ public class TotalResultScript : MonoBehaviour {
 	//各種パラメータ
 	private int[] score;
 	float 			per;	//達成率
+	int			   wait;
 	
 	//
 	private bool initiarized = false;
@@ -125,7 +127,14 @@ public class TotalResultScript : MonoBehaviour {
 			break;
 		case (char)RESULT_SEEQ.SCORE3:
 			if(!ActScore(2))
-				state = (char)RESULT_SEEQ.GAUGE;
+			{
+				state = (char)RESULT_SEEQ.WAIT;
+				wait = 20;
+			}
+			break;
+		case (char)RESULT_SEEQ.WAIT:
+			if(wait > 0)	wait--;
+			else 			state = (char)RESULT_SEEQ.TITLE;
 			break;
 		case (char)RESULT_SEEQ.GAUGE:
 			if(!ActGauge())

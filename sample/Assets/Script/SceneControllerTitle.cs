@@ -18,6 +18,9 @@ public class SceneControllerTitle : MonoBehaviour {
 	void Start () {
 		press = false;
 		dummyLoadCnt = 0;
+		//マウスカーソル
+		//Screen.lockCursor = true;
+		Screen.showCursor = false;
 		
 		//画面サイズ取得
 		screenWidth = DefaultScreen.Width;//Screen.width;

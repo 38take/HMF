@@ -226,6 +226,13 @@ public class PlayerScript : MonoBehaviour {
 					SCutEdge.AddPoint(SLineManager.CalcPos((int)m_Timer, m_Offset));
 					m_TimerPrev = m_Timer;
 				}
+				//切っている間のスコア加減算
+				if(cutting)
+				{
+					if(SLineManager.isDeadLine()) 	CalcScore(-5);
+					else 							CalcScore(1);
+				}
+				
 			}
 			//------------------------------------//
 			//回転処理
@@ -331,6 +338,7 @@ public class PlayerScript : MonoBehaviour {
 	{
 		if(ConcentrateGauge.AddConcentrate((float)Value)) 
 		{
+			CalcScore(2000);
 			GameObject obj = (GameObject)Instantiate(obj_Bomb, new Vector3(0.0f, 0.0f, 0.0f), new Quaternion(0.0f, 0.0f, 0.0f, 0.0f));
 			ConcentrateGauge.AddConcentrate(-ConcentrateGauge.GetConcentration());
 			numBomb++;
