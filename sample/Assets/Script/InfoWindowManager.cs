@@ -173,6 +173,7 @@ public class InfoWindowManager : MonoBehaviour {
 	
 	public void SetWindowContent(int Cont){
 		Cont_State = Cont;
+		InfoContain.SwitchTexture(Cont_State);
 	}
 	
 	public void OffWindowState(){
